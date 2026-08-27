@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Command } from "cmdk";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { searchPortfolio } from "@/lib/search";
+import { searchSite } from "@/lib/search";
 
 export function CommandPalette({
   open,
@@ -15,7 +15,7 @@ export function CommandPalette({
 }) {
   const router = useRouter();
   const [query, setQuery] = useState("");
-  const results = useMemo(() => searchPortfolio(query, 14), [query]);
+  const results = useMemo(() => searchSite(query, 14), [query]);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -31,7 +31,7 @@ export function CommandPalette({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="overflow-hidden p-0">
-        <DialogTitle className="sr-only">Search Gad OS</DialogTitle>
+        <DialogTitle className="sr-only">Search Imani Gad’s site</DialogTitle>
         <Command className="bg-surface" shouldFilter={false}>
           <Command.Input
             value={query}

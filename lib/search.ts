@@ -1,5 +1,4 @@
 import { experience } from "@/data/experience";
-import { labExperiments } from "@/data/lab";
 import { allNav } from "@/data/navigation";
 import { projects } from "@/data/projects";
 import { skills } from "@/data/skills";
@@ -9,7 +8,7 @@ export type SearchResult = {
   title: string;
   subtitle: string;
   href: string;
-  type: "Project" | "Employer" | "Role" | "Skill" | "Lab" | "Page";
+  type: "Project" | "Employer" | "Role" | "Skill" | "Page";
 };
 
 export function buildSearchIndex(): SearchResult[] {
@@ -53,25 +52,16 @@ export function buildSearchIndex(): SearchResult[] {
     type: "Skill",
   }));
 
-  const labResults: SearchResult[] = labExperiments.map((experiment) => ({
-    id: `lab-${experiment.slug}`,
-    title: experiment.title,
-    subtitle: experiment.status,
-    href: `/lab?experiment=${experiment.slug}`,
-    type: "Lab",
-  }));
-
   return [
     ...pages,
     ...projectResults,
     ...employers,
     ...roles,
     ...skillResults,
-    ...labResults,
   ];
 }
 
-export function searchPortfolio(query: string, limit = 12): SearchResult[] {
+export function searchSite(query: string, limit = 12): SearchResult[] {
   const q = query.trim().toLowerCase();
   if (!q) return buildSearchIndex().slice(0, limit);
 

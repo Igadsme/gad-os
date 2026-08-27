@@ -4,6 +4,8 @@ export type ProjectCategory =
   | "Cybersecurity"
   | "Automation";
 
+export type ProjectStatus = "Live" | "Case Study" | "Internal System" | "Archived";
+
 export type Project = {
   slug: string;
   title: string;
@@ -12,6 +14,11 @@ export type Project = {
   categories: ProjectCategory[];
   timeframe: string;
   featured: boolean;
+  status: ProjectStatus;
+  visualMetrics: readonly [
+    { label: string; value: string },
+    { label: string; value: string },
+  ];
   liveUrl?: string;
   liveLabel?: string;
   repoUrl?: string;
@@ -42,6 +49,11 @@ export const projects: Project[] = [
     categories: ["Full Stack", "AI/ML"],
     timeframe: "April 2026 – May 2026",
     featured: true,
+    status: "Live",
+    visualMetrics: [
+      { label: "events", value: "1K+" },
+      { label: "reporting", value: "−80%" },
+    ],
     liveUrl: "https://devdash.com",
     liveLabel: "devdash.com",
     summary:
@@ -74,6 +86,11 @@ export const projects: Project[] = [
     categories: ["AI/ML", "Cybersecurity"],
     timeframe: "June 2026 – July 2026",
     featured: true,
+    status: "Case Study",
+    visualMetrics: [
+      { label: "pipeline", value: "2-stage" },
+      { label: "results", value: "ranked" },
+    ],
     summary:
       "Detects and tracks subjects in CCTV footage, then ranks moments with embedding search over metadata.",
     highlight:
@@ -111,6 +128,11 @@ export const projects: Project[] = [
     categories: ["Cybersecurity", "Automation"],
     timeframe: "January 2026 – June 2026",
     featured: true,
+    status: "Internal System",
+    visualMetrics: [
+      { label: "queries", value: "KQL" },
+      { label: "telemetry", value: "CEF" },
+    ],
     summary:
       "Log ingestion for non-native sources in Microsoft Sentinel, including Palo Alto firewall syslog via CEF.",
     highlight:
@@ -144,6 +166,11 @@ export const projects: Project[] = [
     categories: ["Automation", "Full Stack"],
     timeframe: "November 2025 – July 2026",
     featured: false,
+    status: "Internal System",
+    visualMetrics: [
+      { label: "backlog", value: "80→20" },
+      { label: "tickets", value: "300" },
+    ],
     summary:
       "ServiceNow workflows, Script Includes, and Integration Hub REST APIs for hospital IT platforms.",
     highlight:
@@ -176,6 +203,11 @@ export const projects: Project[] = [
     categories: ["AI/ML"],
     timeframe: "July 2025 – September 2025",
     featured: false,
+    status: "Case Study",
+    visualMetrics: [
+      { label: "AI builds", value: "5" },
+      { label: "users", value: "500+" },
+    ],
     summary:
       "Semantic search and retrieval systems built with Pinecone, Gemini, embeddings, and RAG APIs.",
     highlight:
@@ -214,6 +246,11 @@ export const projects: Project[] = [
     categories: ["Full Stack"],
     timeframe: "January 2024 – May 2024",
     featured: false,
+    status: "Internal System",
+    visualMetrics: [
+      { label: "throughput", value: "+15%" },
+      { label: "latency", value: "−20%" },
+    ],
     summary:
       "Distributed microservices with Redis-cached PostgreSQL and shared REST contracts.",
     highlight:
@@ -251,6 +288,11 @@ export const projects: Project[] = [
     categories: ["Full Stack"],
     timeframe: "May 2025 – August 2025",
     featured: false,
+    status: "Case Study",
+    visualMetrics: [
+      { label: "load time", value: "−30%" },
+      { label: "accessibility", value: "audited" },
+    ],
     summary:
       "React refactor of a production site with performance and accessibility work on key pages.",
     highlight: "Load time reduced by 30%.",

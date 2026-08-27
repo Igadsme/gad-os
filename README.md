@@ -1,6 +1,6 @@
-# Gad OS
+# Imani Gad
 
-Personal product-style portfolio for **Imani Gad** — software engineering, AI/ML, and cybersecurity.
+Personal site for **Imani Gad** — software engineering, AI/ML, and cybersecurity.
 
 The résumé PDF in `public/resume/Imani-Gad.pdf` is the factual source of truth. Mockup-only employers, metrics, and invented projects are not used.
 

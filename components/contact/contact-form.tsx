@@ -42,55 +42,73 @@ export function ContactForm() {
       toast.error(json.error ?? "Could not send message.");
       return;
     }
-    toast.success("Message sent. I usually reply within 24–48 hours.");
-    form.reset();
+    if (json.delivered) {
+      toast.success("Message sent. I usually reply within 24–48 hours.");
+      form.reset();
+      return;
+    }
+    const mailto = `mailto:${profile.email}?subject=${encodeURIComponent(`[Imani Gad] ${values.subject}`)}&body=${encodeURIComponent(values.message)}`;
+    toast.message("Email delivery is not configured.", {
+      description: "Use the email link to send this message directly.",
+      action: {
+        label: "Open email",
+        onClick: () => {
+          window.location.href = mailto;
+        },
+      },
+    });
   }
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[280px_minmax(0,1fr)]">
-      <div className="space-y-4">
+    <div className="grid gap-6 lg:grid-cols-[240px_minmax(0,1fr)]">
+      <div className="space-y-3">
         <Card className="p-4">
-          <Badge tone="green">Available for roles</Badge>
-          <p className="mt-3 text-sm text-muted">
+          <Badge tone="green">{profile.availability}</Badge>
+          <p className="mt-3 text-sm leading-6 text-muted">
             Graduating {profile.education.end}. Open to software engineering, AI/ML, and
             cybersecurity roles.
           </p>
         </Card>
         <Card className="p-4">
-          <p className="flex items-center gap-2 font-medium">
+          <p className="flex items-center gap-2 text-sm font-medium">
             <MapPin className="size-4" /> Based in
           </p>
           <p className="mt-2 text-sm">{profile.locationFull}</p>
-          <p className="text-sm text-muted">Open to local and remote opportunities.</p>
         </Card>
         <Card className="space-y-2 p-4 text-sm">
           <p className="font-medium">Quick links</p>
-          <a className="block text-primary" href={`mailto:${profile.email}`}>
+          <a className="block min-h-11 text-primary" href={`mailto:${profile.email}`}>
             {profile.email}
           </a>
-          <a className="block text-primary" href={profile.linkedin}>
+          <a className="block min-h-11 text-primary" href={profile.linkedin}>
             LinkedIn
           </a>
-          <a className="block text-primary" href={profile.github}>
+          <a className="block min-h-11 text-primary" href={profile.github}>
             GitHub
           </a>
         </Card>
       </div>
-      <Card className="p-6">
-        <h2 className="text-lg font-semibold">Send a Message</h2>
-        <form className="mt-4 space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
-          <Field label="Name" error={form.formState.errors.name?.message}>
-            <Input placeholder="Your full name" {...form.register("name")} />
+      <Card className="p-5">
+        <h2 className="text-base font-semibold">Send a Message</h2>
+        <form className="mt-4 space-y-4" noValidate onSubmit={form.handleSubmit(onSubmit)}>
+          <Field label="Name" htmlFor="contact-name" error={form.formState.errors.name?.message}>
+            <Input id="contact-name" placeholder="Your full name" {...form.register("name")} />
           </Field>
-          <Field label="Email" error={form.formState.errors.email?.message}>
-            <Input placeholder="your.email@example.com" type="email" {...form.register("email")} />
+          <Field label="Email" htmlFor="contact-email" error={form.formState.errors.email?.message}>
+            <Input
+              id="contact-email"
+              placeholder="your.email@example.com"
+              type="email"
+              {...form.register("email")}
+            />
           </Field>
-          <Field label="Company (optional)">
-            <Input placeholder="Company" {...form.register("company")} />
+          <Field label="Company (optional)" htmlFor="contact-company">
+            <Input id="contact-company" placeholder="Company" {...form.register("company")} />
           </Field>
-          <Field label="Subject" error={form.formState.errors.subject?.message}>
+          <Field label="Subject" htmlFor="contact-subject" error={form.formState.errors.subject?.message}>
             <select
-              className="h-10 w-full rounded-xl border border-border bg-surface px-3 text-sm"
+              id="contact-subject"
+              className="h-11 w-full rounded-xl border border-border bg-surface px-3 text-sm"
               {...form.register("subject")}
             >
               {subjects.map((subject) => (
@@ -98,11 +116,15 @@ export function ContactForm() {
               ))}
             </select>
           </Field>
-          <Field label="Message" error={form.formState.errors.message?.message}>
-            <Textarea placeholder="What would you like to build?" {...form.register("message")} />
+          <Field label="Message" htmlFor="contact-message" error={form.formState.errors.message?.message}>
+            <Textarea
+              id="contact-message"
+              placeholder="What would you like to build?"
+              {...form.register("message")}
+            />
           </Field>
           <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
-            <Send /> Send Message
+            <Send /> {form.formState.isSubmitting ? "Sending…" : "Send Message"}
           </Button>
           <p className="flex items-center justify-center gap-2 text-xs text-muted">
             <Lock className="size-3" />
@@ -116,18 +138,20 @@ export function ContactForm() {
 
 function Field({
   label,
+  htmlFor,
   error,
   children,
 }: {
   label: string;
+  htmlFor: string;
   error?: string;
   children: React.ReactNode;
 }) {
   return (
     <div className="space-y-1.5">
-      <Label>{label}</Label>
+      <Label htmlFor={htmlFor}>{label}</Label>
       {children}
-      {error && <p className="text-xs text-danger">{error}</p>}
+      {error ? <p className="text-xs text-danger">{error}</p> : null}
     </div>
   );
 }

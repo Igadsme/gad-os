@@ -1,9 +1,9 @@
 export type GalleryCategory =
   | "All"
-  | "Campus"
+  | "Sports"
   | "Automotive"
   | "Travel"
-  | "Training";
+  | "Campus";
 
 export type GalleryItem = {
   id: string;
@@ -16,10 +16,10 @@ export type GalleryItem = {
 
 export const galleryCategories: GalleryCategory[] = [
   "All",
-  "Campus",
+  "Sports",
   "Automotive",
   "Travel",
-  "Training",
+  "Campus",
 ];
 
 export const gallery: GalleryItem[] = [
@@ -27,7 +27,7 @@ export const gallery: GalleryItem[] = [
     id: "ksu-deadlift",
     title: "Training at KSU",
     location: "Kennesaw State University",
-    category: "Training",
+    category: "Sports",
     src: "/gallery/ksu-training.jpg",
     alt: "Deadlift session in the Kennesaw State University gym",
   },

@@ -25,11 +25,16 @@ export function Badge({
 
 export function Card({
   className,
+  hoverable = false,
   ...props
-}: React.ComponentProps<"div">) {
+}: React.ComponentProps<"div"> & { hoverable?: boolean }) {
   return (
     <div
-      className={cn("card-surface rounded-2xl", className)}
+      className={cn(
+        "card-surface rounded-xl",
+        hoverable && "card-hoverable",
+        className,
+      )}
       {...props}
     />
   );

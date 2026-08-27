@@ -4,7 +4,10 @@ import { useMemo, useState } from "react";
 import { LayoutGrid, List } from "lucide-react";
 import { projectCategories, projects, type ProjectCategory } from "@/data/projects";
 import { ProjectCard, ProjectListRow } from "@/components/projects/project-card";
+import { FilterPills } from "@/components/ui/filter-pills";
+import { EmptyState } from "@/components/ui/empty-state";
 import { Input } from "@/components/ui/input";
+import { Tooltip } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
 export function ProjectsExplorer({
@@ -39,50 +42,56 @@ export function ProjectsExplorer({
   return (
     <div className="space-y-5">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
-        <div className="flex flex-wrap gap-2">
-          {(["All", ...projectCategories] as const).map((item) => (
-            <button
-              key={item}
-              type="button"
-              onClick={() => setCategory(item)}
-              className={cn(
-                "rounded-full border border-border px-3 py-1.5 text-sm text-muted",
-                category === item && "border-primary/30 bg-primary text-white",
-              )}
-            >
-              {item}
-            </button>
-          ))}
-        </div>
+        <FilterPills
+          items={["All", ...projectCategories]}
+          value={category}
+          onChange={(value) => setCategory(value as ProjectCategory | "All")}
+        />
         <div className="flex flex-1 items-center gap-2 lg:justify-end">
           <Input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search projects..."
             className="max-w-xs"
+            aria-label="Search projects"
           />
           <div className="flex rounded-xl border border-border bg-surface p-1">
-            <button
-              type="button"
-              aria-label="Grid view"
-              onClick={() => setView("grid")}
-              className={`rounded-lg p-1.5 ${view === "grid" ? "bg-primary-soft text-primary" : "text-muted"}`}
-            >
-              <LayoutGrid className="size-4" />
-            </button>
-            <button
-              type="button"
-              aria-label="List view"
-              onClick={() => setView("list")}
-              className={`rounded-lg p-1.5 ${view === "list" ? "bg-primary-soft text-primary" : "text-muted"}`}
-            >
-              <List className="size-4" />
-            </button>
+            <Tooltip label="Grid view">
+              <button
+                type="button"
+                aria-label="Grid view"
+                aria-pressed={view === "grid"}
+                onClick={() => setView("grid")}
+                className={cn(
+                  "inline-flex size-11 items-center justify-center rounded-lg",
+                  view === "grid" ? "bg-primary-soft text-primary" : "text-muted",
+                )}
+              >
+                <LayoutGrid className="size-4" />
+              </button>
+            </Tooltip>
+            <Tooltip label="List view">
+              <button
+                type="button"
+                aria-label="List view"
+                aria-pressed={view === "list"}
+                onClick={() => setView("list")}
+                className={cn(
+                  "inline-flex size-11 items-center justify-center rounded-lg",
+                  view === "list" ? "bg-primary-soft text-primary" : "text-muted",
+                )}
+              >
+                <List className="size-4" />
+              </button>
+            </Tooltip>
           </div>
         </div>
       </div>
       {filtered.length === 0 ? (
-        <p className="text-sm text-muted">No projects match that filter.</p>
+        <EmptyState
+          title="No projects match that filter."
+          detail="Try another category or clear the search."
+        />
       ) : view === "grid" ? (
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {filtered.map((project) => (

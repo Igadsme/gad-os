@@ -1,19 +1,17 @@
 import type { Metadata } from "next";
-import { Inter, Instrument_Serif, Geist_Mono } from "next/font/google";
-import { ThemeProvider } from "@/components/layout/theme-provider";
+import { Bricolage_Grotesque, Geist_Mono, Manrope } from "next/font/google";
 import { Toaster } from "sonner";
 import { profile } from "@/data/profile";
 import "./globals.css";
 
-const inter = Inter({
+const manrope = Manrope({
   subsets: ["latin"],
   variable: "--font-sans",
 });
 
-const serif = Instrument_Serif({
+const display = Bricolage_Grotesque({
   subsets: ["latin"],
-  weight: "400",
-  variable: "--font-serif",
+  variable: "--font-display",
 });
 
 const mono = Geist_Mono({
@@ -32,7 +30,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: `${profile.name} · ${profile.productName}`,
     description:
-      "Portfolio for software engineering, AI/ML, and cybersecurity roles.",
+      "Imani Gad’s work in software engineering, AI/ML, and cybersecurity.",
     type: "website",
   },
 };
@@ -41,16 +39,10 @@ export default function RootLayout({
   children,
 }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={`${inter.variable} ${serif.variable} ${mono.variable} h-full antialiased`}
-    >
+    <html lang="en" className={`${manrope.variable} ${display.variable} ${mono.variable} h-full antialiased`}>
       <body className="min-h-full bg-background font-sans text-foreground">
-        <ThemeProvider>
-          {children}
-          <Toaster richColors position="bottom-right" />
-        </ThemeProvider>
+        {children}
+        <Toaster richColors position="bottom-right" />
       </body>
     </html>
   );

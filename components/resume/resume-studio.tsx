@@ -21,8 +21,35 @@ export function ResumeStudio() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_280px]">
-      <Card className="p-6 md:p-8">
-        <h2 className="text-3xl font-semibold tracking-tight">{profile.name}</h2>
+      <Card className="overflow-hidden p-5">
+        <div className="mb-4 overflow-hidden rounded-[14px] border border-border bg-surface-muted">
+          <object
+            data={profile.resumePdf}
+            type="application/pdf"
+            className="hidden h-[420px] w-full md:block"
+            aria-label="Résumé PDF preview"
+          >
+            <p className="p-4 text-sm text-muted">
+              PDF preview is unavailable in this browser.{" "}
+              <a className="text-primary" href={profile.resumePdf}>
+                Open the résumé PDF
+              </a>
+              .
+            </p>
+          </object>
+          <div className="p-4 md:hidden">
+            <p className="text-sm text-muted">
+              PDF preview works best on a larger screen.
+            </p>
+            <a
+              className="mt-2 inline-flex min-h-11 items-center text-sm text-primary"
+              href={profile.resumePdf}
+            >
+              Open résumé PDF
+            </a>
+          </div>
+        </div>
+        <h2 className="text-[28px] font-semibold tracking-tight">{profile.name}</h2>
         <p className="mt-1 text-sm text-muted">{profile.headline.replaceAll(" · ", " — ")}</p>
         <p className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted">
           <span>{profile.location}</span>

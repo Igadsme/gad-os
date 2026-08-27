@@ -14,7 +14,6 @@ export const profile = {
   githubHandle: "github.com/Igadsme",
   website: "https://imanigad.com",
   availability: "Open to opportunities" as const,
-  availabilityShort: "Available" as const,
   openTo: [
     "Software engineering roles",
     "AI/ML roles",
@@ -42,7 +41,7 @@ export const profile = {
   avatar: "/images/profile.jpg",
   resumePdf: "/resume/Imani-Gad.pdf",
   assistantName: "April",
-  productName: "Gad OS",
+  productName: "Imani Gad",
 } as const;
 
 export const honors = {

@@ -15,7 +15,21 @@ test("projects page lists DevDash", async ({ page }) => {
 test("command palette navigates to experience", async ({ page }) => {
   await page.goto("/");
   await page.keyboard.press("Meta+k");
-  await page.getByPlaceholder("Search projects, skills, or experience...").nth(1).fill("wellstar");
+  const search = page.getByPlaceholder("Search projects, skills, or experience...");
+  await search.waitFor({ state: "visible" });
+  await search.fill("wellstar");
   await page.getByText("Wellstar Health System").first().click();
   await expect(page).toHaveURL(/experience/);
+});
+
+test("removed Assistant and Lab sections are not public destinations", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByRole("link", { name: "AI Assistant" })).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "Lab" })).toHaveCount(0);
+
+  await page.goto("/assistant");
+  await expect(page).toHaveURL(/\/$/);
+
+  await page.goto("/lab");
+  await expect(page).toHaveURL(/\/projects$/);
 });

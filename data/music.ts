@@ -6,11 +6,19 @@ export type Track = {
 };
 
 export const codingPlaylist: Track[] = [
-  { title: "Lofi Study", artist: "Focus Ensemble", durationMs: 184000 },
-  { title: "Deep Focus", artist: "Night Desk", durationMs: 201000 },
-  { title: "Quiet Hours", artist: "Signal Room", durationMs: 176000 },
-  { title: "Compile", artist: "Late Window", durationMs: 164000 },
+  { title: "Lofi Study", artist: "Focus Ensemble", album: "Desk Hours", durationMs: 184000 },
+  { title: "Deep Focus", artist: "Night Desk", album: "Compile", durationMs: 201000 },
+  { title: "Quiet Hours", artist: "Signal Room", album: "After Standup", durationMs: 176000 },
+  { title: "Compile", artist: "Late Window", album: "Green Tests", durationMs: 164000 },
 ];
+
+export const curatedRecentlyPlayed: Track[] = codingPlaylist;
+
+export const curatedTopArtists = [
+  { name: "Focus Ensemble", context: "Coding hours" },
+  { name: "Night Desk", context: "Deep work" },
+  { name: "Signal Room", context: "Evenings" },
+] as const;
 
 export function formatDuration(ms: number) {
   const total = Math.round(ms / 1000);
