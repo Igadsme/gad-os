@@ -32,29 +32,34 @@ export function NowPlayingCard({
 
   useEffect(() => {
     let cancelled = false;
-    fetch("/api/spotify/now-playing")
-      .then((res) => res.json())
-      .then((json) => {
-        if (!cancelled) {
-          setData(json);
-          setPlaying(Boolean(json.isPlaying));
-        }
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setData({
-            title: codingPlaylist[0].title,
-            artist: codingPlaylist[0].artist,
-            album: codingPlaylist[0].album,
-            progressMs: 84000,
-            durationMs: codingPlaylist[0].durationMs,
-            isPlaying: false,
-            live: false,
-          });
-        }
-      });
+    const load = () => {
+      fetch("/api/spotify/now-playing")
+        .then((res) => res.json())
+        .then((json) => {
+          if (!cancelled) {
+            setData(json);
+            setPlaying(Boolean(json.isPlaying));
+          }
+        })
+        .catch(() => {
+          if (!cancelled) {
+            setData({
+              title: codingPlaylist[0].title,
+              artist: codingPlaylist[0].artist,
+              album: codingPlaylist[0].album,
+              progressMs: 84000,
+              durationMs: codingPlaylist[0].durationMs,
+              isPlaying: false,
+              live: false,
+            });
+          }
+        });
+    };
+    load();
+    const timer = window.setInterval(load, 15_000);
     return () => {
       cancelled = true;
+      window.clearInterval(timer);
     };
   }, []);
 
@@ -182,8 +187,8 @@ export function NowPlayingCard({
           {live
             ? "Connected to Spotify"
             : connected
-              ? "Connect Spotify to show live listening activity."
-              : "Connect Spotify to show live listening activity."}
+              ? "Spotify is connected. Start a track to update this card."
+              : "The curated playlist appears when Spotify is unavailable."}
         </p>
       ) : (
         <Link

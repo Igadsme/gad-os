@@ -9,7 +9,7 @@ import { experience } from "@/data/experience";
 import { Button } from "@/components/ui/button";
 import { Badge, Card } from "@/components/ui/card";
 import { ProjectCard } from "@/components/projects/project-card";
-import { LiveListeningCard } from "@/components/music/live-listening";
+import { NowPlayingCard } from "@/components/music/now-playing";
 import { ActivityIcon } from "@/components/home/activity-icon";
 import { PageContainer } from "@/components/layout/page-header";
 
@@ -163,7 +163,7 @@ export default function HomePage() {
             </ul>
           </Card>
 
-          <LiveListeningCard compact />
+          <NowPlayingCard compact />
 
           <Card className="p-4">
             <h2 className="mb-3 text-sm font-semibold">Life Outside Code</h2>

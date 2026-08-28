@@ -1,5 +1,6 @@
 import { SpotifyPlaylistCard } from "@/components/music/spotify-playlist";
-import { LiveListeningCard } from "@/components/music/live-listening";
+import { NowPlayingCard } from "@/components/music/now-playing";
+import { SpotifyInsights } from "@/components/music/spotify-insights";
 import { Card } from "@/components/ui/card";
 import { PageContainer, PageHeader } from "@/components/layout/page-header";
 
@@ -15,7 +16,8 @@ export default function MusicPage() {
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1.45fr)_minmax(260px,0.55fr)]">
         <SpotifyPlaylistCard />
         <div className="space-y-4">
-          <LiveListeningCard />
+          <NowPlayingCard />
+          <SpotifyInsights />
           <Card className="p-5">
             <p className="font-display text-lg font-semibold">Press play and stay awhile.</p>
             <p className="mt-2 text-sm leading-6 text-muted">
