@@ -8,7 +8,7 @@ export default function ResumePage() {
     <PageContainer>
       <PageHeader
         title="Résumé"
-        subtitle="View, customize, and share a résumé that stays faithful to the source PDF."
+        subtitle="View, download, and share your professional résumé."
       />
       <ResumeStudio />
     </PageContainer>

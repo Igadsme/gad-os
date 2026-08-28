@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="title">
+  <title id="title">Shaw Industries</title>
+  <rect width="200" height="200" rx="100" fill="#fff"/>
+  <path d="M29 72h57l18-20h67v76H29z" fill="#003c53"/>
+  <path d="M29 72h75l-23 56H29z" fill="#fff"/>
+  <text x="126" y="113" text-anchor="middle" font-family="Georgia, serif" font-size="47" font-weight="700" fill="#fff">Shaw</text>
+</svg>

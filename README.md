@@ -33,6 +33,7 @@ Copy `.env.example` to `.env.local`.
 | --- | --- |
 | `OPENAI_API_KEY` | April uses an LLM grounded on résumé context. Without it, April answers from deterministic retrieval. |
 | `RESEND_API_KEY` | Contact form sends email. Without it, messages are logged server-side. |
+| `OUTLOOK_CALENDAR_ICS_URL` | Read-only Outlook calendar feed used to show live busy dates without exposing event details. |
 | `SPOTIFY_*` | Live now-playing, recently played, and top artists. Without them, a labeled coding playlist is shown. |
 
 ## Content

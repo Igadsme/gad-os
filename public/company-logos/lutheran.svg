@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="title">
+  <title id="title">Lutheran Service School</title>
+  <rect width="200" height="200" rx="28" fill="#fff"/>
+  <path d="M100 18 165 43v50c0 44-25 72-65 89-40-17-65-45-65-89V43z" fill="#1e3a8a" stroke="#d6a72d" stroke-width="8"/>
+  <path d="M92 48h16v33h30v16h-30v55H92V97H62V81h30z" fill="#f4c94a"/>
+  <path d="M62 123h76" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".8"/>
+</svg>

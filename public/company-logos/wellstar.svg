@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="title">
+  <title id="title">Wellstar Health System</title>
+  <rect width="200" height="200" rx="100" fill="#8946b5"/>
+  <g fill="#fff">
+    <path d="M92 35h16v46c0 10-8 18-18 18H44V83h35c7 0 13-6 13-13z"/>
+    <path d="M165 92v16h-46c-10 0-18-8-18-18V44h16v35c0 7 6 13 13 13z"/>
+    <path d="M108 165H92v-46c0-10 8-18 18-18h46v16h-35c-7 0-13 6-13 13z"/>
+    <path d="M35 108V92h46c10 0 18 8 18 18v46H83v-35c0-7-6-13-13-13z"/>
+  </g>
+</svg>

@@ -9,8 +9,8 @@ export default function SkillsPage() {
   return (
     <PageContainer>
       <PageHeader
-        title="Skills"
-        subtitle="Browse tools and technologies with evidence from projects and roles."
+        title="Skills Explorer"
+        subtitle="Explore technologies, tools, and frameworks with real-world evidence."
       />
       <Suspense fallback={<Skeleton className="h-80" />}>
         <SkillsExplorer />

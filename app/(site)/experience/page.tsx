@@ -10,7 +10,7 @@ export default function ExperiencePage() {
     <PageContainer>
       <PageHeader
         title="Experience"
-        subtitle="Roles, impact, and growth — dates and metrics from the résumé."
+        subtitle="A timeline of roles, impact, and growth."
       />
       <Suspense fallback={<Skeleton className="h-96" />}>
         <ExperienceExplorer />
