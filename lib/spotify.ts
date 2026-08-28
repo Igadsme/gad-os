@@ -10,6 +10,7 @@ type SpotifyTrack = {
   live: boolean;
   connected: boolean;
   albumImage?: string;
+  url?: string;
 };
 
 async function getAccessToken() {
@@ -75,6 +76,7 @@ export async function getNowPlaying(): Promise<SpotifyTrack> {
     live: true,
     connected: true,
     albumImage: item?.album?.images?.[0]?.url,
+    url: item?.external_urls?.spotify,
   };
 }
 
@@ -96,10 +98,26 @@ export async function getRecentlyPlayed() {
   const data = await response.json();
   return {
     live: true,
-    tracks: (data.items ?? []).map((item: { track: { name: string; artists: { name: string }[] } }) => ({
-      title: item.track.name,
-      artist: item.track.artists.map((artist) => artist.name).join(", "),
-    })),
+    tracks: (data.items ?? []).map(
+      (item: {
+        played_at?: string;
+        track: {
+          name: string;
+          duration_ms?: number;
+          external_urls?: { spotify?: string };
+          artists: { name: string }[];
+          album?: { name?: string; images?: { url: string }[] };
+        };
+      }) => ({
+        title: item.track.name,
+        artist: item.track.artists.map((artist) => artist.name).join(", "),
+        album: item.track.album?.name,
+        durationMs: item.track.duration_ms,
+        albumImage: item.track.album?.images?.[0]?.url,
+        playedAt: item.played_at,
+        url: item.track.external_urls?.spotify,
+      }),
+    ),
   };
 }
 
@@ -121,8 +139,18 @@ export async function getTopArtists() {
   const data = await response.json();
   return {
     live: true,
-    artists: (data.items ?? []).map((artist: { name: string }) => ({
-      name: artist.name,
-    })),
+    artists: (data.items ?? []).map(
+      (artist: {
+        name: string;
+        images?: { url: string }[];
+        genres?: string[];
+        external_urls?: { spotify?: string };
+      }) => ({
+        name: artist.name,
+        image: artist.images?.[0]?.url,
+        genres: artist.genres?.slice(0, 2),
+        url: artist.external_urls?.spotify,
+      }),
+    ),
   };
 }
