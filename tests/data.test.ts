@@ -47,6 +47,17 @@ describe("résumé-backed data", () => {
     expect(new Set(featured).size).toBe(featured.length);
   });
 
+  it("excludes projects removed from the public project list", () => {
+    expect(projects.map((project) => project.slug)).not.toEqual(
+      expect.arrayContaining([
+        "servicenow-itsm",
+        "headstarter-rag",
+        "upcancer-microservices",
+        "truespice-web",
+      ]),
+    );
+  });
+
   it("lists Python as a language skill", () => {
     expect(skills.some((skill) => skill.name === "Python")).toBe(true);
   });

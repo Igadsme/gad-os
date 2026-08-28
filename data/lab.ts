@@ -34,7 +34,6 @@ export const labExperiments: LabExperiment[] = [
       "Retrieval quality for the Headstarter semantic-search work can be measured with ranked results and usage signals instead of anecdote.",
     methods: ["RAG", "Pinecone", "Embeddings", "Gemini API"],
     stageLabel: "Evaluation harness",
-    relatedProjectSlug: "headstarter-rag",
     relatedExperienceId: "headstarter",
   },
   {

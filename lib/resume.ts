@@ -41,11 +41,7 @@ const experienceOrder: Record<ResumeFocus, string[]> = {
 const projectOrder: Record<ResumeFocus, string[]> = {
   software: [
     "devdash",
-    "upcancer-microservices",
-    "truespice-web",
-    "servicenow-itsm",
     "ai-security-camera-investigator",
-    "headstarter-rag",
     "sentinel-ingestion",
     "nestai",
     "hiveu",
@@ -53,12 +49,8 @@ const projectOrder: Record<ResumeFocus, string[]> = {
   ],
   ai: [
     "ai-security-camera-investigator",
-    "headstarter-rag",
     "devdash",
-    "upcancer-microservices",
     "sentinel-ingestion",
-    "servicenow-itsm",
-    "truespice-web",
     "nestai",
     "hiveu",
     "ai-recruiter-assistant",
@@ -66,11 +58,7 @@ const projectOrder: Record<ResumeFocus, string[]> = {
   cyber: [
     "sentinel-ingestion",
     "ai-security-camera-investigator",
-    "servicenow-itsm",
-    "upcancer-microservices",
     "devdash",
-    "headstarter-rag",
-    "truespice-web",
     "nestai",
     "hiveu",
     "ai-recruiter-assistant",

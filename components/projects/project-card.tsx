@@ -12,10 +12,6 @@ const cardSubtitles: Record<string, string> = {
   hiveu: "AI StudyMatch · Full Stack",
   "ai-recruiter-assistant": "AI Recruiting · Full Stack",
   "sentinel-ingestion": "Security Operations",
-  "servicenow-itsm": "Workflow Automation",
-  "headstarter-rag": "AI · Retrieval Systems",
-  "upcancer-microservices": "Backend Infrastructure",
-  "truespice-web": "Web Performance",
 };
 
 export function ProjectCard({
