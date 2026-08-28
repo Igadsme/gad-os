@@ -1,4 +1,4 @@
-import { honors, organizations, profile } from "./profile";
+import { organizations, profile } from "./profile";
 
 export const about = {
   bio: "Software engineer, builder, and Computer Science candidate at Kennesaw State University (December 2026). I work across software engineering, AI/ML, and cybersecurity — shipping systems that hold up in production, from Next.js products to Sentinel pipelines.",
@@ -54,7 +54,7 @@ export const about = {
   values: [
     {
       title: "Curiosity",
-      body: `I learn by building — coursework in ML and deep learning, five Headstarter AI systems, and ${honors.hackathonWins}× hackathon wins.`,
+      body: "I learn by building — coursework in ML and deep learning, five Headstarter AI systems, and a second-place finish among 23 teams with NestAI.",
     },
     {
       title: "Reliability",
@@ -81,7 +81,7 @@ export const about = {
     },
     {
       title: "Building through curiosity",
-      body: `${honors.hackathonWins}× hackathon winner and ${honors.hackathonParticipations}× participant, plus Dean’s List (${honors.deansList}×) and President’s List (${honors.presidentsList}×).`,
+      body: "NestAI placed second out of 23 teams at the KSU AI Club hackathon by pairing adversarial AI agents with a verification controller.",
       icon: "sparkles" as const,
     },
     {

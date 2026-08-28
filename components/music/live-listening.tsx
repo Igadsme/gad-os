@@ -45,13 +45,17 @@ export function LiveListeningCard({ compact = false }: { compact?: boolean }) {
 
     load();
     const presenceTimer = window.setInterval(load, 15_000);
-    const progressTimer = window.setInterval(() => setNow(Date.now()), 1_000);
     return () => {
       cancelled = true;
       window.clearInterval(presenceTimer);
-      window.clearInterval(progressTimer);
     };
   }, []);
+
+  useEffect(() => {
+    if (!presence?.live || !presence.track) return;
+    const progressTimer = window.setInterval(() => setNow(Date.now()), 1_000);
+    return () => window.clearInterval(progressTimer);
+  }, [presence?.live, presence?.track]);
 
   if (!presence) {
     return (
@@ -71,23 +75,41 @@ export function LiveListeningCard({ compact = false }: { compact?: boolean }) {
 
   const track = presence.track;
   if (!presence.live || !track) {
+    if (compact) {
+      return (
+        <Card className="p-3">
+          <div className="flex items-center gap-3">
+            <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-primary-soft text-primary">
+              <Headphones className="size-4" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="text-sm font-semibold">Build soundtrack</p>
+              <p className="mt-0.5 text-xs text-muted">A curated focus playlist.</p>
+            </div>
+          </div>
+          <Link href="/music" className="mt-2 inline-flex min-h-11 items-center text-sm font-medium text-primary hover:underline">
+            Open playlist
+          </Link>
+        </Card>
+      );
+    }
     return (
       <Card className={cn(compact ? "p-3" : "p-5")}>
         <div className="flex items-center justify-between gap-3">
           <p className="text-sm font-semibold">Now Playing</p>
-          <span className="text-[11px] text-muted">Offline</span>
+          <span className="text-[11px] text-muted">Playlist fallback</span>
         </div>
         <div className="mt-4 flex items-center gap-3">
           <span className="grid size-14 shrink-0 place-items-center rounded-xl bg-surface-muted text-muted">
             <Headphones className="size-5" />
           </span>
           <div>
-            <p className="text-sm font-medium">Nothing playing right now</p>
-            <p className="mt-1 text-xs text-muted">The live card updates automatically.</p>
+            <p className="text-sm font-medium">Live listening is optional</p>
+            <p className="mt-1 text-xs text-muted">The curated playlist is always available.</p>
           </div>
         </div>
         <Link href="/music" className="mt-3 inline-flex min-h-11 items-center text-sm font-medium text-primary hover:underline">
-          Play midnight.exe
+          Open the soundtrack
         </Link>
       </Card>
     );

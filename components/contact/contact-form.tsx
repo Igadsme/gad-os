@@ -21,8 +21,8 @@ import { profile } from "@/data/profile";
 
 const subjects: ContactInput["subject"][] = [
   "Software engineering role",
-  "AI/ML role",
-  "Cybersecurity role",
+  "Applied AI role",
+  "Security engineering role",
   "Project collaboration",
   "Something else",
 ];
@@ -128,10 +128,10 @@ export function ContactForm() {
         <Card className="p-4">
           <h2 className="font-display text-base font-semibold">Availability</h2>
           <Badge tone="green" className="mt-2">Available for roles</Badge>
-          <p className="mt-2 flex items-center gap-1.5 text-[10px] text-muted">
+          <p className="mt-2 flex min-h-4 items-center gap-1.5 text-[10px] text-muted" role="status" aria-live="polite">
             <span className={`size-1.5 rounded-full ${calendarStatus === "connected" ? "bg-success" : calendarStatus === "error" ? "bg-danger" : "bg-slate-300"}`} />
             {calendarStatus === "connected" && "Synced with Outlook"}
-            {calendarStatus === "loading" && "Checking Outlook…"}
+            {calendarStatus === "loading" && <span className="inline-block h-2.5 w-24 animate-pulse rounded bg-surface-muted" aria-label="Checking Outlook availability" />}
             {calendarStatus === "disconnected" && "Outlook connection needed"}
             {calendarStatus === "error" && "Outlook is temporarily unavailable"}
           </p>
@@ -197,10 +197,10 @@ export function ContactForm() {
           <h2 className="font-display text-lg font-semibold">Send a Message</h2>
           <form className="mt-5 space-y-4" noValidate onSubmit={form.handleSubmit(onSubmit)}>
             <Field label="Name" htmlFor="contact-name" error={form.formState.errors.name?.message}>
-              <Input id="contact-name" placeholder="Your full name" {...form.register("name")} />
+              <Input id="contact-name" placeholder="Your full name" aria-invalid={Boolean(form.formState.errors.name)} aria-describedby={form.formState.errors.name ? "contact-name-error" : undefined} {...form.register("name")} />
             </Field>
             <Field label="Email" htmlFor="contact-email" error={form.formState.errors.email?.message}>
-              <Input id="contact-email" placeholder="your.email@example.com" type="email" {...form.register("email")} />
+              <Input id="contact-email" placeholder="your.email@example.com" type="email" aria-invalid={Boolean(form.formState.errors.email)} aria-describedby={form.formState.errors.email ? "contact-email-error" : undefined} {...form.register("email")} />
             </Field>
             <Field label="Company (optional)" htmlFor="contact-company">
               <Input id="contact-company" placeholder="Company or organization" {...form.register("company")} />
@@ -208,6 +208,8 @@ export function ContactForm() {
             <Field label="Subject" htmlFor="contact-subject" error={form.formState.errors.subject?.message}>
               <select
                 id="contact-subject"
+                aria-invalid={Boolean(form.formState.errors.subject)}
+                aria-describedby={form.formState.errors.subject ? "contact-subject-error" : undefined}
                 className="h-11 w-full rounded-lg border border-border bg-surface px-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 {...form.register("subject")}
               >
@@ -215,7 +217,7 @@ export function ContactForm() {
               </select>
             </Field>
             <Field label="Message" htmlFor="contact-message" error={form.formState.errors.message?.message}>
-              <Textarea id="contact-message" className="min-h-36" placeholder="Tell me about the opportunity or project…" {...form.register("message")} />
+              <Textarea id="contact-message" className="min-h-36" placeholder="Tell me about the opportunity or project…" aria-invalid={Boolean(form.formState.errors.message)} aria-describedby={form.formState.errors.message ? "contact-message-error" : undefined} {...form.register("message")} />
             </Field>
             <Button type="submit" className="w-full bg-primary hover:bg-primary/90" disabled={form.formState.isSubmitting}>
               <Send /> {form.formState.isSubmitting ? "Sending…" : "Send Message"}
@@ -249,7 +251,7 @@ function Field({ label, htmlFor, error, children }: { label: string; htmlFor: st
     <div className="space-y-1.5">
       <Label htmlFor={htmlFor}>{label}</Label>
       {children}
-      {error ? <p className="text-xs text-danger">{error}</p> : null}
+      {error ? <p id={`${htmlFor}-error`} role="alert" className="text-xs text-danger">{error}</p> : null}
     </div>
   );
 }

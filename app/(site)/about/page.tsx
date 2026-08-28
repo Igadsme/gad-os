@@ -7,8 +7,13 @@ import { organizations, profile } from "@/data/profile";
 import { Button } from "@/components/ui/button";
 import { Badge, Card } from "@/components/ui/card";
 import { PageContainer, PageHeader } from "@/components/layout/page-header";
+import { RecruiterCta } from "@/components/shared/recruiter-cta";
 
-export const metadata = { title: "About" };
+export const metadata = {
+  title: "About",
+  description: "About Imani Gad, a Kennesaw State University computer science candidate and software engineer in Atlanta.",
+  alternates: { canonical: "/about" },
+};
 
 export default function AboutPage() {
   return (
@@ -124,6 +129,7 @@ export default function AboutPage() {
           ))}
         </div>
       </section>
+      <RecruiterCta className="mt-8" />
     </PageContainer>
   );
 }

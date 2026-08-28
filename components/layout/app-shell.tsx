@@ -14,12 +14,18 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <TooltipProvider>
       <div className="personality-grid min-h-dvh bg-background">
+        <a
+          href="#main-content"
+          className="fixed left-4 top-4 z-[100] -translate-y-24 rounded-lg bg-foreground px-4 py-2 text-sm font-semibold text-background shadow-lg transition-transform focus:translate-y-0"
+        >
+          Skip to main content
+        </a>
         <div className="flex min-h-dvh">
           <Sidebar />
           <div className="flex min-w-0 flex-1 flex-col">
             <MobileNav />
             <CommandBar onSearch={() => setSearchOpen(true)} />
-            <main className="flex-1 px-4 pb-24 pt-6 md:px-7 md:pb-8 md:pt-8">
+            <main id="main-content" tabIndex={-1} className="flex-1 px-4 pb-24 pt-6 outline-none md:px-7 md:pb-8 md:pt-8">
               <PageMotion>{children}</PageMotion>
             </main>
           </div>

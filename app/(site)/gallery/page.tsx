@@ -2,7 +2,7 @@ import { galleryCategories, type GalleryCategory } from "@/data/gallery";
 import { PageContainer, PageHeader } from "@/components/layout/page-header";
 import { GalleryExplorer } from "@/components/gallery/gallery-explorer";
 
-export const metadata = { title: "Gallery" };
+export const metadata = { title: "Gallery", description: "Original photography and life outside code by Imani Gad.", alternates: { canonical: "/gallery" } };
 
 export default async function GalleryPage({
   searchParams,

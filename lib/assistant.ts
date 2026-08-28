@@ -35,10 +35,10 @@ LinkedIn: ${profile.linkedin}
 GitHub: ${profile.github}
 Education: ${profile.education.status}, ${profile.education.school}, ${profile.education.location}, ${profile.education.start} – ${profile.education.end}
 Coursework: ${profile.education.coursework.join(", ")}
-Availability: ${profile.availability}
+Availability: ${profile.availabilityFull}
 
 HONORS
-${honors.hackathonWins}x hackathon winner, ${honors.hackathonParticipations}x participant
+NestAI placed second out of 23 teams at the KSU AI Club hackathon
 Dean's List ${honors.deansList}x, President's List ${honors.presidentsList}x
 Organizations: ${organizations.join(", ")}
 
@@ -59,7 +59,7 @@ const FACT_SNIPPETS = [
   ]),
   ...projects.flatMap((project) => [project.summary, ...project.bullets]),
   `${profile.education.school} ${profile.education.degree} ${profile.education.end}`,
-  `Hackathon winner ${honors.hackathonWins} participant ${honors.hackathonParticipations}`,
+  "NestAI placed second out of 23 teams at the KSU AI Club hackathon",
 ];
 
 export function groundedFallbackAnswer(question: string) {
@@ -108,8 +108,8 @@ export function groundedFallbackAnswer(question: string) {
   if (/ai|ml|rag|pinecone|gemini|yolo|camera/.test(q)) {
     return {
       answer:
-        "AI/ML evidence on the résumé:\n\n• Headstarter AI (Jul 2025 – Sep 2025): 5 AI projects with Pinecone, Gemini API, embeddings, and RAG; features supporting 500+ users.\n• AI Security Camera Investigator (Jun 2026 – Jul 2026): YOLOv8 + FastAPI detection/tracking and embedding search over CCTV metadata.\n• DevDash: OpenAI API summarization and task prioritization, reducing manual reporting time by 80%.\n• Coursework: Machine Learning, Deep Learning.",
-      sources: ["Headstarter experience", "AI Security Camera Investigator", "DevDash", "Résumé"],
+        "Applied AI evidence on the résumé:\n\n• Headstarter AI (Jul 2025 – Sep 2025): 5 AI projects with Pinecone, Gemini API, embeddings, and RAG; features supporting 500+ users.\n• VeriSight — AI Security Camera Investigator (Jun 2026 – Jul 2026): YOLOv8 + FastAPI detection/tracking and embedding search over CCTV metadata.\n• DevDash: OpenAI API summarization and task prioritization, reducing manual reporting time by 80%.\n• Coursework: Machine Learning, Deep Learning.",
+      sources: ["Headstarter experience", "VeriSight case study", "DevDash", "Résumé"],
     };
   }
 

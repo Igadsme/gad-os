@@ -3,6 +3,7 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 import type { Project } from "@/data/projects";
 import { Badge, Card } from "@/components/ui/card";
 import { ProjectVisual } from "@/components/projects/project-visual";
+import { StatusPill, statusTone } from "@/components/ui/status-pill";
 import { cn } from "@/lib/utils";
 
 const cardSubtitles: Record<string, string> = {
@@ -30,17 +31,18 @@ export function ProjectCard({
         className={compact ? "aspect-[1.08/1] w-full border-b border-border" : "aspect-[1.12/1] w-full border-b border-border"}
       />
       <div className="flex flex-1 flex-col bg-surface px-[15px] py-[17px]">
-        <h3 className="font-display text-[18px] font-semibold leading-6 tracking-[-0.02em]">
-          {project.title}
-        </h3>
+        <div className="flex flex-wrap items-start justify-between gap-2">
+          <h3 className="font-display text-[18px] font-semibold leading-6 tracking-[-0.02em]">
+            {project.title}
+          </h3>
+          <StatusPill tone={statusTone(project.status)} className="shrink-0">{project.status}</StatusPill>
+        </div>
         <p className="mt-0.5 text-[13px] text-muted">
           {cardSubtitles[project.slug] ?? project.category}
         </p>
-        {compact ? (
-          <p className="mt-3 line-clamp-3 text-[12px] leading-5 text-muted">
-            {project.summary}
-          </p>
-        ) : null}
+        <p className={cn("mt-3 text-[12px] leading-5 text-muted", compact ? "line-clamp-3" : "line-clamp-2")}>
+          {project.summary}
+        </p>
         <div className="mt-4 flex flex-wrap gap-2">
           {project.technologies.slice(0, 4).map((tech) => (
             <Badge
@@ -70,11 +72,12 @@ export function ProjectListRow({ project }: { project: Project }) {
         />
       </div>
       <div className="flex flex-1 flex-col px-[18px] py-4">
-        <div className="flex items-start justify-between gap-2">
-          <div>
+        <div className="flex flex-wrap items-start justify-between gap-2">
+          <div className="min-w-0">
             <h3 className="text-[15px] font-semibold">{project.title}</h3>
             <p className="text-xs text-muted">{project.category}</p>
           </div>
+          <StatusPill tone={statusTone(project.status)} className="shrink-0">{project.status}</StatusPill>
         </div>
         <p className="mt-2 line-clamp-2 text-sm text-muted">{project.summary}</p>
         <div className="mt-3 flex flex-wrap items-center gap-4 text-sm">
@@ -96,9 +99,7 @@ export function ProjectListRow({ project }: { project: Project }) {
             <a href={project.liveUrl} target="_blank" rel="noreferrer" className="text-muted">
               Live Demo
             </a>
-          ) : (
-            <span className="text-muted/60">Live Demo</span>
-          )}
+          ) : null}
         </div>
       </div>
     </Card>

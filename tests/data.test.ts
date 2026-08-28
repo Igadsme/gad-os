@@ -42,7 +42,7 @@ describe("résumé-backed data", () => {
     expect(featured).toEqual([
       "DevDash",
       "NestAI",
-      "AI Security Camera Investigator",
+      "VeriSight — AI Security Camera Investigator",
     ]);
     expect(new Set(featured).size).toBe(featured.length);
   });

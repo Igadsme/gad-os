@@ -3,7 +3,7 @@ import { LiveListeningCard } from "@/components/music/live-listening";
 import { Card } from "@/components/ui/card";
 import { PageContainer, PageHeader } from "@/components/layout/page-header";
 
-export const metadata = { title: "Music" };
+export const metadata = { title: "Music", description: "The curated soundtrack behind Imani Gad’s build sessions.", alternates: { canonical: "/music" } };
 
 export default function MusicPage() {
   return (

@@ -2,8 +2,13 @@ import { Suspense } from "react";
 import { SkillsExplorer } from "@/components/skills/skills-explorer";
 import { PageContainer, PageHeader } from "@/components/layout/page-header";
 import { Skeleton } from "@/components/ui/skeleton";
+import { RecruiterCta } from "@/components/shared/recruiter-cta";
 
-export const metadata = { title: "Skills" };
+export const metadata = {
+  title: "Skills",
+  description: "Technologies and engineering skills backed by work and project evidence.",
+  alternates: { canonical: "/skills" },
+};
 
 export default function SkillsPage() {
   return (
@@ -15,6 +20,7 @@ export default function SkillsPage() {
       <Suspense fallback={<Skeleton className="h-80" />}>
         <SkillsExplorer />
       </Suspense>
+      <RecruiterCta className="mt-8" />
     </PageContainer>
   );
 }

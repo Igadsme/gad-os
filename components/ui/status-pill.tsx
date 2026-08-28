@@ -45,5 +45,7 @@ export function statusTone(
   if (status === "Prototype") return "prototype";
   if (status === "In Progress") return "progress";
   if (status === "Completed") return "completed";
+  if (status === "Deployed") return "live";
+  if (status === "Private Enterprise Work") return "internal";
   return "study";
 }

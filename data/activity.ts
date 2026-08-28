@@ -16,9 +16,9 @@ export const activity: ActivityItem[] = [
   },
   {
     id: "hackathons",
-    title: "6× hackathon winner",
-    detail: "KSU AI Club member · 12 events",
-    occurred: "Ongoing",
+    title: "2nd of 23 teams",
+    detail: "NestAI · KSU AI Club hackathon",
+    occurred: "May 2025",
     icon: "trophy",
   },
 ];

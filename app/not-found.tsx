@@ -9,9 +9,12 @@ export default function NotFound() {
         <p className="text-sm text-muted">404</p>
         <h1 className="mt-2 text-3xl font-semibold">This page could not be found</h1>
         <p className="mt-2 text-muted">Try Home, Projects, or the command palette.</p>
-        <Button asChild className="mt-6">
-          <Link href="/">Back home</Link>
-        </Button>
+        <div className="mt-6 flex flex-wrap justify-center gap-2">
+          <Button asChild><Link href="/">Back home</Link></Button>
+          <Button asChild variant="secondary"><Link href="/projects">Projects</Link></Button>
+          <Button asChild variant="secondary"><Link href="/resume">Résumé</Link></Button>
+          <Button asChild variant="ghost"><Link href="/contact">Contact</Link></Button>
+        </div>
       </div>
     </AppShell>
   );

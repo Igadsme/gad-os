@@ -35,6 +35,35 @@ export const experienceTypeLabels: Record<ExperienceType, string> = {
 
 export const experience: Experience[] = [
   {
+    id: "shaw",
+    company: "Shaw Industries",
+    role: "Cybersecurity Co-op",
+    type: "co-op",
+    location: "Dalton, GA",
+    locationType: "On-site",
+    start: "January 2026",
+    end: "June 2026",
+    startIso: "2026-01",
+    endIso: "2026-06",
+    summary:
+      "Built Microsoft Sentinel ingestion for non-native telemetry, including a syslog path for Palo Alto firewall logs.",
+    bullets: [
+      "Built log ingestion pipelines in Microsoft Sentinel via DCRs, custom tables, and schemas for non-native telemetry",
+      "Architected a syslog pipeline for Palo Alto firewall logs via CEF forwarding with severity-based filtering",
+      "Validated ingestion accuracy via KQL schema checks and cross-source correlation in Log Analytics",
+    ],
+    technologies: [
+      "Microsoft Sentinel",
+      "KQL",
+      "Azure",
+      "CEF",
+      "Palo Alto",
+      "Log Analytics",
+    ],
+    linkedin: "https://www.linkedin.com/in/igad",
+    color: "#0F766E",
+  },
+  {
     id: "wellstar",
     company: "Wellstar Health System",
     role: "IT Platforms Applications Intern",
@@ -65,35 +94,6 @@ export const experience: Experience[] = [
     ],
     linkedin: "https://www.linkedin.com/in/igad",
     color: "#6D28D9",
-  },
-  {
-    id: "shaw",
-    company: "Shaw Industries",
-    role: "Cybersecurity Co-op",
-    type: "co-op",
-    location: "Dalton, GA",
-    locationType: "On-site",
-    start: "January 2026",
-    end: "June 2026",
-    startIso: "2026-01",
-    endIso: "2026-06",
-    summary:
-      "Built Microsoft Sentinel ingestion for non-native telemetry, including a syslog path for Palo Alto firewall logs.",
-    bullets: [
-      "Built log ingestion pipelines in Microsoft Sentinel via DCRs, custom tables, and schemas for non-native telemetry",
-      "Architected a syslog pipeline for Palo Alto firewall logs via CEF forwarding with severity-based filtering",
-      "Validated ingestion accuracy via KQL schema checks and cross-source correlation in Log Analytics",
-    ],
-    technologies: [
-      "Microsoft Sentinel",
-      "KQL",
-      "Azure",
-      "CEF",
-      "Palo Alto",
-      "Log Analytics",
-    ],
-    linkedin: "https://www.linkedin.com/in/igad",
-    color: "#0F766E",
   },
   {
     id: "headstarter",

@@ -1,10 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, BadgeCheck, FileText, GraduationCap, MapPin } from "lucide-react";
+import { ArrowUpRight, BadgeCheck, FileText, GraduationCap, Mail, MapPin } from "lucide-react";
 import { activity } from "@/data/activity";
 import { gallery } from "@/data/gallery";
 import { profile, stats } from "@/data/profile";
 import { getFeaturedProjects } from "@/data/projects";
+import { experience } from "@/data/experience";
 import { Button } from "@/components/ui/button";
 import { Badge, Card } from "@/components/ui/card";
 import { ProjectCard } from "@/components/projects/project-card";
@@ -46,11 +47,12 @@ export default function HomePage() {
                 <h1 className="font-display text-4xl font-bold leading-none tracking-[-0.04em] sm:text-[42px]">
                   {profile.name}
                 </h1>
-                <p className="mt-2 text-sm font-medium text-muted">{profile.headline}</p>
+                <p className="mt-3 max-w-2xl font-display text-xl font-semibold leading-7 tracking-[-0.02em] sm:text-2xl">{profile.headline}</p>
+                <p className="mt-2 text-sm font-medium text-muted">{profile.supportingLine}</p>
                 <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted">
                   <span className="inline-flex items-center gap-1.5">
                     <GraduationCap className="size-3.5" />
-                    {profile.education.school} · {profile.education.end}
+                    {profile.education.school} · {profile.education.degreeShort} · {profile.education.end}
                   </span>
                   <span className="inline-flex items-center gap-1.5">
                     <MapPin className="size-3.5" />
@@ -67,8 +69,14 @@ export default function HomePage() {
                   </Button>
                   <Button asChild variant="secondary" size="sm">
                     <Link href="/projects">
-                      Explore my work <ArrowUpRight />
+                      Explore Projects <ArrowUpRight />
                     </Link>
+                  </Button>
+                  <Button asChild variant="ghost" size="sm">
+                    <a href={profile.github} target="_blank" rel="noreferrer">GitHub <ArrowUpRight /></a>
+                  </Button>
+                  <Button asChild variant="ghost" size="sm">
+                    <a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn <ArrowUpRight /></a>
                   </Button>
                 </div>
               </div>
@@ -98,6 +106,38 @@ export default function HomePage() {
               ))}
             </div>
           </section>
+
+          <section>
+            <div className="mb-3 flex items-end justify-between">
+              <div>
+                <h2 className="font-display text-xl font-bold">Experience</h2>
+                <p className="mt-1 text-xs text-muted">Recent engineering roles, in reverse chronological order.</p>
+              </div>
+              <Link href="/experience" className="text-sm text-primary hover:underline">Full timeline</Link>
+            </div>
+            <div className="grid overflow-hidden rounded-xl border border-border bg-surface md:grid-cols-3">
+              {experience.slice(0, 3).map((role) => (
+                <Link key={role.id} href={`/experience?role=${role.id}`} className="group min-h-44 border-b border-border p-4 transition-colors hover:bg-surface-muted md:border-b-0 md:border-r md:last:border-r-0">
+                  <p className="text-xs font-medium text-primary">{role.start} – {role.end}</p>
+                  <h3 className="mt-2 font-display text-base font-semibold">{role.company}</h3>
+                  <p className="mt-0.5 text-xs text-muted">{role.role}</p>
+                  <p className="mt-4 line-clamp-3 text-xs leading-5 text-muted">{role.impact?.metric ?? role.summary}</p>
+                  <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-primary">View role <ArrowUpRight className="size-3" /></span>
+                </Link>
+              ))}
+            </div>
+          </section>
+
+          <Card className="flex flex-col gap-4 overflow-hidden border-primary/15 bg-primary-soft/40 p-5 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 className="font-display text-xl font-bold">Let’s build something useful.</h2>
+              <p className="mt-1 max-w-xl text-sm leading-6 text-muted">{profile.availabilityFull}. If your team values thoughtful product engineering, applied AI, and secure systems, I’d like to hear from you.</p>
+            </div>
+            <div className="flex shrink-0 flex-wrap gap-2">
+              <Button asChild size="sm"><a href={`mailto:${profile.email}`}><Mail /> Email</a></Button>
+              <Button asChild variant="secondary" size="sm"><Link href="/resume"><FileText /> Résumé</Link></Button>
+            </div>
+          </Card>
         </div>
 
         <aside className="space-y-4">
@@ -139,7 +179,7 @@ export default function HomePage() {
                       src={item.src}
                       alt={item.alt}
                       fill
-                      loading="eager"
+                      loading="lazy"
                       className="object-cover"
                       sizes="140px"
                     />

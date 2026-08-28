@@ -6,8 +6,8 @@ export const contactSchema = z.object({
   company: z.string().trim().max(80).optional().or(z.literal("")),
   subject: z.enum([
     "Software engineering role",
-    "AI/ML role",
-    "Cybersecurity role",
+    "Applied AI role",
+    "Security engineering role",
     "Project collaboration",
     "Something else",
   ]),

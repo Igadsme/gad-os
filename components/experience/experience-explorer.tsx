@@ -21,7 +21,7 @@ const filterMap: Record<(typeof filters)[number], "all" | ExperienceType> = {
   Teaching: "teaching",
 };
 
-const companyOrder = ["upcancer", "truespice", "wellstar", "headstarter", "shaw", "lutheran"];
+const companyOrder = ["shaw", "wellstar", "headstarter", "truespice", "upcancer", "lutheran"];
 
 const companyLogos: Record<string, string> = {
   upcancer: "/company-logos/upcancer.svg",
@@ -141,6 +141,17 @@ export function ExperienceExplorer() {
               </div>
             </section>
           ) : null}
+
+          <section className="mt-6">
+            <h3 className="text-sm font-semibold">Technologies</h3>
+            <ul className="mt-2 flex flex-wrap gap-2" aria-label={`${selected.company} technologies`}>
+              {selected.technologies.map((technology) => (
+                <li key={technology} className="rounded-md bg-surface-muted px-2.5 py-1 text-xs text-muted">
+                  {technology}
+                </li>
+              ))}
+            </ul>
+          </section>
         </Card>
       </div>
     </div>

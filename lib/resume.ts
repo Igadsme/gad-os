@@ -13,11 +13,11 @@ export const resumeFocusOptions: { id: ResumeFocus; label: string }[] = [
 
 const experienceOrder: Record<ResumeFocus, string[]> = {
   software: [
-    "upcancer",
-    "truespice",
+    "shaw",
     "wellstar",
     "headstarter",
-    "shaw",
+    "truespice",
+    "upcancer",
     "lutheran",
   ],
   ai: [

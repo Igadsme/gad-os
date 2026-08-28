@@ -18,7 +18,7 @@ export function ResumeStudio() {
             <h2 className="font-display text-[26px] font-bold tracking-[-0.035em] text-slate-950">
               {profile.name}
             </h2>
-            <p className="mt-1 font-medium text-slate-600">{profile.headline}</p>
+            <p className="mt-1 font-medium text-slate-600">{profile.supportingLine}</p>
             <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[10px] text-slate-500">
               <span className="inline-flex items-center gap-1">
                 <MapPin className="size-3" /> {profile.location}
