@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { experience } from "@/data/experience";
-import { projects } from "@/data/projects";
+import { getFeaturedProjects, projects } from "@/data/projects";
 import { profile } from "@/data/profile";
 import { skills } from "@/data/skills";
 
@@ -23,12 +23,28 @@ describe("résumé-backed data", () => {
     );
   });
 
-  it("includes the two named résumé projects", () => {
-    expect(projects.some((project) => project.title === "DevDash")).toBe(true);
+  it("includes the five visual projects with their repositories", () => {
     expect(
-      projects.some((project) => project.title === "AI Security Camera Investigator"),
-    ).toBe(true);
-    expect(projects.every((project) => project.slug !== "nestai")).toBe(true);
+      Object.fromEntries(projects.map((project) => [project.slug, project.repoUrl])),
+    ).toMatchObject({
+      devdash: "https://github.com/Igadsme/DevDash",
+      nestai: "https://github.com/Igadsme/nestai_cli_project",
+      "ai-security-camera-investigator":
+        "https://github.com/Igadsme/ai-security-investigator",
+      hiveu: "https://github.com/Igadsme/HIVEU",
+      "ai-recruiter-assistant":
+        "https://github.com/Igadsme/ai-recruiter-assistant",
+    });
+  });
+
+  it("keeps Featured Work in the requested order without duplicates", () => {
+    const featured = getFeaturedProjects().map((project) => project.title);
+    expect(featured).toEqual([
+      "DevDash",
+      "NestAI",
+      "AI Security Camera Investigator",
+    ]);
+    expect(new Set(featured).size).toBe(featured.length);
   });
 
   it("lists Python as a language skill", () => {

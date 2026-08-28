@@ -47,6 +47,9 @@ const projectOrder: Record<ResumeFocus, string[]> = {
     "ai-security-camera-investigator",
     "headstarter-rag",
     "sentinel-ingestion",
+    "nestai",
+    "hiveu",
+    "ai-recruiter-assistant",
   ],
   ai: [
     "ai-security-camera-investigator",
@@ -56,6 +59,9 @@ const projectOrder: Record<ResumeFocus, string[]> = {
     "sentinel-ingestion",
     "servicenow-itsm",
     "truespice-web",
+    "nestai",
+    "hiveu",
+    "ai-recruiter-assistant",
   ],
   cyber: [
     "sentinel-ingestion",
@@ -65,6 +71,9 @@ const projectOrder: Record<ResumeFocus, string[]> = {
     "devdash",
     "headstarter-rag",
     "truespice-web",
+    "nestai",
+    "hiveu",
+    "ai-recruiter-assistant",
   ],
 };
 

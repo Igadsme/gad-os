@@ -43,7 +43,12 @@ export default async function ProjectCaseStudyPage({
       </Link>
       <Card className="overflow-hidden">
         <div className="media-zoom">
-          <ProjectVisual slug={project.slug} className="h-44" />
+          <ProjectVisual
+            slug={project.slug}
+            imageUrl={project.imageUrl}
+            imageAlt={project.imageAlt}
+            className="h-44"
+          />
         </div>
         <div className="space-y-3 px-5 py-5">
           <div className="flex flex-wrap items-center gap-2">
@@ -64,6 +69,18 @@ export default async function ProjectCaseStudyPage({
             <Button asChild size="sm">
               <a href={project.liveUrl} target="_blank" rel="noreferrer">
                 Live Demo
+              </a>
+            </Button>
+          ) : null}
+          {project.repoUrl ? (
+            <Button asChild size="sm" variant="secondary">
+              <a
+                href={project.repoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`View ${project.title} on GitHub (opens in a new tab)`}
+              >
+                View GitHub
               </a>
             </Button>
           ) : null}

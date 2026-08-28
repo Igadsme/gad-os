@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 function Sparkline({ color = "#3b82f6", points = "0,42 18,34 36,38 54,20 72,28 90,8 108,16 126,4" }) {
@@ -110,7 +111,31 @@ function WebPreview() {
 
 const previews: Record<string, () => ReactNode> = { devdash: DevDashPreview, "ai-security-camera-investigator": CameraPreview, "sentinel-ingestion": SentinelPreview, "servicenow-itsm": ItsmPreview, "headstarter-rag": RagPreview, "upcancer-microservices": MicroservicesPreview, "truespice-web": WebPreview };
 
-export function ProjectVisual({ slug, className }: { slug: string; className?: string }) {
+export function ProjectVisual({
+  slug,
+  imageUrl,
+  imageAlt,
+  className,
+}: {
+  slug: string;
+  imageUrl?: string;
+  imageAlt?: string;
+  className?: string;
+}) {
+  if (imageUrl) {
+    return (
+      <div className={cn("relative overflow-hidden bg-[#08111c]", className)}>
+        <Image
+          src={imageUrl}
+          alt={imageAlt ?? `${slug} project dashboard`}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+          className="media-zoom object-cover object-center"
+        />
+      </div>
+    );
+  }
+
   const Preview = previews[slug] ?? DevDashPreview;
   return <div className={cn("relative overflow-hidden", className)} aria-hidden><div className="media-zoom absolute inset-0"><Preview /></div></div>;
 }

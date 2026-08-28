@@ -18,7 +18,7 @@ describe("searchSite", () => {
   });
 
   it("does not expose removed sections", () => {
-    expect(searchSite("assistant")).toEqual([]);
-    expect(searchSite("lab")).toEqual([]);
+    expect(searchSite("assistant").some((item) => item.href === "/ai-assistant")).toBe(false);
+    expect(searchSite("lab").some((item) => item.href === "/lab")).toBe(false);
   });
 });
