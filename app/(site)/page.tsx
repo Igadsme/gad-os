@@ -8,7 +8,7 @@ import { getFeaturedProjects } from "@/data/projects";
 import { Button } from "@/components/ui/button";
 import { Badge, Card } from "@/components/ui/card";
 import { ProjectCard } from "@/components/projects/project-card";
-import { NowPlayingCard } from "@/components/music/now-playing";
+import { SpotifyPlaylistCard } from "@/components/music/spotify-playlist";
 import { ActivityIcon } from "@/components/home/activity-icon";
 import { PageContainer } from "@/components/layout/page-header";
 
@@ -123,7 +123,7 @@ export default function HomePage() {
             </ul>
           </Card>
 
-          <NowPlayingCard compact />
+          <SpotifyPlaylistCard compact />
 
           <Card className="p-4">
             <h2 className="mb-3 text-sm font-semibold">Life Outside Code</h2>
