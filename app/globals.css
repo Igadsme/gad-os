@@ -730,6 +730,7 @@ h3 {
   place-items: center;
   background: var(--background);
   transition: opacity 550ms ease, visibility 550ms ease;
+  animation: site-loader-failsafe 2.2s 1.2s forwards;
 }
 
 .site-loader--done {
@@ -743,6 +744,21 @@ h3 {
   font-family: var(--font-serif), serif;
   font-size: clamp(4rem, 12vw, 9rem);
   font-style: italic;
+}
+
+@keyframes site-loader-failsafe {
+  0% {
+    opacity: 1;
+    visibility: visible;
+  }
+  85% {
+    opacity: 0;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 .site-loader__progress {
