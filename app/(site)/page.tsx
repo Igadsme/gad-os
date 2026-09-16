@@ -85,10 +85,7 @@ export default function HomePage() {
           {featured.map((project, index) => (
             <article key={project.slug} className="editorial-project">
               <div className="editorial-project__number">0{index + 1}</div>
-              <div className="editorial-project__visual editorial-project__visual--empty">
-                <span>{project.category}</span>
-                <strong>{project.status}</strong>
-              </div>
+              <div className="editorial-project__visual" style={project.imageUrl ? { backgroundImage: `url(${project.imageUrl})` } : undefined} />
               <div className="editorial-project__body">
                 <p className="eyebrow">{project.subtitle} · {project.status}</p>
                 <h2>{project.title}</h2>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import type { Project } from "@/data/projects";
 import { Badge, Card } from "@/components/ui/card";
@@ -23,9 +24,8 @@ export function ProjectCard({
 }) {
   return (
     <Card hoverable className="group flex h-full flex-col overflow-hidden rounded-[10px]">
-      <div className="flex aspect-[1.12/1] w-full flex-col justify-between border-b border-border bg-surface-muted p-5">
-        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-violet">{project.category}</span>
-        <span className="font-display text-4xl font-medium uppercase text-muted/50">{project.status}</span>
+      <div className="relative aspect-[1.12/1] w-full overflow-hidden border-b border-border bg-surface-muted">
+        {project.imageUrl ? <Image src={project.imageUrl} alt={project.imageAlt ?? project.title} fill sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw" className="object-cover transition-transform duration-500 group-hover:scale-105" /> : null}
       </div>
       <div className="flex flex-1 flex-col bg-surface px-[15px] py-[17px]">
         <div className="flex flex-wrap items-start justify-between gap-2">
@@ -60,9 +60,8 @@ export function ProjectCard({
 export function ProjectListRow({ project }: { project: Project }) {
   return (
     <Card hoverable className="flex flex-col overflow-hidden md:flex-row">
-      <div className="flex min-h-44 flex-col justify-between bg-surface-muted p-5 md:w-72">
-        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-violet">{project.category}</span>
-        <span className="font-display text-3xl font-medium uppercase text-muted/50">{project.status}</span>
+      <div className="relative min-h-44 overflow-hidden bg-surface-muted md:w-72">
+        {project.imageUrl ? <Image src={project.imageUrl} alt={project.imageAlt ?? project.title} fill sizes="288px" className="object-cover transition-transform duration-500 group-hover:scale-105" /> : null}
       </div>
       <div className="flex flex-1 flex-col px-[18px] py-4">
         <div className="flex flex-wrap items-start justify-between gap-2">

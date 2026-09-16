@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -60,9 +61,8 @@ export default async function ProjectCaseStudyPage({
         <ArrowLeft className="size-4" /> Projects
       </Link>
       <Card className="overflow-hidden">
-        <div className="flex min-h-56 items-end justify-between border-b border-border bg-surface-muted p-6 sm:min-h-72">
-          <span className="font-mono text-xs uppercase tracking-[0.14em] text-violet">{project.category}</span>
-          <span className="font-display text-5xl font-medium uppercase text-muted/40">{project.status}</span>
+        <div className="relative min-h-56 overflow-hidden border-b border-border bg-surface-muted sm:min-h-72">
+          {project.imageUrl ? <Image src={project.imageUrl} alt={project.imageAlt ?? project.title} fill sizes="(min-width: 768px) 900px, 100vw" className="object-cover" /> : null}
         </div>
         <div className="space-y-3 px-5 py-5">
           <div className="flex flex-wrap items-center gap-2">

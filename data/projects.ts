@@ -39,6 +39,8 @@ export type Project = {
   liveUrl?: string;
   liveLabel?: string;
   repoUrl?: string;
+  imageUrl?: string;
+  imageAlt?: string;
   summary: string;
   highlight: string;
   metricContext: string;
@@ -74,6 +76,8 @@ export const projects: Project[] = [
       { label: "reporting", value: "−80%" },
     ],
     repoUrl: "https://github.com/Igadsme/DevDash",
+    imageUrl: "/images/projects/devdash.png",
+    imageAlt: "DevDash engineering health dashboard",
     summary:
       "A privacy-first developer command center that transforms activity from GitHub, GitLab, Bitbucket, CI/CD, and calendar tools into ranked actions, engineering insights, focus estimates, and grounded AI summaries.",
     highlight:
@@ -134,6 +138,8 @@ export const projects: Project[] = [
       { label: "AI agents", value: "3" },
     ],
     repoUrl: "https://github.com/Igadsme/nestai_cli_project",
+    imageUrl: "/images/projects/nestai.png",
+    imageAlt: "NestAI secure code analysis dashboard",
     summary:
       "An award-winning secure-code analysis CLI where adversarial Red and Blue AI agents evaluate software, a controller verifies findings, and the system generates a consolidated security report. Placed second out of 32 teams.",
     highlight:
@@ -196,6 +202,8 @@ export const projects: Project[] = [
       { label: "API routes", value: "20+" },
     ],
     repoUrl: "https://github.com/Igadsme/ai-security-investigator",
+    imageUrl: "/images/projects/verisight.png",
+    imageAlt: "VeriSight AI security camera investigator dashboard",
     summary:
       "A forensic CCTV investigation platform that combines YOLOv8 detection, object tracking, natural-language search, synchronized multi-camera timelines, privacy redaction, and SHA-256 evidence exports.",
     highlight:
