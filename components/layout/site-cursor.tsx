@@ -13,7 +13,7 @@ export function SiteCursor() {
       setPoint({ x: event.clientX, y: event.clientY });
       setVisible(true);
       const target = (event.target as HTMLElement).closest("a, button");
-      setLabel(target?.getAttribute("data-cursor") ?? "");
+      setLabel(target ? target.getAttribute("data-cursor") ?? "Open" : "");
     };
     const leave = () => setVisible(false);
     window.addEventListener("mousemove", move);
