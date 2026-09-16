@@ -7,11 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "",
     "/projects",
     "/experience",
-    "/skills",
-    "/gallery",
-    "/music",
     "/about",
-    "/now",
     "/resume",
     "/contact",
   ];
