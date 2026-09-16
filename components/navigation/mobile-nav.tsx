@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
 import { useState } from "react";
 import { allNav, isActivePath, primaryNav, secondaryNav } from "@/data/navigation";
-import { profile } from "@/data/profile";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
@@ -17,12 +16,9 @@ export function MobileNav() {
 
   return (
     <>
-      <div className="flex min-h-14 items-center justify-between border-b border-border bg-sidebar px-3 py-1 md:hidden">
+      <div className="flex min-h-14 items-center justify-between border-b border-border bg-sidebar px-5 py-1 md:hidden">
         <Link href="/" className="flex items-center gap-2">
-          <span className="brand-mark flex size-8 items-center justify-center rounded-lg text-[11px] font-bold text-white">
-            {profile.initials}
-          </span>
-          <span className="font-display text-sm font-bold">{profile.productName}</span>
+          <span className="font-display text-xl font-extrabold tracking-[0.12em]">IMANI OS</span>
         </Link>
         <button
           type="button"
@@ -43,8 +39,8 @@ export function MobileNav() {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex min-h-11 flex-1 flex-col items-center justify-center gap-1 py-2 text-[10px] font-medium text-muted",
-                active && "text-primary",
+                      "flex min-h-11 flex-1 flex-col items-center justify-center gap-1 py-2 font-mono text-[9px] uppercase text-muted",
+                      active && "text-violet",
               )}
             >
               <Icon className="size-4" />

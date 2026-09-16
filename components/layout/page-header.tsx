@@ -40,13 +40,13 @@ export function PageHeader({
   return (
     <header
       className={cn(
-        "mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between",
+        "mb-10 flex flex-col gap-3 border-b border-border pb-6 sm:flex-row sm:items-end sm:justify-between",
         className,
       )}
     >
       <div className="min-w-0">
         {kicker}
-        <h1 className="font-display text-3xl font-bold leading-tight tracking-[-0.03em] text-foreground sm:text-4xl">
+        <h1 className="font-display text-5xl font-extrabold uppercase leading-[0.9] tracking-[0.02em] text-foreground sm:text-7xl">
           {title}
         </h1>
         {subtitle ? (

@@ -13,14 +13,14 @@ export function CommandBar({
   return (
     <header
       className={cn(
-        "sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border bg-background/95 px-4 backdrop-blur-md md:px-7",
+        "sticky top-0 z-30 flex h-12 items-center justify-end gap-3 border-b border-border bg-sidebar/80 px-4 backdrop-blur-md md:px-6",
         className,
       )}
     >
       <button
         type="button"
         onClick={onSearch}
-        className="group flex h-10 min-w-0 max-w-2xl flex-1 items-center gap-3 rounded-lg border border-border bg-surface px-3 text-left text-sm text-muted transition-colors hover:border-primary/30"
+        className=        "group flex h-8 min-w-0 max-w-[360px] flex-1 items-center gap-3 rounded border border-border bg-surface px-3 text-left text-xs text-muted transition-colors hover:border-primary/30"
       >
         <Search className="size-4 shrink-0" />
         <span className="flex-1 truncate">

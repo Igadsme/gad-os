@@ -1,27 +1,27 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f7f7f5;
-  --foreground: #191919;
-  --surface: #ffffff;
-  --surface-muted: #f0f0ed;
-  --muted: #6b6b66;
-  --border: #dededa;
-  --ring: #3657d6;
-  --primary: #3657d6;
-  --primary-foreground: #ffffff;
-  --primary-soft: #e9ebff;
-  --violet: #8d55e8;
-  --violet-soft: #f1eaff;
-  --success: #16856f;
-  --success-soft: #e4f5ef;
+  --background: #07090b;
+  --foreground: #f2f2ee;
+  --surface: #11151a;
+  --surface-muted: #0d1014;
+  --muted: #9a9ea5;
+  --border: #252a31;
+  --ring: #9b7cff;
+  --primary: #9b7cff;
+  --primary-foreground: #07090b;
+  --primary-soft: rgba(155, 124, 255, 0.12);
+  --violet: #9b7cff;
+  --violet-soft: rgba(155, 124, 255, 0.12);
+  --success: #70c997;
+  --success-soft: rgba(112, 201, 151, 0.12);
   --amber: #d88d23;
   --coral: #f2674f;
   --mint: #28a88a;
   --danger: #dc2626;
-  --sidebar: #f7f7f5;
-  --shadow: 0 1px 2px rgba(24, 24, 22, 0.04);
-  --shadow-hover: 0 4px 14px rgba(24, 24, 22, 0.07);
+  --sidebar: #0d1014;
+  --shadow: 0 12px 40px rgba(0, 0, 0, 0.22);
+  --shadow-hover: 0 30px 60px rgba(0, 0, 0, 0.6);
 }
 
 @theme inline {
@@ -62,8 +62,9 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), sans-serif;
-  font-size: 15px;
-  line-height: 1.5;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
@@ -76,6 +77,12 @@ h3 {
   font-family: var(--font-display), sans-serif;
 }
 
+button,
+a,
+input {
+  font: inherit;
+}
+
 ::selection {
   background: color-mix(in oklab, var(--primary) 24%, transparent);
 }
@@ -84,6 +91,7 @@ h3 {
   background: var(--surface);
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
+  border-radius: 0.5rem;
 }
 
 .card-hoverable {
@@ -158,6 +166,54 @@ h3 {
 .april-glow {
   box-shadow: 0 0 0 4px color-mix(in oklab, var(--violet) 16%, transparent),
     0 0 22px color-mix(in oklab, var(--primary) 28%, transparent);
+}
+
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(37, 42, 49, 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37, 42, 49, 0.3) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+.shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  left: -100%;
+  width: 60%;
+  background: linear-gradient(90deg, transparent, rgba(155, 124, 255, 0.08), transparent);
+  transition: left 0.6s ease;
+}
+
+.shine:hover::after {
+  left: 140%;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #f2f2ee 0%, #9b7cff 50%, #f2f2ee 100%);
+  background-size: 200% auto;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+
+@keyframes shimmer {
+  to { background-position: 200% center; }
 }
 
 @media (prefers-reduced-motion: reduce) {

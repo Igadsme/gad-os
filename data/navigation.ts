@@ -29,6 +29,7 @@ export const primaryNav: NavItem[] = [
 ];
 
 export const secondaryNav: NavItem[] = [
+  { href: "/now", label: "Now / Writing", icon: FileText },
   { href: "/resume", label: "Résumé", icon: FileText, mobilePrimary: true },
   { href: "/contact", label: "Contact", icon: Mail, mobilePrimary: true },
 ];

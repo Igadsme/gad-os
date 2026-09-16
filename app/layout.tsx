@@ -1,22 +1,26 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Geist_Mono, Manrope } from "next/font/google";
+import type { ReactNode } from "react";
+import { Barlow_Condensed, IBM_Plex_Mono, Inter } from "next/font/google";
 import { Toaster } from "sonner";
 import { profile } from "@/data/profile";
 import "./globals.css";
 
-const manrope = Manrope({
+const sans = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
+  weight: ["300", "400", "500", "600", "700"],
 });
 
-const display = Bricolage_Grotesque({
+const display = Barlow_Condensed({
   subsets: ["latin"],
   variable: "--font-display",
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
 });
 
-const mono = Geist_Mono({
+const mono = IBM_Plex_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -49,7 +53,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: LayoutProps<"/">) {
+}: {
+  children: ReactNode;
+}) {
   const personJsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -64,7 +70,7 @@ export default function RootLayout({
     knowsAbout: ["Full-stack engineering", "Applied AI", "Security automation"],
   };
   return (
-    <html lang="en" className={`${manrope.variable} ${display.variable} ${mono.variable} h-full antialiased`}>
+    <html lang="en" className={`${sans.variable} ${display.variable} ${mono.variable} h-full antialiased`}>
       <body className="min-h-full bg-background font-sans text-foreground">
         <script
           type="application/ld+json"
