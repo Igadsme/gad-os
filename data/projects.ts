@@ -39,8 +39,6 @@ export type Project = {
   liveUrl?: string;
   liveLabel?: string;
   repoUrl?: string;
-  imageUrl?: string;
-  imageAlt?: string;
   summary: string;
   highlight: string;
   metricContext: string;
@@ -76,9 +74,6 @@ export const projects: Project[] = [
       { label: "reporting", value: "−80%" },
     ],
     repoUrl: "https://github.com/Igadsme/DevDash",
-    imageUrl: "/images/projects/devdash-project-card.png",
-    imageAlt:
-      "DevDash developer command center showing integrations and an engineering activity timeline",
     summary:
       "A privacy-first developer command center that transforms activity from GitHub, GitLab, Bitbucket, CI/CD, and calendar tools into ranked actions, engineering insights, focus estimates, and grounded AI summaries.",
     highlight:
@@ -139,9 +134,6 @@ export const projects: Project[] = [
       { label: "AI agents", value: "3" },
     ],
     repoUrl: "https://github.com/Igadsme/nestai_cli_project",
-    imageUrl: "/images/projects/nestai-project-card.png",
-    imageAlt:
-      "NestAI secure-code analysis dashboard showing red, blue, and controller agents with a findings summary",
     summary:
       "An award-winning secure-code analysis CLI where adversarial Red and Blue AI agents evaluate software, a controller verifies findings, and the system generates a consolidated security report. Placed second out of 32 teams.",
     highlight:
@@ -204,9 +196,6 @@ export const projects: Project[] = [
       { label: "API routes", value: "20+" },
     ],
     repoUrl: "https://github.com/Igadsme/ai-security-investigator",
-    imageUrl: "/images/projects/verisight-project-card.png",
-    imageAlt:
-      "VeriSight camera investigation dashboard showing synchronized CCTV timelines and chain-of-custody evidence",
     summary:
       "A forensic CCTV investigation platform that combines YOLOv8 detection, object tracking, natural-language search, synchronized multi-camera timelines, privacy redaction, and SHA-256 evidence exports.",
     highlight:
@@ -314,9 +303,6 @@ export const projects: Project[] = [
       { label: "REST routes", value: "10+" },
     ],
     repoUrl: "https://github.com/Igadsme/HIVEU",
-    imageUrl: "/images/projects/hiveu-project-card.png",
-    imageAlt:
-      "HiveU AI StudyMatch dashboard showing course, availability, and study-style matching with a shared group workspace",
     summary:
       "An AI study-partner matching platform that combines courses, availability, and study style to rank compatible peers, then gives each group a shared workspace for chat, files, and tasks.",
     highlight:
@@ -351,9 +337,6 @@ export const projects: Project[] = [
       { label: "CI checks", value: "6" },
     ],
     repoUrl: "https://github.com/Igadsme/ai-recruiter-assistant",
-    imageUrl: "/images/projects/ai-recruiter-assistant-project-card.png",
-    imageAlt:
-      "AI Recruiter Assistant dashboard showing evidence-grounded candidate analysis, verified claims, and job-fit coverage",
     summary:
       "An evidence-grounded recruiting copilot that evaluates candidate fit, verifies résumé claims against source material, and maps strengths to job requirements with transparent coverage scores.",
     highlight:

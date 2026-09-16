@@ -5,7 +5,6 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { getProjectBySlug, projects } from "@/data/projects";
 import { experience } from "@/data/experience";
 import { Badge, Card } from "@/components/ui/card";
-import { ProjectVisual } from "@/components/projects/project-visual";
 import { PageContainer } from "@/components/layout/page-header";
 import { StatusPill, statusTone } from "@/components/ui/status-pill";
 import { Button } from "@/components/ui/button";
@@ -33,13 +32,11 @@ export async function generateMetadata({
       description: project.summary,
       url: canonical,
       type: "article",
-      images: project.imageUrl ? [{ url: project.imageUrl, alt: project.imageAlt ?? project.title }] : undefined,
     },
     twitter: {
       card: "summary_large_image",
       title: `${project.title} — Case Study`,
       description: project.summary,
-      images: project.imageUrl ? [project.imageUrl] : undefined,
     },
   };
 }
@@ -63,13 +60,9 @@ export default async function ProjectCaseStudyPage({
         <ArrowLeft className="size-4" /> Projects
       </Link>
       <Card className="overflow-hidden">
-        <div className="media-zoom">
-          <ProjectVisual
-            slug={project.slug}
-            imageUrl={project.imageUrl}
-            imageAlt={project.imageAlt}
-            className="aspect-[16/9] max-h-[560px] w-full"
-          />
+        <div className="flex min-h-56 items-end justify-between border-b border-border bg-surface-muted p-6 sm:min-h-72">
+          <span className="font-mono text-xs uppercase tracking-[0.14em] text-violet">{project.category}</span>
+          <span className="font-display text-5xl font-medium uppercase text-muted/40">{project.status}</span>
         </div>
         <div className="space-y-3 px-5 py-5">
           <div className="flex flex-wrap items-center gap-2">

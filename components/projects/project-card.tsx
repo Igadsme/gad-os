@@ -2,7 +2,6 @@ import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import type { Project } from "@/data/projects";
 import { Badge, Card } from "@/components/ui/card";
-import { ProjectVisual } from "@/components/projects/project-visual";
 import { StatusPill, statusTone } from "@/components/ui/status-pill";
 import { cn } from "@/lib/utils";
 
@@ -24,12 +23,10 @@ export function ProjectCard({
 }) {
   return (
     <Card hoverable className="group flex h-full flex-col overflow-hidden rounded-[10px]">
-      <ProjectVisual
-        slug={project.slug}
-        imageUrl={project.imageUrl}
-        imageAlt={project.imageAlt}
-        className={compact ? "aspect-[1.08/1] w-full border-b border-border" : "aspect-[1.12/1] w-full border-b border-border"}
-      />
+      <div className="flex aspect-[1.12/1] w-full flex-col justify-between border-b border-border bg-surface-muted p-5">
+        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-violet">{project.category}</span>
+        <span className="font-display text-4xl font-medium uppercase text-muted/50">{project.status}</span>
+      </div>
       <div className="flex flex-1 flex-col bg-surface px-[15px] py-[17px]">
         <div className="flex flex-wrap items-start justify-between gap-2">
           <h3 className="font-display text-[18px] font-semibold leading-6 tracking-[-0.02em]">
@@ -63,13 +60,9 @@ export function ProjectCard({
 export function ProjectListRow({ project }: { project: Project }) {
   return (
     <Card hoverable className="flex flex-col overflow-hidden md:flex-row">
-      <div className="media-zoom relative md:w-72">
-        <ProjectVisual
-          slug={project.slug}
-          imageUrl={project.imageUrl}
-          imageAlt={project.imageAlt}
-          className="aspect-[1.12/1] w-full md:h-full md:aspect-auto"
-        />
+      <div className="flex min-h-44 flex-col justify-between bg-surface-muted p-5 md:w-72">
+        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-violet">{project.category}</span>
+        <span className="font-display text-3xl font-medium uppercase text-muted/50">{project.status}</span>
       </div>
       <div className="flex flex-1 flex-col px-[18px] py-4">
         <div className="flex flex-wrap items-start justify-between gap-2">
