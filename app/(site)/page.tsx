@@ -12,11 +12,11 @@ export default function HomePage() {
   return (
     <PageContainer width="wide">
       <section className="grid-bg relative -mx-4 overflow-hidden border-b border-border px-4 py-20 md:-mx-0 md:px-12 md:py-28">
-        <div className="pointer-events-none absolute -right-24 -top-24 size-[360px] rounded-full bg-violet/10 blur-[80px]" />
+        <div className="aurora -right-24 -top-24" />
         <div className="relative z-10 max-w-3xl">
           <p className="mb-6 font-mono text-[11px] tracking-[0.2em] text-violet">{"// SOFTWARE ENGINEER · ATLANTA, GA"}</p>
-          <h1 className="font-display text-[clamp(72px,12vw,150px)] font-black uppercase leading-[0.82] tracking-tight">
-            Imani<br /><span className="gradient-text">Gad</span>
+          <h1 className="font-display text-[clamp(64px,12vw,150px)] font-black uppercase leading-[0.82] tracking-tight">
+            Imani <span className="font-serif font-normal normal-case italic text-violet">Gad</span>
           </h1>
           <h2 className="mt-8 max-w-2xl font-display text-2xl font-semibold uppercase leading-tight tracking-[0.04em] text-muted sm:text-3xl">
             {profile.headline}

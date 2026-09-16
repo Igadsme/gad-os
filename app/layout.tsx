@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { Barlow_Condensed, IBM_Plex_Mono, Inter } from "next/font/google";
+import { Instrument_Serif, JetBrains_Mono, Inter, Space_Grotesk } from "next/font/google";
 import { Toaster } from "sonner";
 import { profile } from "@/data/profile";
 import "./globals.css";
@@ -11,16 +11,23 @@ const sans = Inter({
   weight: ["300", "400", "500", "600", "700"],
 });
 
-const display = Barlow_Condensed({
+const display = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-display",
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
-const mono = IBM_Plex_Mono({
+const mono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
   weight: ["300", "400", "500", "600", "700"],
+});
+
+const serif = Instrument_Serif({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  weight: "400",
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
@@ -70,7 +77,7 @@ export default function RootLayout({
     knowsAbout: ["Full-stack engineering", "Applied AI", "Security automation"],
   };
   return (
-    <html lang="en" className={`${sans.variable} ${display.variable} ${mono.variable} h-full antialiased`}>
+    <html lang="en" className={`${sans.variable} ${display.variable} ${mono.variable} ${serif.variable} h-full antialiased`}>
       <body className="min-h-full bg-background font-sans text-foreground">
         <script
           type="application/ld+json"
