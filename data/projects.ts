@@ -135,7 +135,7 @@ export const projects: Project[] = [
     featured: true,
     status: "Completed",
     visualMetrics: [
-      { label: "hackathon rank", value: "2nd/23" },
+      { label: "hackathon rank", value: "2nd/32" },
       { label: "AI agents", value: "3" },
     ],
     repoUrl: "https://github.com/Igadsme/nestai_cli_project",
@@ -143,21 +143,21 @@ export const projects: Project[] = [
     imageAlt:
       "NestAI secure-code analysis dashboard showing red, blue, and controller agents with a findings summary",
     summary:
-      "An award-winning secure-code analysis CLI where adversarial Red and Blue AI agents evaluate software, a controller verifies findings, and the system generates a consolidated security report. Placed second out of 23 teams.",
+      "An award-winning secure-code analysis CLI where adversarial Red and Blue AI agents evaluate software, a controller verifies findings, and the system generates a consolidated security report. Placed second out of 32 teams.",
     highlight:
-      "Placed second out of 23 teams with a three-agent adversarial security workflow.",
+      "Placed second out of 32 teams with a three-agent adversarial security workflow.",
     metricContext:
-      "Competition result from the KSU AI Club hackathon: second place among 23 participating teams.",
+      "Competition result from the KSU AI Club hackathon: second place among 32 participating teams.",
     problem:
       "Security reviews often produce disconnected findings without a consistent way to challenge, verify, and prioritize them.",
     approach:
       "Built Red and Blue analysis agents plus a controller that correlates evidence, verifies findings, and produces a consolidated HTML report.",
     outcome:
-      "The multi-agent CLI placed second out of 23 teams and generated one prioritized report from adversarial analysis.",
+      "The multi-agent CLI placed second out of 32 teams and generated one prioritized report from adversarial analysis.",
     bullets: [
       "Orchestrated three specialized AI agents for offensive analysis, defensive review, and finding verification",
       "Generated consolidated HTML security reports with severity-ranked findings and risk scoring",
-      "Placed second out of 23 teams in the KSU AI Club hackathon",
+      "Placed second out of 32 teams in the KSU AI Club hackathon",
     ],
     technologies: [
       "Python",
@@ -182,7 +182,7 @@ export const projects: Project[] = [
       challenge:
         "Multiple agents can repeat, contradict, or overstate findings unless evidence is normalized before prioritization.",
       results: [
-        "Placed second out of 23 teams in the KSU AI Club hackathon.",
+        "Placed second out of 32 teams in the KSU AI Club hackathon.",
         "Deployed three specialized agents and generated one consolidated report per analysis run.",
       ],
       testing: ["Agent-output schema checks", "Finding deduplication review", "Report generation checks"],

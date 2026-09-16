@@ -38,7 +38,7 @@ Coursework: ${profile.education.coursework.join(", ")}
 Availability: ${profile.availabilityFull}
 
 HONORS
-NestAI placed second out of 23 teams at the KSU AI Club hackathon
+NestAI placed second out of 32 teams at the KSU AI Club hackathon
 Dean's List ${honors.deansList}x, President's List ${honors.presidentsList}x
 Organizations: ${organizations.join(", ")}
 
@@ -59,7 +59,7 @@ const FACT_SNIPPETS = [
   ]),
   ...projects.flatMap((project) => [project.summary, ...project.bullets]),
   `${profile.education.school} ${profile.education.degree} ${profile.education.end}`,
-  "NestAI placed second out of 23 teams at the KSU AI Club hackathon",
+  "NestAI placed second out of 32 teams at the KSU AI Club hackathon",
 ];
 
 export function groundedFallbackAnswer(question: string) {

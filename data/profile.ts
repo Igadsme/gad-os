@@ -5,7 +5,7 @@ export const profile = {
   headline: "Software Engineer building AI-powered products and secure backend systems.",
   supportingLine: "Full-stack engineering · Applied AI · Security automation",
   headlineParts: ["Full-stack engineering", "Applied AI", "Security automation"] as const,
-  email: "gad.imani@yahoo.com",
+  email: "gadimani@outlook.com",
   phone: "(404) 932-1821",
   location: "Atlanta, GA",
   locationFull: "Atlanta, GA, USA",
@@ -25,8 +25,8 @@ export const profile = {
   education: {
     school: "Kennesaw State University",
     schoolShort: "KSU",
-    degree: "Bachelor of Science in Computer Science",
-    degreeShort: "B.S. Computer Science",
+    degree: "Bachelor of Science in Computer Science; Minor in Mathematics",
+    degreeShort: "B.S. Computer Science · Minor in Mathematics",
     status: "Candidate for Bachelor of Science in Computer Science",
     location: "Kennesaw, GA",
     start: "August 2022",
@@ -34,11 +34,11 @@ export const profile = {
     startIso: "2022-08",
     endIso: "2026-12",
     coursework: [
-      "Data Structures",
+      "Algorithm Analysis",
       "Operating Systems",
       "Machine Learning",
-      "Algorithm Analysis",
       "Deep Learning",
+      "Data Structures",
     ],
   },
   avatar: "/images/profile.jpg",
@@ -49,9 +49,9 @@ export const profile = {
 
 export const honors = {
   hackathonWins: 6,
-  hackathonParticipations: 12,
+  hackathonParticipations: 13,
   deansList: 3,
-  presidentsList: 1,
+  presidentsList: 2,
 } as const;
 
 export const organizations = [
@@ -59,6 +59,22 @@ export const organizations = [
   "SHPE",
   "KSU AI Club",
   "KSU ColorStack",
+] as const;
+
+export const leadership: readonly {
+  title: string;
+  detail: string;
+  period?: string;
+}[] = [
+  {
+    title: "ANDY 8 Project Coordinator",
+    detail: "Lead planning and delivery for an autonomous drone system.",
+    period: "August 2026 – Present",
+  },
+  {
+    title: "Peer Mentor, Mission Bit",
+    detail: "Guided 15 high school students through coding projects and computer science fundamentals.",
+  },
 ] as const;
 
 export const stats = [
@@ -74,8 +90,8 @@ export const stats = [
   },
   {
     label: "KSU AI Club hackathon",
-    value: "2nd/23",
-    detail: "NestAI placed second out of 23 teams",
+    value: "2nd/32",
+    detail: "NestAI placed second out of 32 teams",
   },
   {
     label: "B.S. Computer Science",
