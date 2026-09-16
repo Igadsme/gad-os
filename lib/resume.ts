@@ -102,8 +102,10 @@ export function getResumeModel(options: ResumeOptions) {
   const skillGroups = [
     "Languages",
     "Frameworks/Libraries",
-    "Cloud/Infrastructure",
+    "Cloud/DevOps",
+    "Databases",
     "AI/ML",
+    "AI/ML & Security",
     "Tools",
   ].map((group) => ({
     group,

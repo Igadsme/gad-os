@@ -6,7 +6,7 @@ import { skills } from "@/data/skills";
 
 describe("résumé-backed data", () => {
   it("uses the résumé email and school", () => {
-    expect(profile.email).toBe("gad.imani@yahoo.com");
+    expect(profile.email).toBe("gadimani@outlook.com");
     expect(profile.education.school).toBe("Kennesaw State University");
   });
 

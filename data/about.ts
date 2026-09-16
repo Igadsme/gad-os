@@ -13,7 +13,7 @@ export const about = {
     },
     {
       title: "Teaching and mentorship",
-      body: "Mentored 25 students in Python at Lutheran Service School in Clarkston, GA, using projects to build problem-solving and independent coding skills.",
+      body: "Taught Python basics to 25+ students at Lutheran Service School in Clarkston, GA through project-based lessons adapted for learners with limited English fluency.",
     },
     {
       title: "Engineering approach",
@@ -54,7 +54,7 @@ export const about = {
   values: [
     {
       title: "Curiosity",
-      body: "I learn by building — coursework in ML and deep learning, five Headstarter AI systems, and a second-place finish among 23 teams with NestAI.",
+      body: "I learn by building — coursework in ML and deep learning, five Headstarter AI systems, and a second-place finish among 32 teams with NestAI.",
     },
     {
       title: "Reliability",
@@ -76,12 +76,12 @@ export const about = {
   highlights: [
     {
       title: "Teaching and mentorship",
-      body: "Mentored 25 students in Python as a coding instructor at Lutheran Service School, including learners with limited English.",
+      body: "Taught Python basics to 25+ students as a coding instructor at Lutheran Service School, including learners with limited English fluency.",
       icon: "graduation" as const,
     },
     {
       title: "Building through curiosity",
-      body: "NestAI placed second out of 23 teams at the KSU AI Club hackathon by pairing adversarial AI agents with a verification controller.",
+      body: "NestAI placed second out of 32 teams at the KSU AI Club hackathon by pairing adversarial AI agents with a verification controller.",
       icon: "sparkles" as const,
     },
     {

@@ -66,7 +66,7 @@ export const experience: Experience[] = [
   {
     id: "wellstar",
     company: "Wellstar Health System",
-    role: "IT Platforms Applications Intern",
+    role: "Platform Applications Intern",
     type: "internship",
     location: "Marietta, GA",
     locationType: "On-site",
@@ -77,14 +77,14 @@ export const experience: Experience[] = [
     summary:
       "Automated enterprise ITSM work on ServiceNow so platform teams could move tickets through intake and resolution with less manual glue.",
     bullets: [
-      "Developed ServiceNow workflows using JS, server-side business rules, and Script Includes for enterprise automation",
-      "Built REST APIs via ServiceNow Integration Hub to enable interoperability across enterprise platforms",
-      "Automated ITSM workflows, cutting resolution backlog from 80% to 20% across 200-300 tickets",
+      "Developed ServiceNow workflows using JavaScript, Business Rules, and Script Includes to automate IT operations",
+      "Built REST API integrations with ServiceNow Integration Hub, enabling data exchange across enterprise platforms",
+      "Automated ITSM workflows supporting 200–600 tickets and reduced the unresolved backlog rate from 80% to 20%",
     ],
     impact: {
       metric: "Backlog reduced 80% → 20%",
       explanation:
-        "Automated ITSM workflows across 200–300 tickets using ServiceNow business rules, Script Includes, and Integration Hub REST APIs.",
+        "Automated ITSM workflows supporting 200–600 tickets using ServiceNow Business Rules, Script Includes, and Integration Hub REST APIs.",
     },
     technologies: [
       "JavaScript",
@@ -109,8 +109,8 @@ export const experience: Experience[] = [
     summary:
       "Shipped AI retrieval systems with Pinecone, Gemini, embeddings, and RAG while learning from live user data.",
     bullets: [
-      "Built 5 AI projects using Pinecone, Gemini API, embeddings, and RAG API for semantic search and retrieval",
-      "Analyzed user and project data to optimize AI features, supporting 500+ users and reach",
+      "Built five AI applications using Pinecone, Gemini API, vector embeddings, and RAG for semantic retrieval",
+      "Analyzed application and user data to improve AI features supporting 500+ users",
     ],
     impact: {
       metric: "500+ users reached",
@@ -141,9 +141,9 @@ export const experience: Experience[] = [
     summary:
       "Refactored a production marketing site for responsiveness, performance, and accessibility.",
     bullets: [
-      "Refactored website using React and CSS media queries, improving cross-device responsiveness",
-      "Optimized performance via semantic HTML and lazy loading, reducing load time by 30%",
-      "Audited and resolved accessibility issues across key pages to improve usability for a broader user base",
+      "Refactored responsive interfaces using React, semantic HTML, and CSS media queries across desktop and mobile devices",
+      "Implemented lazy loading and front-end optimizations, reducing page-load time by 30%",
+      "Resolved accessibility issues involving semantic structure, navigation, and keyboard usability across key pages",
     ],
     impact: {
       metric: "Load time reduced 30%",
@@ -200,8 +200,7 @@ export const experience: Experience[] = [
     summary:
       "Taught Python to students building first projects, including learners with limited English.",
     bullets: [
-      "Mentored 25 students in Python with projects, building creativity, problem-solving, and coding skills",
-      "Guided students with limited English in Python projects, teaching coding basics and independent skills",
+      "Taught Python basics to 25+ students through project-based lessons adapted for learners with limited English fluency",
     ],
     impact: {
       metric: "25 students mentored",

@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { defaultResumeOptions, getResumeModel } from "@/lib/resume";
-import { profile } from "@/data/profile";
+import { leadership, profile } from "@/data/profile";
 
 const model = getResumeModel(defaultResumeOptions);
 
@@ -88,6 +88,17 @@ export function ResumeStudio() {
                 <p key={group.group}>
                   <span className="font-bold text-slate-900">{group.group}: </span>
                   {group.items.join(", ")}
+                </p>
+              ))}
+            </div>
+          </ResumeSection>
+
+          <ResumeSection title="Leadership & Activities">
+            <div className="space-y-1.5">
+              {leadership.map((item) => (
+                <p key={item.title}>
+                  <span className="font-bold text-slate-900">{item.title}</span>
+                  {item.period ? ` · ${item.period}` : ""}: {item.detail}
                 </p>
               ))}
             </div>
