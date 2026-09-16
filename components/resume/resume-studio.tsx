@@ -110,7 +110,7 @@ export function ResumeStudio() {
         <h2 className="mb-3 font-display text-base font-semibold">Actions</h2>
         <Button asChild className="w-full bg-primary hover:bg-primary/90">
           <a href={profile.resumePdf} download>
-            <Download /> Download PDF
+            <Download /> Download Résumé PDF
           </a>
         </Button>
         <Button

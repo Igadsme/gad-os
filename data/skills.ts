@@ -25,6 +25,50 @@ export const skillCategories: SkillCategory[] = [
   "Tools",
 ];
 
+export type SkillFocusGroup = {
+  id: string;
+  label: string;
+  skillIds: string[];
+};
+
+export const skillFocusGroups: SkillFocusGroup[] = [
+  {
+    id: "core-languages",
+    label: "Core Languages",
+    skillIds: ["python", "typescript", "javascript", "sql", "java", "cpp", "csharp"],
+  },
+  {
+    id: "backend-apis",
+    label: "Backend & APIs",
+    skillIds: ["fastapi", "flask", "nodejs", "rest-api", "postgresql", "redis"],
+  },
+  {
+    id: "frontend",
+    label: "Frontend",
+    skillIds: ["nextjs", "react", "html", "css", "typescript", "javascript"],
+  },
+  {
+    id: "ai-ml",
+    label: "AI/ML",
+    skillIds: ["pytorch", "tensorflow", "numpy", "pandas", "rag", "embeddings", "yolov8", "gemini-api", "openai-api", "pinecone"],
+  },
+  {
+    id: "cloud-security",
+    label: "Cloud, DevOps & Security",
+    skillIds: ["azure", "aws", "docker", "sentinel", "kql", "cef", "log-analytics", "servicenow", "integration-hub"],
+  },
+  {
+    id: "databases",
+    label: "Databases",
+    skillIds: ["postgresql", "redis", "mongodb", "mysql", "prisma"],
+  },
+  {
+    id: "testing-tools",
+    label: "Testing & Tools",
+    skillIds: ["git", "github", "jira", "jenkins", "cypress", "cucumber", "tableau"],
+  },
+];
+
 export const skills: Skill[] = [
   { id: "python", name: "Python", category: "Languages", résuméGroup: "Languages" },
   { id: "typescript", name: "TypeScript", category: "Languages", résuméGroup: "Languages" },

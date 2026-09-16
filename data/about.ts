@@ -1,7 +1,7 @@
 import { organizations, profile } from "./profile";
 
 export const about = {
-  bio: "Software engineer, builder, and Computer Science candidate at Kennesaw State University (December 2026). I work across software engineering, AI/ML, and cybersecurity — shipping systems that hold up in production, from Next.js products to Sentinel pipelines.",
+  bio: "I’m a first-generation college student from Rwanda, based near Atlanta, and a Computer Science candidate at Kennesaw State University (December 2026). I build practical software across backend engineering, applied AI, automation, and cybersecurity — from Next.js products to Microsoft Sentinel pipelines.",
   story: [
     {
       title: "Background",

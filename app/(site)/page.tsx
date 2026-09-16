@@ -25,8 +25,8 @@ export default function HomePage() {
             Computer Science candidate at {profile.education.school} building across backend engineering, enterprise automation, applied AI, and cybersecurity.
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
-            <Link href="/projects" className="inline-flex h-11 items-center gap-2 rounded bg-violet px-5 font-mono text-xs font-semibold uppercase tracking-[0.1em] text-background hover:bg-[#b39dff]">View projects <ArrowRight className="size-4" /></Link>
-            <Link href="/resume" className="inline-flex h-11 items-center gap-2 rounded border border-border px-5 font-mono text-xs uppercase tracking-[0.1em] text-muted hover:border-violet hover:text-violet"><FileText className="size-4" /> Résumé</Link>
+            <Link href="/projects" className="inline-flex h-11 items-center gap-2 rounded bg-violet px-5 font-mono text-xs font-semibold uppercase tracking-[0.1em] text-background hover:bg-[#b39dff]">View featured work <ArrowRight className="size-4" /></Link>
+            <a href={profile.resumePdf} download className="inline-flex h-11 items-center gap-2 rounded border border-border px-5 font-mono text-xs uppercase tracking-[0.1em] text-muted hover:border-violet hover:text-violet"><FileText className="size-4" /> Download résumé</a>
             <a href={profile.github} target="_blank" rel="noreferrer" className="inline-flex h-11 items-center rounded border border-border px-4 font-mono text-xs text-muted hover:border-violet hover:text-violet">GH</a>
             <a href={profile.linkedin} target="_blank" rel="noreferrer" className="inline-flex h-11 items-center rounded border border-border px-4 font-mono text-xs text-muted hover:border-violet hover:text-violet">LI</a>
           </div>

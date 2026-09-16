@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     template: `%s — Imani Gad`,
   },
   description:
-    "Software engineer building AI-powered products and secure backend systems. Kennesaw State University computer science candidate graduating December 2026.",
+    "Software Engineer building AI-powered products, secure backend systems, and automation tools. Atlanta-based Kennesaw State University computer science candidate graduating December 2026.",
   alternates: { canonical: "/" },
   authors: [{ name: profile.name, url: profile.website }],
   creator: profile.name,
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary",
     title: "Imani Gad — Software Engineer",
-    description: "Full-stack engineering · Applied AI · Security automation",
+    description: "Backend engineering · Applied AI · Cloud and security automation",
   },
 };
 

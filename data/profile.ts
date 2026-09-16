@@ -2,8 +2,9 @@ export const profile = {
   name: "Imani Gad",
   initials: "IG",
   firstName: "Imani",
-  headline: "Software Engineer building AI-powered products and secure backend systems.",
-  supportingLine: "Full-stack engineering · Applied AI · Security automation",
+  headline:
+    "Software Engineer building AI-powered products, secure backend systems, and automation tools.",
+  supportingLine: "Backend engineering · Applied AI · Cloud and security automation",
   headlineParts: ["Full-stack engineering", "Applied AI", "Security automation"] as const,
   email: "gadimani@outlook.com",
   phone: "(404) 932-1821",

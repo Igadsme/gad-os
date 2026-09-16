@@ -24,7 +24,7 @@ import {
 } from "lucide-react";
 import {
   getSkillEvidence,
-  skillCategories,
+  skillFocusGroups,
   skills,
   type Skill,
   type SkillCategory,
@@ -148,12 +148,14 @@ export function SkillsExplorer() {
   const searchParams = useSearchParams();
   const initialSkill = searchParams.get("skill");
   const initial = skills.find((skill) => skill.id === initialSkill) ?? skills[0];
-  const [category, setCategory] = useState<SkillCategory>(initial.category);
+  const initialGroup = skillFocusGroups.find((group) => group.skillIds.includes(initial.id)) ?? skillFocusGroups[0];
+  const [groupId, setGroupId] = useState(initialGroup.id);
   const [selectedId, setSelectedId] = useState(initial.id);
 
+  const group = skillFocusGroups.find((item) => item.id === groupId) ?? skillFocusGroups[0];
   const inCategory = useMemo(
-    () => skills.filter((skill) => skill.category === category),
-    [category],
+    () => skills.filter((skill) => group.skillIds.includes(skill.id)),
+    [group],
   );
   const selected = inCategory.find((skill) => skill.id === selectedId) ?? inCategory[0];
   const evidence = selected ? getSkillEvidence(selected) : null;
@@ -163,30 +165,30 @@ export function SkillsExplorer() {
       <aside className="border-b border-border p-4 lg:border-b-0 lg:border-r">
         <p className="mb-3 text-xs font-semibold">Categories</p>
         <div className="flex gap-1 overflow-x-auto lg:block lg:space-y-1">
-          {skillCategories.map((item) => (
+          {skillFocusGroups.map((item) => (
             <button
-              key={item}
+              key={item.id}
               type="button"
               onClick={() => {
-                setCategory(item);
-                const first = skills.find((skill) => skill.category === item);
+                setGroupId(item.id);
+                const first = skills.find((skill) => item.skillIds.includes(skill.id));
                 if (first) setSelectedId(first.id);
               }}
               className={cn(
                 "min-h-11 shrink-0 rounded-lg px-3 text-left text-sm transition-colors lg:block lg:w-full",
-                category === item
+                groupId === item.id
                   ? "bg-primary-soft font-semibold text-primary"
                   : "text-muted hover:bg-surface-muted hover:text-foreground",
               )}
             >
-              {item}
+              {item.label}
             </button>
           ))}
         </div>
       </aside>
 
       <section className="border-b border-border p-4 lg:border-b-0 lg:border-r">
-        <p className="mb-4 text-sm font-semibold">{category}</p>
+        <p className="mb-4 text-sm font-semibold">{group.label}</p>
         <div className="grid grid-cols-3 gap-2.5">
           {inCategory.map((skill) => (
             <button
