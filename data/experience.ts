@@ -168,11 +168,11 @@ export const experience: Experience[] = [
     summary:
       "Built Python and TypeScript microservices with Redis-cached PostgreSQL and shared REST contracts with frontend engineers.",
     bullets: [
-      "Built Python and TypeScript microservices using Redis-cached PostgreSQL, boosting throughput 15% and latency 20%",
+      "Built Python and TypeScript microservices using Redis-cached PostgreSQL, improving throughput 15% and reducing latency 20%",
       "Designed REST API contracts with front-end engineers, reducing integration friction across distributed services",
     ],
     impact: {
-      metric: "Throughput +15% · latency +20%",
+      metric: "Throughput +15% · latency −20%",
       explanation:
         "Python and TypeScript microservices on Redis-cached PostgreSQL, with REST contracts shared across distributed services.",
     },

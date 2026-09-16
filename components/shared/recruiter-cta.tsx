@@ -11,7 +11,7 @@ export function RecruiterCta({ className }: { className?: string }) {
       <div>
         <h2 className="font-display text-xl font-semibold">Let’s build something useful.</h2>
         <p className="mt-1 max-w-xl text-sm leading-6 text-muted">
-          Open to software engineering internships and new-grad opportunities.
+        Seeking backend, applied AI, and security engineering internships or new-grad roles. Atlanta-based, graduating December 2026.
         </p>
       </div>
       <div className="flex shrink-0 flex-wrap gap-2">

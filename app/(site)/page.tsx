@@ -24,6 +24,9 @@ export default function HomePage() {
           <p className="mt-6 max-w-xl text-base leading-7 text-muted/80">
             Computer Science candidate at {profile.education.school} building across backend engineering, enterprise automation, applied AI, and cybersecurity.
           </p>
+          <p className="mt-4 max-w-xl border-l-2 border-violet pl-4 text-sm leading-6 text-foreground/80">
+            Seeking software engineering internships and new-grad roles in backend, applied AI, or security. Based in Atlanta; graduating December 2026.
+          </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <Link href="/projects" className="inline-flex h-11 items-center gap-2 rounded bg-violet px-5 font-mono text-xs font-semibold uppercase tracking-[0.1em] text-background hover:bg-[#b39dff]">View featured work <ArrowRight className="size-4" /></Link>
             <a href={profile.resumePdf} download className="inline-flex h-11 items-center gap-2 rounded border border-border px-5 font-mono text-xs uppercase tracking-[0.1em] text-muted hover:border-violet hover:text-violet"><FileText className="size-4" /> Download résumé</a>
