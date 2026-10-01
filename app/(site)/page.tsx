@@ -1,19 +1,43 @@
 import Link from "next/link";
 import { ArrowUpRight, Download, Mail } from "lucide-react";
 import { PageContainer } from "@/components/layout/page-header";
-import { about } from "@/data/about";
 import { experience } from "@/data/experience";
 import { getFeaturedProjects } from "@/data/projects";
-import { profile, stats } from "@/data/profile";
+import { profile } from "@/data/profile";
 import { skills } from "@/data/skills";
+
+const engineeringProfile = [
+  {
+    label: "Backend",
+    details: "APIs · Microservices · Integrations · Data processing",
+  },
+  {
+    label: "Cloud",
+    details: "Azure · AWS · Containers · CI/CD · Telemetry",
+  },
+  {
+    label: "Applied AI",
+    details: "LLM APIs · RAG · Embeddings · Computer vision · Evaluation",
+  },
+  {
+    label: "Security",
+    details: "Microsoft Sentinel · KQL · CEF · Log Analytics · Palo Alto",
+  },
+];
+
+const toolkitGroups = [
+  { label: "Languages", prominence: true, ids: ["python", "typescript", "javascript", "java", "sql", "html", "css", "bash"] },
+  { label: "Backend & APIs", prominence: true, ids: ["fastapi", "flask", "nodejs", "rest-api", "integration-hub", "prisma"] },
+  { label: "Frontend", ids: ["react", "nextjs", "html", "css"] },
+  { label: "Data", ids: ["postgresql", "redis", "mongodb", "mysql", "pinecone", "embeddings"] },
+  { label: "Cloud & DevOps", prominence: true, ids: ["azure", "aws", "docker", "jenkins", "github"] },
+  { label: "AI / ML", ids: ["pytorch", "tensorflow", "numpy", "pandas", "rag", "embeddings", "yolov8", "gemini-api", "openai-api", "pinecone"] },
+  { label: "Security & Observability", ids: ["sentinel", "kql", "cef", "log-analytics", "palo-alto"] },
+  { label: "Developer & Enterprise Tools", ids: ["git", "github", "jira", "servicenow", "integration-hub", "cypress", "cucumber", "tableau"] },
+];
 
 export default function HomePage() {
   const featured = getFeaturedProjects();
-  const prioritySkillIds = new Set([
-    "python", "typescript", "javascript", "sql", "react", "nextjs", "fastapi",
-    "nodejs", "postgresql", "redis", "docker", "git", "sentinel", "kql",
-    "azure", "rest-api", "servicenow", "integration-hub",
-  ]);
 
   return (
     <PageContainer width="wide">
@@ -21,66 +45,38 @@ export default function HomePage() {
         <div className="aurora editorial-hero__aurora" />
         <div className="relative z-10">
           <p className="eyebrow">Imani Gad / Atlanta, Georgia</p>
-          <p className="editorial-hero__role">Software Engineer <span>/</span> Kennesaw State University — December 2026</p>
+          <p className="editorial-hero__role">Software Engineer · Backend · Cloud · Applied AI</p>
           <h1 className="editorial-hero__title">
-            I build AI-powered<br />
-            <span className="font-serif italic text-violet">software systems.</span>
+            Software engineer<br />
+            <span className="font-serif italic text-violet">building systems that ship.</span>
           </h1>
           <p className="editorial-hero__copy">
-            {profile.headline} I’m focused on software engineering, backend systems, applied AI, cloud automation, and cybersecurity.
+            I design and build software across backend systems, cloud infrastructure, applied AI, and security. My work spans APIs, enterprise integrations, developer tools, automation, and data pipelines.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-5">
             <a href="#work" data-cursor="View" className="editorial-button">View my work <ArrowUpRight className="size-4" /></a>
-            <Link href="/about" data-cursor="Open" className="editorial-text-link">About me <span>↗</span></Link>
+            <a href={profile.resumePdf} download data-cursor="Download" className="editorial-text-link"><Download className="size-4" /> Résumé</a>
+            <a href={profile.github} target="_blank" rel="noreferrer" className="editorial-text-link">GitHub ↗</a>
           </div>
         </div>
-        <div className="editorial-hero__meta">
-          {stats.slice(0, 3).map((stat) => (
-            <div key={stat.label}><strong>{stat.value}</strong><span>{stat.label}</span></div>
-          ))}
-          <div><strong className="text-success">OPEN</strong><span>to work · Dec 2026</span></div>
-        </div>
-        <a href="#about" className="editorial-scroll">Scroll <span>↓</span></a>
+        <a href="#engineering-profile" className="editorial-scroll">Scroll <span>↓</span></a>
       </section>
 
-      <div className="editorial-marquee" aria-hidden="true">
-        <div>OPEN TO SOFTWARE ENGINEERING ROLES <span>✦</span> ATLANTA-BASED <span>✦</span> GRADUATING DECEMBER 2026 <span>✦</span> AI / BACKEND / CLOUD / SECURITY <span>✦</span> OPEN TO SOFTWARE ENGINEERING ROLES <span>✦</span></div>
-      </div>
-
-      <section id="about" className="editorial-section">
-        <div className="editorial-section__heading"><span>01 — About</span><span>First-generation / Rwanda → United States, 2018</span></div>
-        <div className="editorial-two-col">
-          <div>
-            <p className="eyebrow">How I work</p>
-            <h2 className="editorial-heading">Software for<br /><span className="font-serif italic text-violet">real problems.</span></h2>
-          </div>
-          <div>
-            <p className="editorial-lede">{about.bio}</p>
-            <div className="editorial-principles">
-              {about.values.map((value, index) => (
-                <div key={value.title}><span>0{index + 1}</span><div><h3>{value.title}</h3><p>{value.body}</p></div></div>
-              ))}
+      <section id="engineering-profile" className="editorial-section">
+        <div className="editorial-section__heading"><span>01 — Engineering profile</span><span>Systems built across code, infrastructure, and operations</span></div>
+        <div className="engineering-profile">
+          {engineeringProfile.map((item, index) => (
+            <div className="engineering-profile__row" key={item.label}>
+              <span>0{index + 1}</span>
+              <h2>{item.label}</h2>
+              <p>{item.details}</p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="stack" className="editorial-section editorial-section--border">
-        <div className="editorial-section__heading"><span>02 — Technical stack</span><span>Tools used across products, platforms, and security systems</span></div>
-        <div className="editorial-stack">
-          {[
-            { id: "languages", label: "Languages", description: "Core languages used across backend, frontend, data, and automation work.", ids: ["python", "typescript", "javascript", "sql"] },
-            { id: "systems", label: "Backend, AI & APIs", description: "The machinery behind products — services, data, APIs, and applied AI.", ids: ["fastapi", "nodejs", "postgresql", "redis", "rest-api", "react", "nextjs"] },
-            { id: "platforms", label: "Cloud, DevOps & Security", description: "The systems used to ship, operate, and secure software in production.", ids: ["docker", "git", "sentinel", "kql", "azure", "servicenow", "integration-hub"] },
-          ].map((group, index) => {
-            const groupSkills = skills.filter((skill) => group.ids.includes(skill.id) && prioritySkillIds.has(skill.id));
-            return <div key={group.id} className="editorial-stack__group"><span className="editorial-stack__letter">{String.fromCharCode(65 + index)}</span><h3>{group.label}</h3><p>{group.description}</p><div>{groupSkills.map((skill) => <span key={skill.id}>{skill.name}</span>)}</div></div>;
-          })}
+          ))}
         </div>
       </section>
 
       <section id="work" className="editorial-section editorial-section--border">
-        <div className="editorial-section__heading"><span>03 — Selected work</span><span>AI, backend, full-stack, and cybersecurity projects</span></div>
+        <div className="editorial-section__heading"><span>02 — Selected work</span><span>Software, backend, applied AI, and security systems</span></div>
         <div className="editorial-work-list">
           {featured.map((project, index) => (
             <article key={project.slug} className="editorial-project">
@@ -99,31 +95,51 @@ export default function HomePage() {
             </article>
           ))}
         </div>
-        <a href={profile.github} target="_blank" rel="noreferrer" className="mt-10 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-violet">More experiments on GitHub <ArrowUpRight className="size-4" /></a>
+        <a href={profile.github} target="_blank" rel="noreferrer" className="mt-10 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-violet">More projects on GitHub <ArrowUpRight className="size-4" /></a>
       </section>
 
       <section id="experience" className="editorial-section editorial-section--border">
-        <div className="editorial-section__heading"><span>04 — Experience</span><span>Internships, co-op, fellowship, and teaching</span></div>
+        <div className="editorial-section__heading"><span>03 — Professional experience</span><span>Backend services, enterprise platforms, applied AI, and security operations</span></div>
         <div className="editorial-experience">
-          {experience.map((role, index) => <div key={role.id} className="editorial-experience__row"><span>0{index + 1}</span><div><h3>{role.company}</h3><p>{role.role} · {role.start} — {role.end}</p></div><strong>{role.impact?.metric ?? role.summary}</strong></div>)}
+          {experience.map((role, index) => <Link key={role.id} href={`/experience?role=${role.id}`} className="editorial-experience__row"><span>0{index + 1}</span><div><h3>{role.company}</h3><p>{role.role} · {role.start} — {role.end}</p></div><strong>{role.impact?.metric ?? role.summary}</strong></Link>)}
+        </div>
+        <Link href="/experience" className="mt-6 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-violet">Full experience <ArrowUpRight className="size-4" /></Link>
+      </section>
+
+      <section id="toolkit" className="editorial-section editorial-section--border">
+        <div className="editorial-section__heading"><span>04 — Technical toolkit</span><span>Technologies grounded in project and experience work</span></div>
+        <div className="technical-toolkit">
+          {toolkitGroups.map((group) => {
+            const names = group.ids
+              .map((id) => skills.find((skill) => skill.id === id)?.name)
+              .filter((name): name is string => Boolean(name));
+            return (
+              <div key={group.label} className={`technical-toolkit__row${group.prominence ? " technical-toolkit__row--prominent" : ""}`}>
+                <h3>{group.label}</h3>
+                <p>{[...new Set(names)].join(" · ")}</p>
+              </div>
+            );
+          })}
         </div>
       </section>
 
-      <section id="journey" className="editorial-section editorial-section--border">
-        <div className="editorial-section__heading"><span>05 — The journey</span><span>Rwanda → Atlanta → software engineering</span></div>
-        <div className="editorial-journey">
-          {about.journey.map((item, index) => <div key={item.year} className="editorial-journey__item"><span>0{index + 1} / {item.year}</span><h3>{item.title}</h3><p>{item.detail}</p></div>)}
+      <section id="about" className="editorial-section editorial-section--border">
+        <div className="editorial-section__heading"><span>05 — About</span><span>Kennesaw State University · Atlanta, Georgia</span></div>
+        <div className="editorial-about-preview">
+          <h2>Software, infrastructure,<br /><span className="font-serif italic text-violet">and operational problems.</span></h2>
+          <p>I’m a Computer Science student graduating in December 2026. My experience spans backend development, enterprise platforms, cybersecurity operations, and applied AI.</p>
+          <Link href="/about" className="editorial-text-link">More about me <ArrowUpRight className="size-4" /></Link>
         </div>
       </section>
 
       <section id="contact" className="editorial-contact">
         <p className="eyebrow">06 — Contact</p>
-        <h2>Let&apos;s build something<br /><span className="font-serif italic text-violet">useful.</span></h2>
-        <p>Seeking software engineering, backend, full-stack, AI/ML, cloud, ServiceNow, cybersecurity, and SDET opportunities.</p>
-        <div className="mt-8 flex flex-wrap gap-5"><a href={`mailto:${profile.email}`} data-cursor="Email" className="editorial-button"><Mail className="size-4" /> Email me</a><a href={profile.github} target="_blank" rel="noreferrer" className="editorial-text-link">GitHub ↗</a><a href={profile.linkedin} target="_blank" rel="noreferrer" className="editorial-text-link">LinkedIn ↗</a></div>
+        <h2>Let&apos;s talk<br /><span className="font-serif italic text-violet">engineering.</span></h2>
+        <p>Interested in software engineering opportunities across backend, cloud, applied AI, or security.</p>
+        <div className="mt-8 flex flex-wrap gap-5"><a href={`mailto:${profile.email}`} data-cursor="Email" className="editorial-button"><Mail className="size-4" /> Email me</a><a href={profile.linkedin} target="_blank" rel="noreferrer" className="editorial-text-link">LinkedIn ↗</a><a href={profile.github} target="_blank" rel="noreferrer" className="editorial-text-link">GitHub ↗</a></div>
       </section>
 
-      <footer className="editorial-footer"><span>IG©26 — Imani Gad</span><span>Built by hand · Atlanta, Georgia</span><a href={profile.resumePdf} download className="editorial-text-link"><Download className="size-4" /> Open full résumé</a></footer>
+      <footer className="editorial-footer"><span>IG©26 — Imani Gad</span><span>Atlanta, Georgia</span><a href={profile.resumePdf} download className="editorial-text-link"><Download className="size-4" /> Download résumé</a></footer>
     </PageContainer>
   );
 }

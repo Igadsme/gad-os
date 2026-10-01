@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { profile } from "@/data/profile";
@@ -15,6 +16,7 @@ const links = [
 ];
 
 export function SiteChrome() {
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -69,7 +71,17 @@ export function SiteChrome() {
         </Link>
         <nav className="site-nav__links" aria-label="Primary navigation">
           {links.map((link) => (
-            <Link key={link.href} href={link.href} className="nav-link">{link.label}</Link>
+            <Link
+              key={link.href}
+              href={link.href}
+              aria-current={pathname === link.href || (link.href === "/projects" && pathname.startsWith("/projects/")) ? "page" : undefined}
+              className={cn(
+                "nav-link",
+                (pathname === link.href || (link.href === "/projects" && pathname.startsWith("/projects/"))) && "nav-link--active",
+              )}
+            >
+              {link.label}
+            </Link>
           ))}
         </nav>
         <a href={`mailto:${profile.email}`} className="site-nav__cta">Let&apos;s talk <span>↗</span></a>
@@ -83,7 +95,7 @@ export function SiteChrome() {
           <p className="eyebrow">Navigation / 01</p>
           <nav aria-label="Mobile navigation">
             {links.map((link, index) => (
-              <Link key={link.href} href={link.href} onClick={() => setMenuOpen(false)}>
+              <Link key={link.href} href={link.href} aria-current={pathname === link.href || (link.href === "/projects" && pathname.startsWith("/projects/")) ? "page" : undefined} onClick={() => setMenuOpen(false)}>
                 <span>0{index + 1}</span>{link.label}
               </Link>
             ))}

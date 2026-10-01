@@ -9,11 +9,8 @@ export const metadata = {
 
 export default function ResumePage() {
   return (
-    <PageContainer>
-      <PageHeader
-        title="Résumé"
-        subtitle="View or download my résumé."
-      />
+    <PageContainer width="wide">
+      <PageHeader title="Résumé" subtitle="Experience, education, projects, and technical skills." />
       <ResumeStudio />
     </PageContainer>
   );

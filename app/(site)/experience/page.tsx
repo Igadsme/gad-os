@@ -5,8 +5,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { RecruiterCta } from "@/components/shared/recruiter-cta";
 
 export const metadata = {
-  title: "Experience",
-  description: "Imani Gad’s software engineering, platform automation, and security engineering experience.",
+  title: "Professional Experience",
+  description: "Imani Gad’s backend, enterprise platform, applied AI, and cybersecurity experience.",
   alternates: { canonical: "/experience" },
 };
 
@@ -14,8 +14,8 @@ export default function ExperiencePage() {
   return (
     <PageContainer>
       <PageHeader
-        title="Experience"
-        subtitle="A timeline of roles, impact, and growth."
+        title="Professional Experience"
+        subtitle="Backend services, enterprise platforms, applied AI, and cybersecurity operations."
       />
       <Suspense fallback={<Skeleton className="h-96" />}>
         <ExperienceExplorer />
