@@ -6,15 +6,6 @@ import { Badge, Card } from "@/components/ui/card";
 import { StatusPill, statusTone } from "@/components/ui/status-pill";
 import { cn } from "@/lib/utils";
 
-const cardSubtitles: Record<string, string> = {
-  devdash: "Developer Productivity · Full Stack",
-  nestai: "Multi-Agent AI · Cybersecurity",
-  "ai-security-camera-investigator": "Computer Vision · Security",
-  hiveu: "AI StudyMatch · Full Stack",
-  "ai-recruiter-assistant": "AI Recruiting · Full Stack",
-  "sentinel-ingestion": "Security Operations",
-};
-
 export function ProjectCard({
   project,
   compact = false,
@@ -23,9 +14,10 @@ export function ProjectCard({
   compact?: boolean;
 }) {
   return (
-    <Card hoverable className="group flex h-full flex-col overflow-hidden rounded-[10px]">
-      <div className="relative aspect-[1.12/1] w-full overflow-hidden border-b border-border bg-surface-muted">
-        {project.imageUrl ? <Image src={project.imageUrl} alt={project.imageAlt ?? project.title} fill sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw" className="object-cover transition-transform duration-500 group-hover:scale-105" /> : null}
+    <Card hoverable className={cn("project-card group flex h-full flex-col overflow-hidden rounded-[10px]", project.visualStyle && `project-card--${project.visualStyle}`)}>
+      <div className="project-card__visual relative aspect-[1.12/1] w-full overflow-hidden border-b border-border bg-surface-muted">
+        {project.imageUrl ? <Image src={project.imageUrl} alt={project.imageAlt ?? project.title} fill sizes="(min-width: 1280px) 50vw, (min-width: 768px) 50vw, 100vw" className={cn("transition-transform duration-500 group-hover:scale-105", project.visualStyle === "research" ? "object-contain p-3" : "object-cover")} /> : <ProjectArchitecturePreview project={project} />}
+        {project.visualLabel ? <span className="project-card__visual-label">{project.visualLabel}</span> : null}
       </div>
       <div className="flex flex-1 flex-col bg-surface px-[15px] py-[17px]">
         <div className="flex flex-wrap items-start justify-between gap-2">
@@ -34,14 +26,18 @@ export function ProjectCard({
           </h3>
           <StatusPill tone={statusTone(project.status)} className="shrink-0">{project.status}</StatusPill>
         </div>
-        <p className="mt-0.5 text-[13px] text-muted">
-          {cardSubtitles[project.slug] ?? project.category}
-        </p>
+        <p className="mt-0.5 text-[13px] text-muted">{project.subtitle}</p>
         <p className={cn("mt-3 text-[12px] leading-5 text-muted", compact ? "line-clamp-3" : "line-clamp-2")}>
           {project.summary}
         </p>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {project.technologies.slice(0, 4).map((tech) => (
+        <div className="project-card__engineering mt-4">
+          <p className="project-card__section-label">Engineering</p>
+          <p className="mt-1 text-[12px] leading-5 text-muted">{project.engineering ?? project.approach}</p>
+        </div>
+        <div className="mt-4">
+          <p className="project-card__section-label">Stack</p>
+          <div className="mt-2 flex flex-wrap gap-2">
+          {project.technologies.slice(0, 6).map((tech) => (
             <Badge
               key={tech}
               tone="muted"
@@ -50,8 +46,9 @@ export function ProjectCard({
               {tech}
             </Badge>
           ))}
+          </div>
         </div>
-        <ProjectActions project={project} featured={compact} />
+        <ProjectActions project={project} />
       </div>
     </Card>
   );
@@ -59,50 +56,57 @@ export function ProjectCard({
 
 export function ProjectListRow({ project }: { project: Project }) {
   return (
-    <Card hoverable className="flex flex-col overflow-hidden md:flex-row">
-      <div className="relative min-h-44 overflow-hidden bg-surface-muted md:w-72">
-        {project.imageUrl ? <Image src={project.imageUrl} alt={project.imageAlt ?? project.title} fill sizes="288px" className="object-cover transition-transform duration-500 group-hover:scale-105" /> : null}
+    <Card hoverable className={cn("project-card project-card--list group flex flex-col overflow-hidden md:flex-row", project.visualStyle && `project-card--${project.visualStyle}`)}>
+      <div className="project-card__visual relative min-h-44 overflow-hidden bg-surface-muted md:w-72">
+        {project.imageUrl ? <Image src={project.imageUrl} alt={project.imageAlt ?? project.title} fill sizes="288px" className={cn("transition-transform duration-500 group-hover:scale-105", project.visualStyle === "research" ? "object-contain p-3" : "object-cover")} /> : <ProjectArchitecturePreview project={project} />}
+        {project.visualLabel ? <span className="project-card__visual-label">{project.visualLabel}</span> : null}
       </div>
       <div className="flex flex-1 flex-col px-[18px] py-4">
         <div className="flex flex-wrap items-start justify-between gap-2">
           <div className="min-w-0">
             <h3 className="text-[15px] font-semibold">{project.title}</h3>
-            <p className="text-xs text-muted">{project.category}</p>
+            <p className="text-xs text-muted">{project.subtitle}</p>
           </div>
           <StatusPill tone={statusTone(project.status)} className="shrink-0">{project.status}</StatusPill>
         </div>
-        <p className="mt-2 line-clamp-2 text-sm text-muted">{project.summary}</p>
-        <div className="mt-3 flex flex-wrap items-center gap-4 text-sm">
-          <Link href={`/projects/${project.slug}`} className="font-medium text-primary hover:underline">
-            Case Study →
-          </Link>
-          {project.repoUrl ? (
-            <a
-              href={project.repoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`View ${project.title} on GitHub (opens in a new tab)`}
-              className="inline-flex min-h-11 items-center gap-1.5 font-medium text-primary hover:underline focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              <GithubMark /> GitHub <ArrowUpRight className="size-3.5" />
-            </a>
-          ) : null}
-          {project.liveUrl ? (
-            <a href={project.liveUrl} target="_blank" rel="noreferrer" className="text-muted">
-              Live Demo
-            </a>
-          ) : null}
+        <p className="mt-2 text-sm leading-6 text-muted">{project.summary}</p>
+        <p className="project-card__section-label mt-3">Engineering</p>
+        <p className="mt-1 text-sm leading-6 text-muted">{project.engineering ?? project.approach}</p>
+        <p className="project-card__section-label mt-3">Stack</p>
+        <div className="mt-1 flex flex-wrap gap-1.5">
+          {project.technologies.slice(0, 6).map((technology) => <Badge key={technology} tone="muted">{technology}</Badge>)}
         </div>
+        <ProjectActions project={project} />
       </div>
     </Card>
   );
 }
 
-function ProjectActions({ project, featured }: { project: Project; featured: boolean }) {
+export function ProjectArchitecturePreview({ project }: { project: Project }) {
+  const architecture = project.caseStudy?.architecture;
+  if (!architecture?.length) return null;
+
+  return (
+    <div
+      className={cn("project-architecture-preview", project.visualStyle && `project-architecture-preview--${project.visualStyle}`)}
+      role="img"
+      aria-label={`${project.title} repository-derived architecture preview`}
+    >
+      {architecture.map((node, index) => (
+        <div className="project-architecture-preview__node" key={node}>
+          <span>0{index + 1}</span>
+          <p>{node}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function ProjectActions({ project }: { project: Project }) {
   return (
     <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-5 text-[13px] font-semibold">
       <Link href={`/projects/${project.slug}`} className="inline-flex min-h-11 items-center gap-2 text-primary hover:underline focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-        Case Study
+        View Case Study
         <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
       </Link>
       {project.repoUrl ? (
@@ -113,7 +117,12 @@ function ProjectActions({ project, featured }: { project: Project; featured: boo
           aria-label={`View ${project.title} on GitHub (opens in a new tab)`}
           className="inline-flex min-h-11 items-center gap-1.5 text-primary hover:underline focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
-          <GithubMark /> {featured ? "View GitHub" : "GitHub"} <ArrowUpRight className="size-3.5" />
+          <GithubMark /> GitHub <ArrowUpRight className="size-3.5" />
+        </a>
+      ) : null}
+      {project.liveUrl ? (
+        <a href={project.liveUrl} target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center gap-1 text-primary hover:underline">
+          Live Demo <ArrowUpRight className="size-3.5" />
         </a>
       ) : null}
     </div>

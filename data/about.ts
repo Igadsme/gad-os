@@ -17,7 +17,7 @@ export const about = {
     },
     {
       title: "Engineering approach",
-      body: "Where the résumé documents an outcome, I make it explicit: ServiceNow backlog 80% → 20%, UpCancer throughput +15% and latency −20%, TrueSpice load time −30%, and DevDash reporting time −80%. Sentinel ingestion is described by its validation method rather than an unsupported percentage.",
+      body: "Where the résumé documents an outcome, I make it explicit: ServiceNow backlog 80% → 20%, UpCancer throughput +15% and latency −20%, and TrueSpice load time −30%. DevDash is described through its GitHub activity, persisted sync state, and productivity workflows; Sentinel ingestion through its validation methods.",
     },
     {
       title: "Life outside code",

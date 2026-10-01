@@ -4,12 +4,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { getProjectBySlug, projects } from "@/data/projects";
-import { experience } from "@/data/experience";
-import { Badge, Card } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { PageContainer } from "@/components/layout/page-header";
 import { StatusPill, statusTone } from "@/components/ui/status-pill";
-import { Button } from "@/components/ui/button";
-import { RecruiterCta } from "@/components/shared/recruiter-cta";
 
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }));
@@ -50,7 +47,7 @@ export default async function ProjectCaseStudyPage({
   const { slug } = await params;
   const project = getProjectBySlug(slug);
   if (!project) notFound();
-  const related = experience.find((role) => role.id === project.relatedExperienceId);
+  const caseStudy = project.caseStudy;
 
   return (
     <PageContainer width="default">
@@ -60,113 +57,111 @@ export default async function ProjectCaseStudyPage({
       >
         <ArrowLeft className="size-4" /> Projects
       </Link>
-      <Card className="overflow-hidden">
+      <Card className={`project-case project-case--${project.visualStyle ?? "default"} overflow-hidden`}>
         <div className="relative min-h-56 overflow-hidden border-b border-border bg-surface-muted sm:min-h-72">
-          {project.imageUrl ? <Image src={project.imageUrl} alt={project.imageAlt ?? project.title} fill sizes="(min-width: 768px) 900px, 100vw" className="object-cover" /> : null}
+          {project.imageUrl ? (
+            <Image
+              src={project.imageUrl}
+              alt={project.imageAlt ?? project.title}
+              fill
+              sizes="(min-width: 768px) 900px, 100vw"
+              className={project.visualStyle === "research" ? "object-contain p-4" : "object-cover"}
+            />
+          ) : null}
         </div>
         <div className="space-y-3 px-5 py-5">
           <div className="flex flex-wrap items-center gap-2">
-            <Badge tone="blue">{project.category}</Badge>
+            <span className="text-xs uppercase tracking-[0.1em] text-muted">{project.subtitle}</span>
             <StatusPill tone={statusTone(project.status)}>{project.status}</StatusPill>
           </div>
           <h1 className="max-w-4xl font-display text-[32px] font-semibold tracking-[-0.035em] sm:text-5xl">{project.title}</h1>
           <p className="max-w-3xl text-base leading-7 text-muted">{project.summary}</p>
-          <p className="text-xs text-muted">{project.timeframe}</p>
-          <div className="flex flex-wrap gap-1.5">
-            {project.technologies.slice(0, 4).map((tech) => (
-              <Badge key={tech} tone="muted">
-                {tech}
-              </Badge>
-            ))}
-          </div>
-          {project.liveUrl ? (
-            <Button asChild size="sm">
-              <a href={project.liveUrl} target="_blank" rel="noreferrer">
-                Live Demo
-              </a>
-            </Button>
-          ) : null}
-          {project.repoUrl ? (
-            <Button asChild size="sm" variant="secondary">
-              <a
-                href={project.repoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`View ${project.title} on GitHub (opens in a new tab)`}
-              >
-                View GitHub
-              </a>
-            </Button>
-          ) : null}
         </div>
       </Card>
-      <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_280px]">
-        <Card className="space-y-8 px-5 py-6 sm:px-7">
-          <CaseSection title="Overview" body={project.caseStudy?.overview ?? project.summary} />
-          <CaseSection title="Problem" body={project.problem} />
-          <CaseSection title="Solution" body={project.caseStudy?.solution ?? project.approach} />
 
-          {project.caseStudy ? (
-            <section>
-              <h2 className="font-display text-xl font-semibold">Architecture</h2>
-              <ol className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
-                {project.caseStudy.architecture.map((node, index) => (
-                  <li key={node} className="relative rounded-xl border border-border bg-surface-muted p-3 text-sm font-medium">
-                    <span className="mb-2 block font-mono text-[10px] text-primary">0{index + 1}</span>
-                    {node}
-                    {index < project.caseStudy!.architecture.length - 1 ? <ArrowRight className="absolute -right-2.5 top-1/2 hidden size-4 -translate-y-1/2 rounded-full bg-surface text-primary xl:block" /> : null}
-                  </li>
-                ))}
-              </ol>
-            </section>
-          ) : null}
-
-          {project.caseStudy ? <CaseList title="Technical decisions" items={project.caseStudy.decisions} /> : null}
-          <CaseSection title="Biggest challenge" body={project.caseStudy?.challenge ?? project.problem} />
-          <CaseList title="Results and impact" items={project.caseStudy?.results ?? project.bullets} />
-          <p className="rounded-xl border border-border bg-surface-muted px-4 py-3 text-xs leading-5 text-muted">
-            <span className="font-semibold text-foreground">Metric context: </span>{project.metricContext}
-          </p>
-          {project.caseStudy ? <CaseList title="Testing" items={project.caseStudy.testing} /> : null}
-          <CaseSection title="Reflection" body={project.caseStudy?.reflection ?? project.outcome} />
-        </Card>
-
-        <aside className="space-y-4 lg:sticky lg:top-5 lg:self-start">
-          <Card className="p-4">
-            <h2 className="font-display text-base font-semibold">My role</h2>
-            <p className="mt-2 text-sm leading-6 text-muted">{project.caseStudy?.role ?? "Software engineer"}</p>
-          </Card>
-          <Card className="p-4">
-            <h2 className="font-display text-base font-semibold">Project facts</h2>
-            <dl className="mt-3 space-y-3 text-sm">
-              <div><dt className="text-xs text-muted">Status</dt><dd className="mt-0.5 font-medium">{project.status}</dd></div>
-              <div><dt className="text-xs text-muted">Timeframe</dt><dd className="mt-0.5 font-medium">{project.timeframe}</dd></div>
-              {project.visualMetrics.map((metric) => <div key={metric.label}><dt className="text-xs text-muted">{metric.label}</dt><dd className="mt-0.5 font-medium">{metric.value}</dd></div>)}
-            </dl>
-          </Card>
-        </aside>
-      </div>
-
-      <RecruiterCta className="mt-5" />
-
-      {related ? (
-        <Card className="mt-5 space-y-4 px-5 py-5">
-          <p className="text-sm">
-            Related experience:{" "}
-            <Link className="text-primary" href={`/experience?role=${related.id}`}>
-              {related.role} · {related.company}
-            </Link>
-          </p>
-        </Card>
-      ) : null}
+      <Card className="mt-5 space-y-8 px-5 py-6 sm:px-7">
+        <CaseSection title="Overview" body={caseStudy?.overview ?? project.summary} />
+        <CaseSection title="Problem" body={project.problem} />
+        {caseStudy ? (
+          <section>
+            <h2 className="font-display text-xl font-semibold">Architecture</h2>
+            <ol className={`architecture-diagram architecture-diagram--${project.visualStyle ?? "default"} mt-4`} aria-label={`${project.title} architecture flow`}>
+              {caseStudy.architecture.map((node, index) => (
+                <li className="architecture-diagram__step" key={node}>
+                  <div className="architecture-diagram__node">
+                    <span>0{index + 1}</span>
+                    <p>{node}</p>
+                  </div>
+                  {index < caseStudy.architecture.length - 1 ? (
+                    <ArrowRight className="architecture-diagram__arrow" aria-hidden="true" />
+                  ) : null}
+                </li>
+              ))}
+            </ol>
+            {caseStudy.architectureCaption ? (
+              <p className="mt-3 text-xs leading-5 text-muted">{caseStudy.architectureCaption}</p>
+            ) : null}
+          </section>
+        ) : (
+          <CaseSection title="Architecture" body="An architecture diagram is not included because implementation details are not documented in the portfolio data." />
+        )}
+        <CaseList title="What I Built" items={caseStudy?.whatBuilt ?? project.bullets} />
+        <CaseSection title="Technical Challenges" body={caseStudy?.challenge ?? project.problem} />
+        <section>
+          <h2 className="font-display text-xl font-semibold">Stack</h2>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {project.technologies.map((technology) => (
+              <span className="editorial-tag" key={technology}>{technology}</span>
+            ))}
+          </div>
+        </section>
+        <CaseList
+          title="Validation / Testing"
+          items={caseStudy?.testing ?? ["Project-specific validation details are not documented in the portfolio data."]}
+        />
+        <section>
+          <h2 className="font-display text-xl font-semibold">Current Status</h2>
+          <div className="mt-3 flex flex-wrap items-center gap-3">
+            <StatusPill tone={statusTone(project.status)}>{project.status}</StatusPill>
+            <p className="text-sm leading-6 text-muted">{caseStudy?.currentStatus ?? project.statusDetail ?? project.status}</p>
+          </div>
+        </section>
+        <section>
+          <h2 className="font-display text-xl font-semibold">GitHub / Demo</h2>
+          <div className="mt-3 flex flex-wrap gap-4 text-sm">
+            {project.repoUrl ? (
+              <a className="editorial-text-link" href={project.repoUrl} target="_blank" rel="noreferrer">
+                GitHub <ArrowRight className="size-4" />
+              </a>
+            ) : null}
+            {project.liveUrl ? (
+              <a className="editorial-text-link" href={project.liveUrl} target="_blank" rel="noreferrer">
+                Live Demo <ArrowRight className="size-4" />
+              </a>
+            ) : null}
+          </div>
+        </section>
+      </Card>
     </PageContainer>
   );
 }
 
 function CaseSection({ title, body }: { title: string; body: string }) {
-  return <section><h2 className="font-display text-xl font-semibold">{title}</h2><p className="mt-2 max-w-3xl text-sm leading-7 text-muted">{body}</p></section>;
+  return (
+    <section>
+      <h2 className="font-display text-xl font-semibold">{title}</h2>
+      <p className="mt-2 max-w-3xl text-sm leading-7 text-muted">{body}</p>
+    </section>
+  );
 }
 
 function CaseList({ title, items }: { title: string; items: readonly string[] }) {
-  return <section><h2 className="font-display text-xl font-semibold">{title}</h2><ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-7 text-muted">{items.map((item) => <li key={item}>{item}</li>)}</ul></section>;
+  return (
+    <section>
+      <h2 className="font-display text-xl font-semibold">{title}</h2>
+      <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-7 text-muted">
+        {items.map((item) => <li key={item}>{item}</li>)}
+      </ul>
+    </section>
+  );
 }

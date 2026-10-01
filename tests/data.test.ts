@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { experience } from "@/data/experience";
-import { getFeaturedProjects, projects } from "@/data/projects";
+import { getFeaturedProjects, getOrderedProjects, getProjectBySlug, projects } from "@/data/projects";
 import { profile } from "@/data/profile";
 import { skills } from "@/data/skills";
 
@@ -23,28 +23,58 @@ describe("résumé-backed data", () => {
     );
   });
 
-  it("includes the five visual projects with their repositories", () => {
+  it("includes the established projects with their repositories", () => {
     expect(
       Object.fromEntries(projects.map((project) => [project.slug, project.repoUrl])),
     ).toMatchObject({
+      neighborly: "https://github.com/Igadsme/neighborly",
       devdash: "https://github.com/Igadsme/DevDash",
       nestai: "https://github.com/Igadsme/nestai_cli_project",
-      "ai-security-camera-investigator":
+      "ai-security-investigator":
         "https://github.com/Igadsme/ai-security-investigator",
+      kynovar: "https://github.com/Igadsme/Kynovar",
       hiveu: "https://github.com/Igadsme/HIVEU",
       "ai-recruiter-assistant":
         "https://github.com/Igadsme/ai-recruiter-assistant",
     });
   });
 
-  it("keeps Featured Work in the requested order without duplicates", () => {
-    const featured = getFeaturedProjects().map((project) => project.title);
-    expect(featured).toEqual([
-      "DevDash",
-      "NestAI",
-      "VeriSight — AI Security Camera Investigator",
+  it("shows the four primary projects in the requested order", () => {
+    const primary = getFeaturedProjects();
+    expect(primary.map((project) => project.slug)).toEqual([
+      "neighborly",
+      "devdash",
+      "ai-security-investigator",
+      "kynovar",
     ]);
-    expect(new Set(featured).size).toBe(featured.length);
+    expect(getOrderedProjects().slice(0, 4)).toEqual(primary);
+  });
+
+  it("keeps the previous investigator case-study URL resolving to the renamed project", () => {
+    expect(getProjectBySlug("ai-security-camera-investigator")?.slug).toBe("ai-security-investigator");
+  });
+
+  it("uses verified statuses and exposes a live demo only for the checked deployment", () => {
+    const primary = getFeaturedProjects();
+    expect(primary.map((project) => project.status)).toEqual([
+      "In Development",
+      "Live",
+      "Prototype",
+      "Research",
+    ]);
+    expect(primary.filter((project) => project.liveUrl).map((project) => project.slug)).toEqual([
+      "devdash",
+    ]);
+  });
+
+  it("provides engineering, stack, and repository-grounded case studies for each primary project", () => {
+    for (const project of getFeaturedProjects()) {
+      expect(project.engineering).toBeTruthy();
+      expect(project.technologies.length).toBeGreaterThan(0);
+      expect(project.caseStudy?.architecture.length).toBeGreaterThan(1);
+      expect(project.caseStudy?.whatBuilt?.length).toBeGreaterThan(0);
+      expect(project.caseStudy?.testing.length).toBeGreaterThan(0);
+    }
   });
 
   it("excludes projects removed from the public project list", () => {

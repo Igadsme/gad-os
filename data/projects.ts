@@ -5,9 +5,12 @@ export type ProjectCategory =
   | "Automation";
 
 export type ProjectStatus =
+  | "Live"
+  | "In Development"
+  | "Research"
+  | "Prototype"
   | "Deployed"
   | "Completed"
-  | "Prototype"
   | "In Progress"
   | "Private Enterprise Work";
 
@@ -16,23 +19,32 @@ export type ProjectCaseStudy = {
   role: string;
   solution: string;
   architecture: readonly string[];
+  architectureCaption?: string;
+  whatBuilt?: readonly string[];
   decisions: readonly string[];
   challenge: string;
   results: readonly string[];
   testing: readonly string[];
   reflection: string;
+  currentStatus?: string;
 };
+
+export type ProjectVisualStyle = "marketplace" | "analytics" | "security" | "research";
 
 export type Project = {
   slug: string;
   title: string;
   subtitle: string;
+  engineering?: string;
+  statusDetail?: string;
+  visualStyle?: ProjectVisualStyle;
+  visualLabel?: string;
   category: ProjectCategory;
   categories: ProjectCategory[];
-  timeframe: string;
+  timeframe?: string;
   featured: boolean;
   status: ProjectStatus;
-  visualMetrics: readonly [
+  visualMetrics?: readonly [
     { label: string; value: string },
     { label: string; value: string },
   ];
@@ -63,38 +75,114 @@ export const projectCategories: ProjectCategory[] = [
 
 export const projects: Project[] = [
   {
+    slug: "neighborly",
+    title: "Neighborly",
+    subtitle: "Full-Stack / Backend / Product Engineering",
+    engineering:
+      "A React and TypeScript client integrates with a NestJS modular API; Prisma models the PostgreSQL-backed marketplace. Authentication and trust/safety workflows are implemented in dedicated backend modules.",
+    statusDetail:
+      "The repository says launch is pending product-owner approval. Production deployment has not occurred.",
+    visualStyle: "marketplace",
+    visualLabel: "Marketplace / product",
+    category: "Full Stack",
+    categories: ["Full Stack"],
+    featured: true,
+    status: "In Development",
+    repoUrl: "https://github.com/Igadsme/neighborly",
+    imageUrl: "/images/projects/neighborly-home.png",
+    imageAlt: "Neighborly marketplace home screen from its browser smoke-test artifact",
+    summary:
+      "A request-first local marketplace for neighbors to discover and exchange housing, services, jobs, and community listings.",
+    highlight: "A Vite client, modular API, and marketplace workflows share one product.",
+    metricContext: "",
+    problem:
+      "Local exchanges need a shared place to discover listings and coordinate community transactions.",
+    approach:
+      "Connect a React client to a NestJS API, with Prisma and PostgreSQL for marketplace data and dedicated authentication and safety modules.",
+    outcome:
+      "Implements listings, discovery, messaging, saved items, profiles, and trust/safety flows in a request-first marketplace.",
+    bullets: [
+      "Built a React and TypeScript marketplace client with listing, discovery, messaging, profile, and saved-item flows.",
+      "Implemented a NestJS modular API with Prisma/PostgreSQL persistence, authentication, and trust/safety modules.",
+      "Integrated the client and API through the repository's Vite API client and documented local Compose staging setup.",
+    ],
+    technologies: ["React", "TypeScript", "NestJS", "PostgreSQL", "Vite", "Prisma"],
+    relatedSkillIds: ["react", "typescript", "postgresql"],
+    caseStudy: {
+      overview:
+        "Neighborly is a request-first local marketplace for community listings and exchanges.",
+      role: "Full-stack engineer",
+      solution:
+        "A Vite-based React/TypeScript frontend calls a NestJS modular API. Prisma models marketplace data in PostgreSQL; authentication and safety concerns are separated into backend modules.",
+      architecture: [
+        "React + TypeScript client (Vite)",
+        "API client / HTTP requests",
+        "NestJS modules: auth, listings, users, safety",
+        "Prisma data access",
+        "PostgreSQL",
+      ],
+      architectureCaption:
+        "The diagram follows the repository's client/API split, backend modules, Prisma service, and PostgreSQL schema.",
+      whatBuilt: [
+        "Marketplace screens for discovery, categories, listing details, creation, messaging, saved items, profiles, and dashboards.",
+        "Backend authentication, listing, user-profile, messaging, and trust/safety modules.",
+        "Frontend-to-API wiring with a modular NestJS backend and Prisma/PostgreSQL persistence.",
+      ],
+      decisions: [
+        "Keep the API a modular monolith, with marketplace capabilities separated into NestJS modules.",
+        "Use a request-first marketplace flow rather than presenting the project as a launched public service.",
+      ],
+      challenge:
+        "Connecting a broad set of marketplace flows to consistent API behavior while keeping authentication and trust/safety responsibilities explicit.",
+      results: [
+        "Repository artifacts include browser-smoke captures for the implemented marketplace flows.",
+        "The repository documents a local Docker Compose staging environment; this is not a public production deployment.",
+      ],
+      testing: [
+        "Repository includes backend auth, listing, safety, and HTTP/service tests, plus frontend marketplace and trust/safety tests.",
+        "The repository documents frontend typecheck/build and backend Prisma generation, typecheck, tests, and build checks.",
+      ],
+      reflection:
+        "Production release remains gated on product-owner approval and deployment decisions documented in the repository.",
+      currentStatus:
+        "Production preparation is documented, but the public launch and production deployment are explicitly pending approval.",
+    },
+  },
+  {
     slug: "devdash",
     title: "DevDash",
-    subtitle: "Developer Productivity · Full Stack",
+    subtitle: "Developer Tooling / Analytics / Integrations",
+    engineering:
+      "GitHub OAuth and server-side GitHub API sync feed normalized repository, pull-request, issue, review, CI, and commit signals into durable Prisma-backed activity and sync snapshots. The application derives ranked action items, timelines, focus analysis, and grounded weekly summaries from that data.",
+    statusDetail:
+      "The Vercel deployment at dev-dash-woad.vercel.app returned HTTP 200 when checked.",
+    visualStyle: "analytics",
+    visualLabel: "Developer activity / analytics",
     category: "Full Stack",
     categories: ["Full Stack", "AI/ML"],
-    timeframe: "April 2026 – May 2026",
     featured: true,
-    status: "Prototype",
-    visualMetrics: [
-      { label: "events", value: "1K+" },
-      { label: "reporting", value: "−80%" },
-    ],
+    status: "Live",
+    liveUrl: "https://dev-dash-woad.vercel.app",
     repoUrl: "https://github.com/Igadsme/DevDash",
     imageUrl: "/images/projects/devdash.png",
     imageAlt: "DevDash engineering health dashboard",
     summary:
-      "A privacy-first developer command center that transforms activity from GitHub, GitLab, Bitbucket, CI/CD, and calendar tools into ranked actions, engineering insights, focus estimates, and grounded AI summaries.",
+      "A developer productivity tool that turns GitHub repository, pull-request, issue, review, CI, and commit activity into action items, timelines, focus analysis, and weekly summaries.",
     highlight:
-      "LLM summarization and task prioritization reduced manual reporting time by 80%.",
-    metricContext:
-      "Project dataset: 1,000+ Git and CI/CD events; the 80% figure compares manual status-reporting time before and after generated summaries.",
+      "Server-side GitHub sync powers prioritized workflows and activity views.",
+    metricContext: "",
     problem:
-      "Engineering teams spend too much time reconstructing status from commits, pull requests, and CI events.",
+      "Developer activity is distributed across repositories, pull requests, issues, reviews, CI signals, and commits.",
     approach:
-      "Built a Next.js and Prisma app that ingests GitHub APIs, then uses the OpenAI API to summarize activity and prioritize tasks.",
+      "Uses GitHub OAuth and server-side GitHub API requests to sync activity, normalize signals, persist sync state, and build productivity workflows.",
     outcome:
-      "Processed 1,000+ commits, PRs, and CI/CD events, with LLM summarization cutting manual reporting time by 80%.",
+      "Presents synced GitHub activity as ranked action items, timelines, focus analysis, and grounded weekly summaries with a deterministic fallback.",
     bullets: [
-      "Built full-stack developer productivity SaaS with Next.js and Prisma, integrating GitHub APIs to process 1,000+ commits, PRs, and CI/CD events",
-      "Developed LLM summarization and task prioritization via OpenAI API, reducing manual reporting time by 80%",
+      "Implemented GitHub OAuth, personal and organization workspace discovery, repository views, recent commits, and ranked pull-request, issue, review, and CI action items.",
+      "Built server-side GitHub synchronization, durable sync state, last-known-good snapshots, typed pull-request signals, and account export/deletion controls.",
+      "Added grounded weekly summaries with a deterministic fallback when OpenAI is unavailable.",
     ],
-    technologies: ["Next.js", "TypeScript", "PostgreSQL", "Prisma", "Gemini"],
+    technologies: ["Next.js", "TypeScript", "NextAuth", "Prisma", "GitHub API", "OpenAI API"],
     relatedSkillIds: [
       "nextjs",
       "typescript",
@@ -103,25 +191,43 @@ export const projects: Project[] = [
     ],
     caseStudy: {
       overview:
-        "DevDash is a privacy-first developer command center for turning fragmented engineering activity into a concise operating view.",
-      role: "Product designer and full-stack engineer",
+        "DevDash is a developer productivity application that collects a user's GitHub activity and organizes it into a single operational view.",
+      role: "Full-stack engineer",
       solution:
-        "A Next.js application normalizes events from developer tools, stores structured activity with Prisma, and uses an LLM to produce grounded summaries and ranked next steps.",
-      architecture: ["Developer APIs", "Event normalization", "Prisma + PostgreSQL", "Grounded AI summaries", "Dashboard actions"],
+        "GitHub OAuth establishes the account; server-side GitHub API sync normalizes activity, persists events and durable snapshots through Prisma, then powers action-item, timeline, focus, and summary workflows.",
+      architecture: [
+        "GitHub OAuth / NextAuth",
+        "Server-side GitHub API sync",
+        "Signal normalization and ranking",
+        "Prisma events + sync snapshots",
+        "Action items, timeline, focus, summaries",
+      ],
+      architectureCaption:
+        "This reflects the repository's OAuth, server-side GitHub integration, event/snapshot persistence, and application views.",
+      whatBuilt: [
+        "GitHub OAuth sign-in and personal/organization workspace discovery.",
+        "Repository, commit, pull-request, issue, review, and CI activity workflows with attention filters and timelines.",
+        "Durable sync state and last-known-good snapshots for API outages.",
+        "Grounded weekly summaries with deterministic fallback behavior when OpenAI is unavailable.",
+      ],
       decisions: [
-        "Keep source events visible so every generated summary remains traceable.",
-        "Separate ingestion from summarization so model failures never block activity capture.",
-        "Prioritize privacy by keeping the product focused on a user’s own engineering data.",
+        "Keep GitHub requests on the server so access tokens are not sent to browser responses.",
+        "Persist sync snapshots so previously synchronized views remain available when GitHub is unavailable.",
+        "Provide a deterministic summary fallback when the OpenAI service is unavailable.",
       ],
       challenge:
-        "Events from repositories and CI systems describe similar work with different schemas, timestamps, and levels of detail.",
+        "GitHub's repositories, pull requests, issues, reviews, CI status, and commits expose different signals that must be normalized into coherent workflows.",
       results: [
-        "Processed a project dataset of 1,000+ commits, pull requests, and CI/CD events.",
-        "Reduced manual reporting time by 80% in the project workflow.",
+        "Repository includes typed pull-request signals, durable sync snapshots, account controls, and CI validation.",
       ],
-      testing: ["Normalized-event validation", "Summary grounding checks", "Responsive dashboard review"],
+      testing: [
+        "Repository documents typecheck, Vitest, and production build checks and includes a CI workflow.",
+        "Account export/deletion, sync snapshots, and pull-request signal filtering are covered by project code and tests.",
+      ],
       reflection:
-        "The next iteration would add more connector-level permission controls and explicit confidence indicators for generated recommendations.",
+        "The current integration centers on GitHub; additional provider integrations should only be added when implemented and verified.",
+      currentStatus:
+        "The public Vercel deployment responds successfully. The repository supports GitHub integration; no other source-provider integration is claimed here.",
     },
   },
   {
@@ -131,7 +237,7 @@ export const projects: Project[] = [
     category: "Cybersecurity",
     categories: ["Cybersecurity", "AI/ML"],
     timeframe: "May 2025",
-    featured: true,
+    featured: false,
     status: "Completed",
     visualMetrics: [
       { label: "hackathon rank", value: "2nd/32" },
@@ -189,72 +295,153 @@ export const projects: Project[] = [
     },
   },
   {
-    slug: "ai-security-camera-investigator",
-    title: "VeriSight — AI Security Camera Investigator",
-    subtitle: "Computer Vision · Security",
-    category: "AI/ML",
-    categories: ["AI/ML", "Cybersecurity"],
-    timeframe: "June 2026 – July 2026",
+    slug: "ai-security-investigator",
+    title: "AI Security Investigator",
+    subtitle: "Security Engineering / Applied AI",
+    engineering:
+      "A Python video-processing pipeline exposes investigation workflows through FastAPI and SQLAlchemy, with detections and tracks persisted for search and case review. YOLOv8 performs detection; tracking, optional semantic search, optional Gemini/Ollama analysis, and evidence workflows are separate components.",
+    statusDetail:
+      "The repository documents a Hugging Face Space deployment, but the Space is currently paused; no working public deployment was verified.",
+    visualStyle: "security",
+    visualLabel: "Investigation / evidence",
+    category: "Cybersecurity",
+    categories: ["Cybersecurity", "AI/ML"],
     featured: true,
     status: "Prototype",
-    visualMetrics: [
-      { label: "object classes", value: "7" },
-      { label: "API routes", value: "20+" },
-    ],
     repoUrl: "https://github.com/Igadsme/ai-security-investigator",
-    imageUrl: "/images/projects/verisight.png",
-    imageAlt: "VeriSight AI security camera investigator dashboard",
     summary:
-      "A forensic CCTV investigation platform that combines YOLOv8 detection, object tracking, natural-language search, synchronized multi-camera timelines, privacy redaction, and SHA-256 evidence exports.",
-    highlight:
-      "YOLOv8 detections plus embedding search return timestamped, ranked footage results.",
-    metricContext:
-      "Prototype surface with seven configured object classes and more than 20 documented API routes.",
+      "A CCTV investigation system for uploading footage, reviewing detected and tracked objects, searching for events, and assembling case evidence.",
+    highlight: "Connects video analysis with searchable investigation and evidence workflows.",
+    metricContext: "",
     problem:
-      "Reviewing CCTV by hand is slow when the question is a person, object, or moment rather than a timestamp.",
+      "Investigators need to find relevant events across video and camera timelines, then preserve context while reviewing and sharing evidence.",
     approach:
-      "Engineered a YOLOv8 and FastAPI pipeline for detection and tracking, then layered embedding search over CCTV metadata.",
+      "Processes video into detections, tracks, and events, then exposes search and case workflows through a FastAPI service.",
     outcome:
-      "Ranked results with timestamped detections, turning footage into a queryable investigation surface.",
+      "The repository implements video investigation, search, cases, timelines, audit, evidence export, privacy redaction, and optional AI-assisted summaries.",
     bullets: [
-      "Engineered a computer-vision pipeline with YOLOv8 and FastAPI to detect and track subjects across CCTV footage",
-      "Built embedding-based semantic search over CCTV metadata, returning ranked results with timestamped detections",
+      "Built video upload and processing workflows using OpenCV, YOLOv8 detections, and configurable tracking.",
+      "Implemented search, cases, multi-camera timelines, audit records, evidence exports, and privacy redaction.",
+      "Added optional Gemini/Ollama summaries and optional ChromaDB vector indexing; SQL and rule-based search paths remain available.",
     ],
-    technologies: [
-      "YOLOv8",
-      "DeepSORT",
-      "FastAPI",
-      "Next.js",
-      "PostgreSQL",
-    ],
-    relatedSkillIds: [
-      "python",
-      "fastapi",
-      "yolov8",
-      "embeddings",
-      "pytorch",
-    ],
+    technologies: ["Python", "FastAPI", "SQLAlchemy", "YOLOv8", "OpenCV", "Next.js", "SQLite (local)", "PostgreSQL (optional)", "ChromaDB (optional)", "Gemini / Ollama (optional)"],
+    relatedSkillIds: ["python", "fastapi", "yolov8", "embeddings", "pytorch"],
     caseStudy: {
       overview:
-        "VeriSight is a forensic CCTV investigation prototype that turns footage into a searchable, evidence-aware timeline.",
-      role: "Product designer, computer-vision engineer, and backend engineer",
+        "AI Security Investigator is a CCTV investigation system that connects video analysis to case review, search, audit, and evidence handling.",
+      role: "Full-stack and applied-AI engineering",
       solution:
-        "YOLOv8 and DeepSORT create timestamped detections, FastAPI exposes investigation workflows, and embedding search maps natural-language queries to ranked footage moments.",
-      architecture: ["CCTV footage", "YOLOv8 detection", "DeepSORT tracking", "FastAPI + metadata", "Search and evidence export"],
+        "Uploaded video is processed into detections, tracks, and events. The FastAPI service exposes data and investigation routes to a Next.js interface; optional vector and AI services augment selected search and summary workflows.",
+      architecture: [
+        "Video upload",
+        "Frame processing / YOLOv8 detection",
+        "Tracking + event extraction",
+        "FastAPI / SQLAlchemy persistence",
+        "Search, cases, audit, evidence",
+      ],
+      architectureCaption:
+        "The flow follows the repository's video processor, detection/tracking modules, database, forensic API, and investigation UI. Optional AI/vector services are not required for the main workflow.",
+      whatBuilt: [
+        "Video upload and processing with YOLOv8 detection and selectable lightweight or DeepSORT tracking.",
+        "Investigation search, video/case workflows, multi-camera timelines, and audit records.",
+        "Evidence clip export with a JSON sidecar and SHA-256, plus redaction and case-report workflows.",
+        "Optional Gemini/Ollama summaries and optional ChromaDB vector search.",
+      ],
       decisions: [
-        "Store detection metadata separately from footage so search stays fast and auditable.",
-        "Preserve timestamps and hashes throughout export to support chain-of-custody review.",
-        "Use natural-language search as a layer over structured detections, not as a replacement for them.",
+        "Keep AI summaries and ChromaDB vector indexing optional; the README documents rule-based and SQL search paths without them.",
+        "Keep timestamps, camera context, and hashes attached to evidence workflows.",
+        "Present results as investigator tools and evidence context, not autonomous security decisions.",
       ],
       challenge:
-        "The same subject can move between frames and cameras while lighting, occlusion, and scene changes reduce detection consistency.",
+        "Connecting frame-level detections and tracks to timestamped events, multi-camera case timelines, search results, and reviewable evidence.",
       results: [
-        "Configured seven object classes for the prototype investigation workflow.",
-        "Designed more than 20 API routes for cameras, detections, investigations, search, and evidence.",
+        "Repository documents investigation APIs for video, search, cases, timelines, audit, evidence, redaction, and annotations.",
       ],
-      testing: ["API contract checks", "Detection timeline review", "Evidence-hash verification"],
+      testing: [
+        "Repository includes backend API tests and documents a forensic smoke-test script.",
+        "No detection-accuracy or incident-resolution benchmark is claimed.",
+      ],
       reflection:
-        "Before production use, the system would need dataset-specific accuracy benchmarks, retention policies, and human review controls for consequential decisions.",
+        "Any operational use would require environment-specific model validation, data-retention review, and human oversight; no autonomous SOC replacement is claimed.",
+      currentStatus:
+        "Prototype. The documented Hugging Face Space is paused, and a working public deployment was not verified.",
+    },
+  },
+  {
+    slug: "kynovar",
+    title: "Kynovar",
+    subtitle: "Machine Learning Research / Simulation",
+    engineering:
+      "Seeded simulators generate controlled dynamical systems and observable trajectories; data tooling prepares training and out-of-distribution splits for multiple dynamics models. Evaluation scripts record rollout and benchmark results, but the current repository explicitly marks research milestones and some results as work in progress.",
+    statusDetail:
+      "Research is active. The latest repository commit says milestone acceptance runs are pending and preliminary benchmark results should not be treated as final.",
+    visualStyle: "research",
+    visualLabel: "Simulation / model evaluation",
+    category: "AI/ML",
+    categories: ["AI/ML"],
+    featured: true,
+    status: "Research",
+    repoUrl: "https://github.com/Igadsme/Kynovar",
+    imageUrl: "/images/projects/kynovar-workbench.png",
+    imageAlt: "Kynovar research workbench screenshot from the repository's interactive-run artifacts",
+    summary:
+      "A research system for controlled synthetic universes, simulation, dynamics-model training, and evaluation on observed trajectories.",
+    highlight:
+      "Explores model behavior through reproducible simulations and evaluation workflows.",
+    metricContext: "",
+    problem:
+      "Studying whether models can infer and revise explanations of unfamiliar physical systems requires controllable worlds and observable evidence.",
+    approach:
+      "Builds deterministic simulation and laboratory workflows, generates trajectory datasets, trains multiple dynamics-model families, and evaluates predictions including out-of-distribution cases.",
+    outcome:
+      "The repository contains simulator, dataset, model-training, benchmark, and OOD evaluation code; research results and milestone acceptance remain in progress.",
+    bullets: [
+      "Implemented seeded simulation and laboratory workflows that expose trajectories separately from evaluation-only hidden state.",
+      "Added data generation, normalization, splits, training code, and model families including linear, MLP, GRU, and graph neural networks.",
+      "Added rollout, benchmark, and out-of-distribution evaluation workflows with run metadata for reproducibility.",
+    ],
+    technologies: ["Python", "PyTorch", "NumPy", "SciPy", "SymPy", "Linear models", "MLP", "GRU", "GNN"],
+    relatedSkillIds: ["python", "pytorch", "numpy"],
+    caseStudy: {
+      overview:
+        "Kynovar is a research system for studying dynamics learning and scientific reasoning in controlled simulated universes.",
+      role: "Research software engineer",
+      solution:
+        "The simulator and laboratory generate observable trajectories; dataset utilities prepare runs for training; model factories build baseline, recurrent, and graph-based dynamics models; evaluation code compares predictions and runs OOD analyses.",
+      architecture: [
+        "Seeded simulator / controlled universe",
+        "Laboratory / observable trajectories",
+        "Dataset generation, splits, normalization",
+        "Linear, MLP, GRU, GNN model families",
+        "Rollout benchmarks / OOD evaluation",
+      ],
+      architectureCaption:
+        "This flow follows the repository's simulator, laboratory, data, model factory/training, and evaluation modules.",
+      whatBuilt: [
+        "Controlled synthetic universes and a laboratory interface for generating observations.",
+        "Dataset generation, normalization, split, and OOD utilities.",
+        "Trainable linear, MLP, GRU, GNN, and interaction-GNN dynamics models.",
+        "Simulation, training, benchmark, and OOD scripts with recorded run metadata.",
+      ],
+      decisions: [
+        "Separate observable trajectories from hidden state reserved for evaluation.",
+        "Use seeded generation and run metadata to support reproducible experiments.",
+        "Treat current benchmark results as preliminary until the repository's acceptance runs are complete.",
+      ],
+      challenge:
+        "Model comparisons depend on stable data splits and uncontended, reproducible runs; the latest repository notes call out unstable regimes and pending acceptance reruns.",
+      results: [
+        "The repository contains model-training, rollout-evaluation, benchmark, and OOD workflows.",
+        "The latest commit explicitly labels current milestone work and results as WIP/preliminary.",
+      ],
+      testing: [
+        "A pytest suite covers simulator, data, models, evaluation, and reproducibility paths.",
+        "The latest repository status says no milestone has passed its sequential, uncontended acceptance run; benchmark results remain preliminary.",
+      ],
+      reflection:
+        "The next research step is to complete the documented acceptance reruns before treating model comparisons or milestone results as settled.",
+      currentStatus:
+        "Research in progress; current milestone results are explicitly marked WIP and preliminary in the repository.",
     },
   },
   {
@@ -368,9 +555,24 @@ export const projects: Project[] = [
 ];
 
 export function getProjectBySlug(slug: string) {
-  return projects.find((project) => project.slug === slug);
+  const canonicalSlug = slug === "ai-security-camera-investigator" ? "ai-security-investigator" : slug;
+  return projects.find((project) => project.slug === canonicalSlug);
+}
+
+const primaryProjectOrder = [
+  "neighborly",
+  "devdash",
+  "ai-security-investigator",
+  "kynovar",
+];
+
+export function getOrderedProjects() {
+  const order = new Map(primaryProjectOrder.map((slug, index) => [slug, index]));
+  return [...projects].sort(
+    (a, b) => (order.get(a.slug) ?? Number.MAX_SAFE_INTEGER) - (order.get(b.slug) ?? Number.MAX_SAFE_INTEGER),
+  );
 }
 
 export function getFeaturedProjects() {
-  return projects.filter((project) => project.featured);
+  return getOrderedProjects().filter((project) => project.featured);
 }

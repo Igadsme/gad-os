@@ -44,7 +44,7 @@ export const labExperiments: LabExperiment[] = [
       "YOLOv8 detections plus embeddings over footage metadata can return timestamped, ranked investigation results faster than linear review.",
     methods: ["YOLOv8", "FastAPI", "Embeddings", "PyTorch"],
     stageLabel: "Working pipeline",
-    relatedProjectSlug: "ai-security-camera-investigator",
+    relatedProjectSlug: "ai-security-investigator",
   },
   {
     slug: "sentinel-schema-checks",

@@ -14,7 +14,7 @@ export function buildAssistantContext() {
   const projectBlock = projects
     .map(
       (project) =>
-        `${project.title} (${project.timeframe}): ${project.bullets.join(" ")} Technologies: ${project.technologies.join(", ")}.`,
+        `${project.title}${project.timeframe ? ` (${project.timeframe})` : ""}: ${project.summary} ${project.bullets.join(" ")} Technologies: ${project.technologies.join(", ")}. Status: ${project.status}.`,
     )
     .join("\n");
 
@@ -106,10 +106,13 @@ export function groundedFallbackAnswer(question: string) {
   }
 
   if (/ai|ml|rag|pinecone|gemini|yolo|camera/.test(q)) {
+    const aiProjects = projects.filter((project) =>
+      ["ai-security-investigator", "devdash", "kynovar"].includes(project.slug),
+    );
     return {
       answer:
-        "Applied AI evidence on the résumé:\n\n• Headstarter AI (Jul 2025 – Sep 2025): 5 AI projects with Pinecone, Gemini API, embeddings, and RAG; features supporting 500+ users.\n• VeriSight — AI Security Camera Investigator (Jun 2026 – Jul 2026): YOLOv8 + FastAPI detection/tracking and embedding search over CCTV metadata.\n• DevDash: OpenAI API summarization and task prioritization, reducing manual reporting time by 80%.\n• Coursework: Machine Learning, Deep Learning.",
-      sources: ["Headstarter experience", "VeriSight case study", "DevDash", "Résumé"],
+        `Applied AI and research project evidence:\n\n${aiProjects.map((project) => `• ${project.title}: ${project.summary} Engineering: ${project.engineering ?? project.approach} Stack: ${project.technologies.join(", ")}. Status: ${project.status}.`).join("\n\n")}\n\n• Coursework: Machine Learning, Deep Learning.`,
+      sources: [...aiProjects.map((project) => `${project.title} case study`), "Résumé"],
     };
   }
 

@@ -4,7 +4,7 @@ import { RecruiterCta } from "@/components/shared/recruiter-cta";
 
 export const metadata = {
   title: "Projects",
-  description: "Selected full-stack, applied AI, and security engineering projects by Imani Gad.",
+  description: "Selected product engineering, developer tooling, security, and machine learning research projects by Imani Gad.",
   alternates: { canonical: "/projects" },
 };
 
@@ -13,7 +13,7 @@ export default function ProjectsPage() {
     <PageContainer>
       <PageHeader
         title="Projects"
-        subtitle="Products, systems, and experiments built to solve real problems."
+        subtitle="Product engineering, developer tooling, security investigation, and machine learning research."
       />
       <ProjectsExplorer />
       <RecruiterCta className="mt-8" />

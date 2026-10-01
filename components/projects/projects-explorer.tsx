@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { LayoutGrid, List } from "lucide-react";
-import { projectCategories, projects, type ProjectCategory } from "@/data/projects";
+import { getOrderedProjects, projectCategories, type ProjectCategory } from "@/data/projects";
 import { ProjectCard, ProjectListRow } from "@/components/projects/project-card";
 import { FilterPills } from "@/components/ui/filter-pills";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -26,7 +26,7 @@ export function ProjectsExplorer({
   const [view, setView] = useState<"grid" | "list">("grid");
 
   const filtered = useMemo(() => {
-    return projects.filter((project) => {
+    return getOrderedProjects().filter((project) => {
       const matchesCategory =
         category === "All" || project.categories.includes(category);
       const q = query.trim().toLowerCase();
@@ -38,6 +38,8 @@ export function ProjectsExplorer({
       return matchesCategory && matchesQuery;
     });
   }, [category, query]);
+  const primaryProjects = filtered.filter((project) => project.featured);
+  const additionalProjects = filtered.filter((project) => !project.featured);
 
   return (
     <div className="space-y-5">
@@ -92,17 +94,36 @@ export function ProjectsExplorer({
           title="No projects match that filter."
           detail="Try another category or clear the search."
         />
-      ) : view === "grid" ? (
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {filtered.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
-          ))}
-        </div>
       ) : (
-        <div className="space-y-3">
-          {filtered.map((project) => (
-            <ProjectListRow key={project.slug} project={project} />
-          ))}
+        <div className="space-y-10">
+          {primaryProjects.length > 0 ? (
+            <section aria-labelledby="primary-projects-heading">
+              <h2 id="primary-projects-heading" className="mb-4 font-display text-xl font-semibold">Primary Projects</h2>
+              {view === "grid" ? (
+                <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-2">
+                  {primaryProjects.map((project) => <ProjectCard key={project.slug} project={project} />)}
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {primaryProjects.map((project) => <ProjectListRow key={project.slug} project={project} />)}
+                </div>
+              )}
+            </section>
+          ) : null}
+          {additionalProjects.length > 0 ? (
+            <section aria-labelledby="additional-projects-heading">
+              <h2 id="additional-projects-heading" className="mb-4 font-display text-xl font-semibold">Additional Projects</h2>
+              {view === "grid" ? (
+                <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-2">
+                  {additionalProjects.map((project) => <ProjectCard key={project.slug} project={project} />)}
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {additionalProjects.map((project) => <ProjectListRow key={project.slug} project={project} />)}
+                </div>
+              )}
+            </section>
+          ) : null}
         </div>
       )}
     </div>

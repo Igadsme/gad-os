@@ -5,6 +5,7 @@ import { experience } from "@/data/experience";
 import { getFeaturedProjects } from "@/data/projects";
 import { profile } from "@/data/profile";
 import { skills } from "@/data/skills";
+import { ProjectArchitecturePreview } from "@/components/projects/project-card";
 
 const engineeringProfile = [
   {
@@ -79,18 +80,40 @@ export default function HomePage() {
         <div className="editorial-section__heading"><span>02 — Selected work</span><span>Software, backend, applied AI, and security systems</span></div>
         <div className="editorial-work-list">
           {featured.map((project, index) => (
-            <article key={project.slug} className="editorial-project">
+            <article key={project.slug} className={`editorial-project editorial-project--${project.visualStyle ?? "default"}`}>
               <div className="editorial-project__number">0{index + 1}</div>
-              <div className="editorial-project__visual" style={project.imageUrl ? { backgroundImage: `url(${project.imageUrl})` } : undefined} />
+              <div
+                className="editorial-project__visual"
+                role={project.imageUrl ? "img" : undefined}
+                aria-label={project.imageUrl ? project.imageAlt ?? project.title : undefined}
+                style={project.imageUrl ? { backgroundImage: `url(${project.imageUrl})` } : undefined}
+              >
+                {!project.imageUrl ? <ProjectArchitecturePreview project={project} /> : null}
+                {project.visualLabel ? <span>{project.visualLabel}</span> : null}
+              </div>
               <div className="editorial-project__body">
-                <p className="eyebrow">{project.subtitle} · {project.status}</p>
+                <p className="eyebrow">{project.subtitle}</p>
                 <h2>{project.title}</h2>
                 <p className="editorial-project__summary">{project.summary}</p>
-                <div className="editorial-project__facts"><div><span>Problem</span><p>{project.problem}</p></div><div><span>Result</span><p>{project.highlight}</p></div></div>
-                <div className="mt-5 flex flex-wrap gap-3">
-                  {project.technologies.slice(0, 5).map((technology) => <span key={technology} className="editorial-tag">{technology}</span>)}
+                <div className="editorial-project__engineering">
+                  <span>Engineering</span>
+                  <p>{project.engineering}</p>
                 </div>
-                <div className="mt-6 flex gap-5"><Link href={`/projects/${project.slug}`} data-cursor="Open" className="editorial-text-link">Case study <ArrowUpRight className="size-4" /></Link>{project.repoUrl ? <a href={project.repoUrl} target="_blank" rel="noreferrer" data-cursor="Visit" className="editorial-text-link">GitHub ↗</a> : null}</div>
+                <div className="editorial-project__stack">
+                  <span>Stack</span>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {project.technologies.map((technology) => <span key={technology} className="editorial-tag">{technology}</span>)}
+                  </div>
+                </div>
+                <div className="editorial-project__status">
+                  <span>Status</span>
+                  <strong>{project.status}</strong>
+                </div>
+                <div className="mt-6 flex flex-wrap gap-5">
+                  <Link href={`/projects/${project.slug}`} data-cursor="Open" className="editorial-text-link">View Case Study <ArrowUpRight className="size-4" /></Link>
+                  {project.repoUrl ? <a href={project.repoUrl} target="_blank" rel="noreferrer" data-cursor="Visit" className="editorial-text-link">GitHub ↗</a> : null}
+                  {project.liveUrl ? <a href={project.liveUrl} target="_blank" rel="noreferrer" className="editorial-text-link">Live Demo ↗</a> : null}
+                </div>
               </div>
             </article>
           ))}

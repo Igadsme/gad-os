@@ -42,7 +42,9 @@ export function statusTone(
   if (status === "Archived") return "archived";
   if (status === "Proposed") return "proposed";
   if (status === "Researching") return "researching";
+  if (status === "Research") return "researching";
   if (status === "Prototype") return "prototype";
+  if (status === "In Development") return "progress";
   if (status === "In Progress") return "progress";
   if (status === "Completed") return "completed";
   if (status === "Deployed") return "live";
