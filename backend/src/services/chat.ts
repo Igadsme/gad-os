@@ -1,10 +1,9 @@
-import { education, experience, skills } from '../data/candidate/index.ts'
+import { activities, education, experience, leadership, projects, skills } from '../data/candidate/index.ts'
 import {
   casualFollowUps,
   classifyConversationIntent,
   conversationalReply,
   injectionReply,
-  introductionReply,
   isBareProofQuery,
   isConversationalIntent,
   needsLlm,
@@ -118,20 +117,6 @@ export async function handleChat(input: {
       message,
       intent,
       followUps: casualFollowUps('assistant'),
-    })
-    await persistTurn(conversation.id, input.message, message)
-    return response
-  }
-
-  if (intent === 'introduction') {
-    const message = introductionReply()
-    trackEvent({ type: 'question_asked', query: input.message, conversationId: conversation.id })
-    const response = conversationalResponse({
-      conversationId: conversation.id,
-      session: conversation.session,
-      message,
-      intent,
-      followUps: casualFollowUps(intent),
     })
     await persistTurn(conversation.id, input.message, message)
     return response
@@ -274,7 +259,7 @@ export async function handleChat(input: {
   const response: ChatResponse = {
     message: grounded,
     sections: isResume ? generated.sections : [],
-    sources: retrieval.sources.slice(0, 8),
+    sources: retrieval.sources.slice(0, 12),
     conversationId: conversation.id,
     isResume,
     verified:
@@ -394,7 +379,7 @@ function buildProofResponse(
   return {
     message,
     sections: [],
-    sources: retrieval.sources.slice(0, 8),
+    sources: retrieval.sources.slice(0, 12),
     conversationId,
     isResume: false,
     verified: retrieval.verified,
@@ -420,6 +405,7 @@ function emptyRetrieval(): RetrievalResult {
     expandedTerms: [],
     insufficient: false,
     topScore: 1,
+    depth: 'narrow',
   }
 }
 
@@ -440,18 +426,34 @@ function buildResumeResponse(
         .filter((name) => name !== 'Lutheran Service School')
         .join(', ')}.`,
       tags: experience.map((role) => role.organization).filter((name) => name !== 'Lutheran Service School'),
-      metrics: ['+15% throughput', '80%→20% backlog', '500+ users'],
+      metrics: ['+15% throughput', '−20% latency', '80%→20% unresolved backlog rate', '200–600 tickets', '500+ users', '60% less manual reporting time'],
+    },
+    {
+      label: 'PROJECTS',
+      body: projects.map((project) => `${project.title} (${project.status}): ${project.bullets[0]}`).join(' '),
+      tags: projects.map((project) => project.title),
     },
     {
       label: 'TECHNICAL SKILLS',
-      body: 'Languages, frameworks, tools, and platforms across the full engineering stack.',
+      body: 'Languages, frameworks, cloud/DevOps, databases, AI/ML, and security platforms.',
       tags: [
-        ...skills.languages.slice(0, 4),
-        ...skills.frameworks.slice(0, 4),
-        'PostgreSQL',
-        'AWS',
-        'Docker',
+        ...skills.languages,
+        ...skills.frameworks,
+        ...skills.tools,
+        ...skills.databases,
+        ...skills.ai,
+        ...skills.security,
       ],
+    },
+    {
+      label: 'LEADERSHIP, AWARDS & ACTIVITIES',
+      body: [
+        ...leadership.map((item) => `${item.title}: ${item.detail}`),
+        `${activities.hackathons.wins} hackathon wins across ${activities.hackathons.participations} participations; ${activities.hackathons.recognition}.`,
+        activities.awards.join(', '),
+        `Member of ${activities.organizations.join(', ')}.`,
+      ].join(' '),
+      tags: [...activities.organizations, 'ANDY 8', 'Mission Bit', activities.hackathons.recognition, ...activities.awards],
     },
   ]
 
@@ -464,10 +466,10 @@ function buildResumeResponse(
     isResume: true,
     verified: true,
     followUps: [
-      'Why should I interview Imani Gad?',
-      'Tell me about DevDash',
-      'What backend experience does he have?',
       'What AI experience does Imani have?',
+      'Tell me about Neighborly',
+      'What leadership experience does he have?',
+      'When does he graduate?',
     ],
     retrievalStages: [],
     showContactCta: true,

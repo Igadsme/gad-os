@@ -13,6 +13,11 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["src/**/*.ts", "../tests/assistant-backend.test.ts"],
+  "include": [
+    "src/**/*.ts",
+    "../tests/assistant-backend.test.ts",
+    "../tests/assistant-knowledge.test.ts",
+    "../tests/gemini-depth.test.ts"
+  ],
   "exclude": ["dist"]
 }

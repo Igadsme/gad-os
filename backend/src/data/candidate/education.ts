@@ -5,9 +5,9 @@ export const education = {
   expectedGraduation: 'December 2026',
   coursework: [
     'Data Structures',
+    'Algorithm Analysis',
     'Operating Systems',
     'Machine Learning',
-    'Algorithm Analysis',
     'Deep Learning',
   ],
 } as const

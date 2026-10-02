@@ -1,6 +1,7 @@
 import { config, GEMINI_MODEL_FALLBACKS } from '../config.ts'
 import { logger } from '../logger.ts'
 import { CANDIDATE_ASSISTANT_PROMPT } from '../prompts/candidateAssistant.ts'
+import { classifyRetrievalDepth } from './retrieval.ts'
 import { AppError, type ChatMode, type ConversationMessage, type GeminiStructuredResponse } from '../types.ts'
 
 type GeminiSdkClient = {
@@ -69,7 +70,7 @@ export class GeminiClient implements LlmClient {
             config: {
               systemInstruction: CANDIDATE_ASSISTANT_PROMPT,
               temperature: input.mode === 'recruiter' ? 0.55 : 0.8,
-              maxOutputTokens: 2800,
+              maxOutputTokens: 6000,
             },
           }),
           config.geminiTimeoutMs,
@@ -198,6 +199,7 @@ function isRetryableGeminiError(error: unknown): boolean {
 function buildUserTurn(input: GenerateChatInput): string {
   const followUp = input.history.length > 0
   const whyHire = input.intent === 'why_hire'
+  const depth = classifyRetrievalDepth(input.message)
   return [
     `Mode: ${input.mode}`,
     input.intent ? `Conversation intent: ${input.intent}` : '',
@@ -208,15 +210,19 @@ function buildUserTurn(input: GenerateChatInput): string {
       ? 'This is a follow-up. Use the previous conversation naturally. Do not restart his biography. Do not begin with "Imani Gad is" unless that is the most natural answer.'
       : 'Answer the question they asked. Do not deliver a résumé summary unless they asked who he is, why to hire him, or for his résumé.',
     whyHire
-      ? 'They asked why to hire or interview him. Give a structured, evidence-first pitch in a few short paragraphs — still conversational, not a dump of resume bullets.'
-      : 'Keep it to one or two natural sentences first. Add a little more only if the question needs it.',
+      ? 'They asked why to hire or interview him. Give a substantive, structured, evidence-first assessment that connects relevant experience and project evidence; no filler.'
+      : depth === 'broad'
+        ? 'This is a broad question. Synthesize the relevant evidence across roles, projects, skills, and education as appropriate; provide a substantive multi-paragraph answer when the retrieved context supports it.'
+        : depth === 'medium'
+          ? 'This is a focused question. Give enough context and implementation detail to explain the relevant evidence; do not force a one-sentence limit.'
+          : 'This is a narrow factual question. Answer directly and briefly, using only the evidence needed.',
     'When talking about Imani, use he/him. You may say "I\'m Imani\'s AI assistant" only if they asked who you are.',
     'If a fact is not in the context, say: "I don\'t have that information, but you can ask Imani directly."',
     'Name specific roles and projects from the context when you make a claim.',
     'Reply as JSON: {"intro":"...","claims":[{"text":"...","sourceIds":["experience:shaw"]}]}',
     'Every factual sentence needs a claims[] entry whose sourceIds exist in the context.',
     input.mode === 'recruiter'
-      ? 'Recruiter mode: tighter, evidence-first, no filler. Recruiters already have the brief — do not repeat his full life story unless asked.'
+      ? 'Recruiter mode: evidence-first and efficient, but preserve the requested depth. Include relevant specifics and outcomes; omit filler and unrelated biography.'
       : '',
     '',
     'Verified candidate context for this question:',

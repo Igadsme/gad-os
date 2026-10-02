@@ -47,8 +47,14 @@ function inventory(): InventoryRow[] {
   for (const tool of skills.tools) {
     add(tool, `Listed under verified tools.`, ['skill:tools'], false)
   }
+  for (const database of skills.databases) {
+    add(database, `Listed under verified databases.`, ['skill:databases'], false)
+  }
   for (const item of skills.ai) {
     add(item, `Listed under verified AI/ML skills.`, ['skill:ai'], false)
+  }
+  for (const item of skills.security) {
+    add(item, `Listed under verified AI/ML and security skills.`, ['skill:security'], false)
   }
   for (const role of experience) {
     for (const tech of role.technologies) {

@@ -164,6 +164,7 @@ export type CandidateCategory =
   | 'frontend'
   | 'why_hire'
   | 'contact'
+  | 'leadership'
 
 export type FitMatch = {
   technology: string

@@ -9,12 +9,12 @@ export type InterviewQuestion = {
 }
 
 export const interviewTracks: { id: InterviewTrack; label: string; blurb: string }[] = [
-  { id: 'behavioral', label: 'Behavioral', blurb: 'Teaching, teamwork, and how he ships under deadlines.' },
+  { id: 'behavioral', label: 'Behavioral', blurb: 'Teaching, mentoring, project coordination, and hackathon teamwork.' },
   { id: 'java', label: 'Java', blurb: 'Language listed in his skills — not tied to a specific job.' },
-  { id: 'python', label: 'Python', blurb: 'Teaching, UpCancer services, Headstarter, and FastAPI.' },
-  { id: 'backend', label: 'Backend', blurb: 'APIs, PostgreSQL, Redis, ServiceNow, FastAPI.' },
-  { id: 'ai', label: 'AI / ML', blurb: 'RAG, embeddings, Gemini, OpenAI, YOLOv8.' },
-  { id: 'system-design', label: 'System design', blurb: 'Walk through DevDash or the camera investigator.' },
+  { id: 'python', label: 'Python', blurb: 'Teaching, UpCancer services, Headstarter, AI Security Investigator, and Kynovar.' },
+  { id: 'backend', label: 'Backend', blurb: 'APIs, PostgreSQL, Redis, ServiceNow, NestJS, and FastAPI.' },
+  { id: 'ai', label: 'AI / ML', blurb: 'RAG, embeddings, Gemini, OpenAI, YOLOv8, and simulation research.' },
+  { id: 'system-design', label: 'System design', blurb: 'Walk through Neighborly, DevDash, or AI Security Investigator.' },
 ]
 
 export const interviewBank: InterviewQuestion[] = [
@@ -33,7 +33,7 @@ export const interviewBank: InterviewQuestion[] = [
     id: 'behavioral-hackathon',
     track: 'behavioral',
     prompt:
-      'You have 12 hackathon participations and 6 wins, and you have said you are proud of finishing under tight deadlines. Tell me about a time the plan broke and you still shipped.',
+      'You have 13 hackathon participations and 6 wins, including a second-place result among 32 teams at NestAI. Tell me about a time the plan broke and your team still shipped.',
     followUps: [
       'How did you divide work on that team?',
       'What would you drop first if you had to cut scope again?',
@@ -66,12 +66,12 @@ export const interviewBank: InterviewQuestion[] = [
     id: 'python-fastapi',
     track: 'python',
     prompt:
-      'The AI Security Camera Investigator uses FastAPI and YOLOv8. Why FastAPI for that detection service, and how does a request get from the Next.js UI to a timestamped search result?',
+      'AI Security Investigator uses FastAPI and YOLOv8 for video investigation workflows. How does a request move from video processing through persisted detections to case review?',
     followUps: [
       'Where do embeddings live relative to the detector?',
       'What happens when detection confidence is low?',
     ],
-    sourceId: 'project:securitycam',
+    sourceId: 'project:ai-security-investigator',
   },
   {
     id: 'backend-upcancer',
@@ -88,7 +88,7 @@ export const interviewBank: InterviewQuestion[] = [
     id: 'backend-wellstar',
     track: 'backend',
     prompt:
-      'At Wellstar you built REST APIs through ServiceNow Integration Hub and cut an ITSM backlog from 80% to 20% across 200–300 tickets. Walk through a workflow you automated and the server-side rules involved.',
+      'At Wellstar you built ServiceNow REST integrations and automated workflows supporting 200–600 tickets, reducing the unresolved backlog rate from 80% to 20%. Walk through the documented workflow components.',
     followUps: [
       'What made a ticket eligible for automation vs human review?',
       'How did you test Script Includes and business rules safely?',
@@ -99,10 +99,10 @@ export const interviewBank: InterviewQuestion[] = [
     id: 'ai-devdash',
     track: 'ai',
     prompt:
-      'You mentioned building DevDash. Walk me through how GitHub commits, PRs, and CI/CD events become LLM summaries and prioritized tasks. Why OpenAI for that step?',
+      'DevDash processes more than 1,000 commits, pull requests, and CI/CD events and uses OpenAI-powered summaries and task prioritization. Walk through that data path and how reporting time changed.',
     followUps: [
       'What did you send to the model, and what did you keep deterministic?',
-      'How did you measure the 80% reduction in manual reporting time?',
+      'How was the 60% reduction in manual reporting time measured?',
     ],
     sourceId: 'project:devdash',
   },
@@ -121,12 +121,12 @@ export const interviewBank: InterviewQuestion[] = [
     id: 'ai-camera',
     track: 'ai',
     prompt:
-      'For the AI Security Camera Investigator, how do YOLOv8 detections and embedding search work together so a recruiter could ask “red backpack near the lobby” and get a timestamp?',
+      'For AI Security Investigator, explain how YOLOv8 video detections, tracking, and the optional semantic-search path relate to investigation results.',
     followUps: [
       'What is in the metadata you embed?',
       'How are results ranked?',
     ],
-    sourceId: 'project:securitycam',
+    sourceId: 'project:ai-security-investigator',
   },
   {
     id: 'design-devdash',
@@ -143,11 +143,33 @@ export const interviewBank: InterviewQuestion[] = [
     id: 'design-camera',
     track: 'system-design',
     prompt:
-      'Design the AI Security Camera Investigator as if you were at a whiteboard: Next.js client, FastAPI, YOLOv8, embedding search. Where is state, and what is synchronous vs async?',
+      'Design AI Security Investigator from the repository evidence: video processing, YOLOv8, tracking, FastAPI, and persisted case data. What is implemented, and which AI search paths are optional?',
     followUps: [
       'Would you run detection on upload, on query, or both?',
       'How would you keep search results timestamped and ranked as footage volume grows?',
     ],
-    sourceId: 'project:securitycam',
+    sourceId: 'project:ai-security-investigator',
+  },
+  {
+    id: 'design-neighborly',
+    track: 'system-design',
+    prompt:
+      'The updated resume lists Next.js for Neighborly, while the current repository uses a React/TypeScript/Vite client with NestJS, Prisma, and PostgreSQL. Clarify which version you worked on, then walk through its client-to-API flow and how authentication and trust/safety responsibilities are separated.',
+    followUps: [
+      'Which marketplace flows are implemented in the client?',
+      'What remains before the product can launch?',
+    ],
+    sourceId: 'project:neighborly',
+  },
+  {
+    id: 'ai-kynovar',
+    track: 'ai',
+    prompt:
+      'Kynovar is a research system for training and comparing dynamics models in controlled simulated universes. Explain how its seeded simulations, observable trajectories, model families, and OOD evaluation fit together.',
+    followUps: [
+      'How does the system prevent hidden evaluation state from leaking into training?',
+      'Which benchmark results are still preliminary?',
+    ],
+    sourceId: 'project:kynovar',
   },
 ]

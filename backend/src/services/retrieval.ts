@@ -3,6 +3,7 @@ import {
   education,
   experience,
   formatDateRange,
+  leadership,
   profile,
   projects,
   skills,
@@ -23,7 +24,10 @@ export type RetrievalResult = {
   projectId?: string
   insufficient: boolean
   topScore: number
+  depth: RetrievalDepth
 }
+
+export type RetrievalDepth = 'narrow' | 'medium' | 'broad'
 
 type Chunk = {
   id: string
@@ -43,13 +47,14 @@ type Chunk = {
 const TECH_INVENTORY = buildTechInventory()
 
 const QUERY_EXPANSION: Record<string, string[]> = {
-  backend: ['api', 'apis', 'server', 'servers', 'microservice', 'microservices', 'postgresql', 'postgres', 'redis', 'node', 'nodejs', 'fastapi', 'rest', 'database', 'databases', 'sql'],
-  frontend: ['react', 'next.js', 'nextjs', 'css', 'html', 'ui', 'accessibility', 'responsive'],
-  ai: ['artificial', 'intelligence', 'machine', 'learning', 'ml', 'llm', 'rag', 'embedding', 'embeddings', 'pinecone', 'gemini', 'openai', 'yolo', 'yolov8', 'computer', 'vision', 'vector'],
-  cybersecurity: ['cyber', 'security', 'sentinel', 'kql', 'palo', 'alto', 'siem', 'syslog', 'cef', 'firewall'],
+  backend: ['api', 'apis', 'server', 'servers', 'microservice', 'microservices', 'postgresql', 'postgres', 'redis', 'node', 'nodejs', 'fastapi', 'nestjs', 'rest', 'database', 'databases', 'sql', 'prisma'],
+  frontend: ['react', 'next.js', 'nextjs', 'css', 'html', 'ui', 'accessibility', 'responsive', 'vite'],
+  ai: ['artificial', 'intelligence', 'machine', 'learning', 'ml', 'llm', 'rag', 'embedding', 'embeddings', 'pinecone', 'gemini', 'openai', 'yolo', 'yolov8', 'computer', 'vision', 'vector', 'semantic', 'pytorch', 'gru', 'gnn'],
+  cybersecurity: ['cyber', 'security', 'sentinel', 'kql', 'palo', 'alto', 'siem', 'syslog', 'cef', 'firewall', 'telemetry', 'detection', 'investigation'],
   databases: ['postgresql', 'postgres', 'mysql', 'mongodb', 'cassandra', 'redis', 'prisma', 'sql'],
-  cloud: ['aws', 'docker', 'deploy', 'deployment'],
+  cloud: ['aws', 'azure', 'docker', 'deploy', 'deployment', 'cloud', 'jenkins'],
   intern: ['internship', 'internships', 'co-op', 'coop', 'fellow', 'fellowship', 'role', 'job'],
+  leadership: ['leader', 'led', 'coordinator', 'planning', 'delivery', 'mentor', 'mentoring', 'students', 'team'],
 }
 
 const STOPWORDS = new Set([
@@ -63,7 +68,9 @@ function buildTechInventory(): Set<string> {
     ...skills.languages,
     ...skills.frameworks,
     ...skills.tools,
+    ...skills.databases,
     ...skills.ai,
+    ...skills.security,
     ...experience.flatMap((role) => role.technologies),
     ...projects.flatMap((project) => project.technologies),
     'REST APIs',
@@ -139,7 +146,7 @@ function buildChunks(): Chunk[] {
       technologies: [...education.coursework],
       metrics: [],
       aliases: ['school', 'university', 'degree', 'graduate', 'graduation'],
-      categories: ['education', 'profile'],
+      categories: ['education', 'profile', 'ai'],
     },
     {
       id: 'skill:languages',
@@ -171,10 +178,22 @@ function buildChunks(): Chunk[] {
       category: 'Skills',
       title: 'Tools and platforms',
       excerpt: skills.tools.join(', '),
-      text: `TOOLS ${skills.tools.join(' ')} postgresql aws docker mysql redis azure`,
+      text: `CLOUD DEVOPS ${skills.tools.join(' ')} aws azure docker github jenkins jira cloud`,
       technologies: [...skills.tools],
       metrics: [],
-      aliases: ['cloud', 'database', 'aws', 'docker', 'azure'],
+      aliases: ['cloud', 'cloud computing', 'devops', 'aws', 'docker', 'azure', 'deployment'],
+      categories: ['skills', 'backend'],
+    },
+    {
+      id: 'skill:databases',
+      type: 'skill',
+      category: 'Skills',
+      title: 'Databases',
+      excerpt: skills.databases.join(', '),
+      text: `DATABASES ${skills.databases.join(' ')} relational cache storage`,
+      technologies: [...skills.databases],
+      metrics: [],
+      aliases: ['database', 'databases', 'data store', 'cache'],
       categories: ['skills', 'backend'],
     },
     {
@@ -190,24 +209,24 @@ function buildChunks(): Chunk[] {
       categories: ['skills', 'ai'],
     },
     {
-      id: 'activity:orgs',
-      type: 'activity',
-      category: 'Activities',
-      title: 'Student organizations',
-      excerpt: `Member of ${activities.organizations.join(', ')}.`,
-      text: `ACTIVITIES ${activities.organizations.join(' ')} ieee shpe colorstack ai club leadership community`,
-      technologies: [],
+      id: 'skill:security',
+      type: 'skill',
+      category: 'Skills',
+      title: 'Security platforms and query language',
+      excerpt: skills.security.join(', '),
+      text: `SECURITY ${skills.security.join(' ')} enterprise workflows SIEM log analytics`,
+      technologies: [...skills.security],
       metrics: [],
-      aliases: ['club', 'organization', 'leadership'],
-      categories: ['activities'],
+      aliases: ['cybersecurity', 'security', 'siem', 'platform'],
+      categories: ['skills', 'cybersecurity'],
     },
     {
       id: 'activity:hackathons',
       type: 'activity',
       category: 'Activities',
       title: 'Hackathons',
-      excerpt: `${activities.hackathons.participations} participations, ${activities.hackathons.wins} wins. ${activities.hackathons.note}`,
-      text: `HACKATHONS ${activities.hackathons.participations} participations ${activities.hackathons.wins} wins ${activities.hackathons.note}`,
+      excerpt: `${activities.hackathons.participations} participations and ${activities.hackathons.wins} wins. ${activities.hackathons.recognition}.`,
+      text: `HACKATHONS ${activities.hackathons.participations} participations ${activities.hackathons.wins} wins ${activities.hackathons.recognition}`,
       technologies: [],
       metrics: [
         `${activities.hackathons.wins} hackathon wins`,
@@ -216,6 +235,19 @@ function buildChunks(): Chunk[] {
       aliases: ['hackathon', 'deadline', 'ship'],
       categories: ['activities', 'why_hire'],
     },
+    ...leadership.map((item): Chunk => ({
+      id: `activity:leadership:${item.id}`,
+      type: 'activity' as const,
+      category: 'Leadership',
+      title: item.title,
+      date: 'dates' in item ? item.dates : undefined,
+      excerpt: item.detail,
+      text: `LEADERSHIP ${item.title} ${item.detail} ${'dates' in item ? item.dates : ''} planning delivery mentoring autonomous drone system coding projects computer science high school students`,
+      technologies: [],
+      metrics: item.id === 'mission-bit' ? ['15 high school students'] : [],
+      aliases: ['leadership', 'leader', 'mentor', 'mentoring', item.id],
+      categories: ['activities', 'leadership'],
+    })),
     {
       id: 'activity:awards',
       type: 'activity',
@@ -253,6 +285,30 @@ function buildChunks(): Chunk[] {
       aliases: ['teach', 'mentor', 'student'],
       categories: ['story', 'why_hire', 'activities'],
     },
+    {
+      id: 'activity:organizations',
+      type: 'activity',
+      category: 'Activities',
+      title: 'Student organizations',
+      excerpt: `Member of ${activities.organizations.join(', ')}.`,
+      text: `ACTIVITIES ORGANIZATIONS ${activities.organizations.join(' ')} SHPE KSU AI Club KSU ColorStack student community`,
+      technologies: [],
+      metrics: [],
+      aliases: ['club', 'organization', 'activities'],
+      categories: ['activities', 'leadership'],
+    },
+    {
+      id: 'activity:hackathon-recognition',
+      type: 'activity',
+      category: 'Awards',
+      title: 'Hackathon recognition',
+      excerpt: activities.hackathons.recognition,
+      text: `HACKATHON AWARD ${activities.hackathons.recognition}`,
+      technologies: [],
+      metrics: ['2nd of 32 teams'],
+      aliases: ['nestai', 'hackathon', 'award', 'recognition'],
+      categories: ['activities', 'ai'],
+    },
   ]
 
   for (const role of experience) {
@@ -278,8 +334,8 @@ function buildChunks(): Chunk[] {
       aliases: [role.organization, role.id, ...role.categories],
       categories: [
         'experience',
-        ...(role.categories.includes('ai') ? (['ai'] as const) : []),
         ...(role.categories.includes('cybersecurity') ? (['cybersecurity'] as const) : []),
+        ...(role.categories.includes('ai') ? (['ai'] as const) : []),
         ...(role.categories.includes('web') ? (['frontend'] as const) : []),
         ...(role.categories.includes('software') || role.categories.includes('enterprise')
           ? (['backend'] as const)
@@ -289,29 +345,63 @@ function buildChunks(): Chunk[] {
   }
 
   for (const project of projects) {
-    chunks.push({
-      id: `project:${project.id}`,
-      type: 'project',
+    const projectNotes = project.sourceNotes ?? []
+    const sourceNotes = projectNotes.join(' ')
+    const date = project.start && project.end
+      ? formatDateRange(project.start, project.end)
+      : project.start ?? project.end
+    const categories: CandidateCategory[] = [
+      'projects',
+      ...(project.categories.includes('ai') ? ['ai' as const] : []),
+      ...(project.categories.includes('fullstack') ? ['backend' as const, 'frontend' as const] : []),
+      ...(project.id === 'ai-security-investigator' ? ['cybersecurity' as const] : []),
+    ]
+    const projectFields = {
+      type: 'project' as const,
       category: 'Projects',
       title: project.title,
       organization: project.subtitle,
-      date: formatDateRange(project.start, project.end),
-      excerpt: project.bullets.join(' '),
-      text: [
-        project.title,
-        project.subtitle,
-        project.bullets.join(' '),
-        project.problem,
-        project.solution,
-        project.technologies.join(' '),
-        project.contributed.join(' '),
-        project.categories.join(' '),
-      ].join(' '),
+      date,
       technologies: [...project.technologies],
       metrics: [...project.metrics],
-      aliases: [project.id, 'project', 'built', 'saas', 'portfolio'],
-      categories: ['projects', ...(project.categories.includes('ai') ? (['ai'] as const) : [])],
-    })
+      aliases: [project.id, project.title, project.subtitle, 'project', 'built', 'architecture', 'portfolio'],
+      categories,
+    }
+    const sections = [
+      {
+        suffix: '',
+        heading: `${project.title} overview`,
+        excerpt: `${project.problem} ${project.solution} ${project.bullets.join(' ')} ${sourceNotes}`,
+        text: `${project.title} ${project.subtitle} ${project.problem} ${project.solution} ${project.bullets.join(' ')} ${project.technologies.join(' ')} ${project.status} ${project.github ?? ''} ${sourceNotes}`,
+      },
+      {
+        suffix: ':architecture',
+        heading: `${project.title} architecture`,
+        excerpt: `${project.architectureSummary}. ${project.architecture.nodes.map((node) => `${node.label}: ${node.detail}`).join('; ')}. ${sourceNotes}`,
+        text: `${project.title} architecture ${project.architectureSummary} ${project.architecture.nodes.map((node) => `${node.label} ${node.detail}`).join(' ')} ${project.technologies.join(' ')} ${sourceNotes}`,
+      },
+      {
+        suffix: ':engineering',
+        heading: `${project.title} engineering work`,
+        excerpt: [...project.contributed, ...project.challenges, ...projectNotes].join(' '),
+        text: `${project.title} engineering implementation contributions challenges ${[...project.contributed, ...project.challenges, ...projectNotes].join(' ')}`,
+      },
+      {
+        suffix: ':validation',
+        heading: `${project.title} validation and status`,
+        excerpt: `Status: ${project.status}. ${project.validation.join(' ')} ${sourceNotes}`,
+        text: `${project.title} status ${project.status} validation testing deployment ${project.validation.join(' ')} ${sourceNotes}`,
+      },
+    ]
+    for (const section of sections) {
+      chunks.push({
+        ...projectFields,
+        id: `project:${project.id}${section.suffix}`,
+        title: section.heading,
+        excerpt: section.excerpt,
+        text: section.text,
+      })
+    }
   }
 
   return chunks
@@ -396,6 +486,7 @@ export function analyzeQuery(query: string): CandidateCategory[] {
   if (SKILL_KEYWORDS.test(query)) intents.add('skills')
   if (EDUCATION_KEYWORDS.test(query)) intents.add('education')
   if (ACTIVITY_KEYWORDS.test(query)) intents.add('activities')
+  if (LEADERSHIP_KEYWORDS.test(query)) intents.add('leadership')
   if (STORY_KEYWORDS.test(query) || OVERVIEW_KEYWORDS.test(query)) {
     intents.add('story')
     intents.add('profile')
@@ -422,6 +513,7 @@ export async function retrieveCandidateContext(
 ): Promise<RetrievalResult> {
   await ensureChunkEmbeddings()
   const intents = analyzeQuery(query)
+  const depth = classifyRetrievalDepth(query)
   const expandedTerms = expandQuery(query)
   const queryVector = sparseTfidf(expandedTerms)
   const queryEmbedding = await embedQuery(query)
@@ -441,8 +533,14 @@ export async function retrieveCandidateContext(
   })
     .sort((a, b) => b.score - a.score)
 
-  const minScore = 0.08
-  let selected = rerank(ranked.filter((item) => item.score >= minScore).slice(0, 14), query).slice(0, 10)
+  const minScore = 0.05
+  const allCandidates = rerank(ranked, query)
+  const candidates = allCandidates.filter((item) => item.score >= minScore)
+  const limit = depth === 'broad' ? 12 : depth === 'medium' ? 7 : 3
+  let selected =
+    depth === 'broad'
+      ? selectBroadEvidence(allCandidates, query, intents, limit)
+      : candidates.slice(0, limit)
 
   if (intents.includes('ai') && !intents.includes('cybersecurity')) {
     selected = selected.filter(
@@ -451,7 +549,7 @@ export async function retrieveCandidateContext(
   }
 
   if (selected.length === 0) {
-    selected = ranked.slice(0, 4)
+    selected = ranked.slice(0, limit)
   }
 
   const alwaysInclude = CHUNKS.filter((chunk) => {
@@ -461,17 +559,9 @@ export async function retrieveCandidateContext(
     return false
   })
   for (const chunk of alwaysInclude) {
-    if (!selected.some((item) => item.chunk.id === chunk.id)) {
-      selected.push({ chunk, score: 1 })
-    }
-  }
-
-  if (intents.includes('ai')) {
-    for (const chunk of CHUNKS) {
-      if (chunk.categories.includes('ai') && !selected.some((item) => item.chunk.id === chunk.id)) {
-        selected.push({ chunk, score: 0.9 })
-      }
-    }
+    if (selected.some((item) => item.chunk.id === chunk.id)) continue
+    if (selected.length >= limit) selected.pop()
+    selected.push({ chunk, score: 1 })
   }
 
   const sources = selected.map(({ chunk }) => toSource(chunk))
@@ -496,7 +586,153 @@ export async function retrieveCandidateContext(
     projectId: inferProjectId(query),
     insufficient,
     topScore,
+    depth,
   }
+}
+
+export function classifyRetrievalDepth(query: string): RetrievalDepth {
+  if (
+    /\b(when (does|will|is)|what year|what date|how many|what is (he|imani) studying|what is his degree|what degree|where (does|did) he study)\b/i.test(
+      query,
+    )
+  ) {
+    return 'narrow'
+  }
+  if (
+    /\b(tell me about|explain|describe|walk me through|everything|all (of|about)|experience|projects?|skills?|technolog(?:y|ies)|leadership|background|overview|what .* (experience|know|built|projects)|what is imani studying)\b/i.test(
+      query,
+    )
+  ) {
+    return 'broad'
+  }
+  if (/\b(what did|what was|what does) .* (at|for)\b/i.test(query)) return 'medium'
+  return 'medium'
+}
+
+function selectBroadEvidence(
+  candidates: Array<{ chunk: Chunk; score: number }>,
+  query: string,
+  intents: CandidateCategory[],
+  limit: number,
+): Array<{ chunk: Chunk; score: number }> {
+  const selected: Array<{ chunk: Chunk; score: number }> = []
+  const selectedIds = new Set<string>()
+  const add = (candidate: { chunk: Chunk; score: number } | undefined) => {
+    if (!candidate || selected.length >= limit || selectedIds.has(candidate.chunk.id)) return
+    selected.push(candidate)
+    selectedIds.add(candidate.chunk.id)
+  }
+  const addEntity = (prefix: string, sectionLimit = 1) => {
+    candidates
+      .filter((item) => item.chunk.id === prefix || item.chunk.id.startsWith(`${prefix}:`))
+      .slice(0, sectionLimit)
+      .forEach(add)
+  }
+
+  const preferredEntities: string[] = []
+  const projectId = inferProjectId(query)
+  if (projectId) {
+    addEntity(`project:${projectId}`, 3)
+    if (projectId === 'neighborly') preferredEntities.push('skill:frameworks', 'skill:databases')
+    if (projectId === 'devdash') preferredEntities.push('skill:frameworks', 'skill:ai')
+    if (projectId === 'kynovar') preferredEntities.push('skill:frameworks', 'education:ksu')
+    if (projectId === 'ai-security-investigator') {
+      preferredEntities.push('skill:frameworks', 'skill:ai', 'skill:security')
+    }
+  }
+  if (intents.includes('ai')) {
+    preferredEntities.push(
+      'experience:headstarter',
+      'project:devdash',
+      'project:ai-security-investigator',
+      'project:kynovar',
+      'education:ksu',
+      'skill:ai',
+    )
+  }
+  if (intents.includes('cybersecurity')) {
+    preferredEntities.push(
+      'experience:shaw',
+      'project:ai-security-investigator',
+      'skill:security',
+      'skill:tools',
+    )
+  }
+  if (intents.includes('leadership')) {
+    preferredEntities.push(
+      'activity:leadership:andy8',
+      'activity:leadership:mission-bit',
+      'experience:lutheran',
+      'activity:hackathons',
+      'activity:organizations',
+    )
+  }
+  if (intents.includes('backend')) {
+    preferredEntities.push(
+      'experience:upcancer',
+      'experience:wellstar',
+      'project:neighborly',
+      'project:devdash',
+      'skill:databases',
+      'skill:frameworks',
+    )
+  }
+  if (intents.includes('experience')) {
+    preferredEntities.push(
+      'experience:wellstar',
+      'experience:shaw',
+      'experience:headstarter',
+      'experience:truespice',
+      'experience:upcancer',
+      'experience:lutheran',
+    )
+  }
+  if (intents.includes('projects')) {
+    preferredEntities.push(
+      'project:neighborly',
+      'project:devdash',
+      'project:ai-security-investigator',
+      'project:kynovar',
+    )
+  }
+  if (intents.includes('skills')) {
+    preferredEntities.push(
+      'skill:languages',
+      'skill:frameworks',
+      'skill:tools',
+      'skill:databases',
+      'skill:ai',
+      'skill:security',
+    )
+  }
+  if (intents.includes('story') || intents.includes('profile')) {
+    preferredEntities.push(
+      'profile:imani',
+      'education:ksu',
+      'story:background',
+      'experience:wellstar',
+      'experience:upcancer',
+      'experience:headstarter',
+      'experience:shaw',
+      'project:neighborly',
+      'project:devdash',
+      'project:ai-security-investigator',
+      'project:kynovar',
+      'activity:leadership:andy8',
+    )
+  }
+
+  for (const prefix of preferredEntities) addEntity(prefix)
+
+  const entityIds = new Set<string>()
+  for (const candidate of candidates) {
+    const entityId = candidate.chunk.id.split(':').slice(0, 2).join(':')
+    if (entityIds.has(entityId)) continue
+    entityIds.add(entityId)
+    add(candidate)
+  }
+  for (const candidate of candidates) add(candidate)
+  return selected
 }
 
 function typeFilterForIntent(intent?: ConversationIntent): SourceType | undefined {
@@ -538,8 +774,12 @@ function isSpecificUnknown(query: string): boolean {
 }
 
 function inferProjectId(query: string): string | undefined {
+  if (/neighborly/i.test(query)) return 'neighborly'
   if (/devdash/i.test(query)) return 'devdash'
-  if (/camera|investigator|cctv|yolo/i.test(query)) return 'securitycam'
+  if (/ai security investigator|camera|investigator|cctv|yolo/i.test(query)) {
+    return 'ai-security-investigator'
+  }
+  if (/kynovar/i.test(query)) return 'kynovar'
   return undefined
 }
 
@@ -676,16 +916,18 @@ const AI_KEYWORDS =
 const CYBER_KEYWORDS =
   /\b(cyber|security|sentinel|kql|palo alto|siem|syslog|cef|firewall|log analytics)\b/i
 const PROJECT_KEYWORDS =
-  /\b(project|built|build|created|developed|devdash|camera|saas|portfolio|architecture)\b/i
-const PROJECT_NAME = /\b(devdash|security camera|camera investigator|cctv)\b/i
+  /\b(project|built|build|created|developed|neighborly|devdash|kynovar|investigator|camera|saas|portfolio|architecture)\b/i
+const PROJECT_NAME = /\b(neighborly|devdash|kynovar|ai security investigator|security camera|camera investigator|cctv)\b/i
 const EXPERIENCE_KEYWORDS =
   /\b(experience|intern|internship|co-?op|work|role|job|career|software engineering|wellstar|shaw|upcancer|truespice|headstarter|lutheran)\b/i
 const SKILL_KEYWORDS =
-  /\b(skill|stack|languages?|frameworks?|tools?|technolog|proficien|python|typescript|react|next\.js)\b/i
+  /\b(skill|stack|languages?|frameworks?|tools?|technolog|proficien|python|typescript|react|next\.js|cloud|aws|azure|docker|database)\b/i
 const EDUCATION_KEYWORDS =
-  /\b(education|school|university|degree|coursework|graduat|kennesaw|\bksu\b|computer science)\b/i
+  /\b(education|school|university|degree|coursework|graduat|studying|major|kennesaw|\bksu\b|computer science)\b/i
 const ACTIVITY_KEYWORDS =
-  /\b(hackathon|ieee|shpe|colorstack|club|activit|community|leadership|mentor)\b/i
+  /\b(hackathon|shpe|colorstack|club|activit|community|leadership|mentor|andy 8|mission bit)\b/i
+const LEADERSHIP_KEYWORDS =
+  /\b(leadership|leader|led|coordinator|mentor|mentoring|project coordinator)\b/i
 const STORY_KEYWORDS =
   /\b(story|background|born|rwanda|congo|congolese|immigrant|moved|personal|who is|about|life|grew up|childhood|family|journey|motivation|why did|how did you|get into|personality|who are you|swahili|kinyarwanda|hobby|hobbies|gym|soccer|music|driving)\b/i
 const RESUME_KEYWORDS = /\b(r[eé]sum[eé]|cv|download|pdf|document)\b/i
