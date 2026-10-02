@@ -31,7 +31,12 @@ Copy `.env.example` to `.env.local`.
 
 | Variable | Effect |
 | --- | --- |
-| `RECRUITER_ASSISTANT_API_URL` | Required for the native Ask Imani feature. Server-only origin of the existing AI Recruiter Assistant API. |
+| `GEMINI_API_KEY` | Required, server-only Google Gemini API key used by Ask Imani. Never use a `NEXT_PUBLIC_` prefix. |
+| `DATABASE_URL` | Optional PostgreSQL connection for durable conversations, analytics, and embeddings. Without it, conversations use process memory and best-effort local JSON storage. |
+| `ANALYTICS_KEY` | Optional secret protecting `/assistant/analytics`. |
+| `GEMINI_MODEL`, `GEMINI_EMBEDDING_MODEL`, `GEMINI_EMBEDDING_DIMENSIONS` | Optional Gemini model configuration; defaults are `gemini-flash-lite-latest`, `gemini-embedding-001`, and `768`. |
+| `FRONTEND_URL` | Optional allowed frontend origin for the co-hosted API; defaults to `http://localhost:5173`. |
+| `GEMINI_TIMEOUT_MS`, `CHAT_RATE_LIMIT_MAX`, `CHAT_RATE_LIMIT_WINDOW_MS`, `SESSION_TTL_MS`, `DATA_RETENTION_DAYS`, `LOG_LEVEL` | Optional assistant backend limits, retention, timeout, and logging settings. |
 | `RESEND_API_KEY` | Contact form sends email. Without it, messages are logged server-side. |
 | `SPOTIFY_*` | Live now-playing, recently played, and top artists. Without them, a labeled coding playlist is shown. |
 
@@ -47,7 +52,7 @@ The setup endpoints return `404` in production. Spotify refresh tokens currently
 
 ### Ask Imani assistant
 
-The `/assistant` page integrates the existing `Igadsme/ai-recruiter-assistant` frontend in the Gad OS design system. Its backend remains a separate service and is accessed through the same-origin `/api/recruiter/*` proxy. Set `RECRUITER_ASSISTANT_API_URL` to the backend service origin (no `/api` suffix) in `.env.local` for development and in the portfolio deployment environment for production. The URL is server-only; Gemini credentials and database configuration remain on the assistant backend and are never sent to the browser. See the assistant repository's README for its backend environment variables and database setup.
+The `/assistant` page integrates the existing `Igadsme/ai-recruiter-assistant` frontend in the Gad OS design system. Its original Express API, candidate data, retrieval, prompts, Gemini integration, and recruiter endpoints run in the same Gad OS Node server under `/api/recruiter/*`; no separate assistant service URL is required. Set `GEMINI_API_KEY` on the server/deployment platform. Gemini credentials and database configuration are never sent to the browser. Set `DATABASE_URL` to PostgreSQL for durable production sessions, analytics, and embeddings; without it, built-in in-memory and best-effort JSON stores are used.
 
 The integration retains the assistant's chat, recruiter mode, suggested prompts, evidence and source disclosures, job-fit analysis, interview simulator, career timeline, recruiter session panel, resume preview/download, contact details, voice input/output where browser-supported, and private analytics at `/assistant/analytics`. That analytics route remains protected by the backend's `ANALYTICS_KEY`.
 
