@@ -91,6 +91,41 @@ describe("co-hosted recruiter assistant API", () => {
     expect(inputs[1].history.length).toBeGreaterThan(0);
   });
 
+  it("sends broad candidate introductions through retrieval and the configured model", async () => {
+    const inputs: GenerateChatInput[] = [];
+    setLlmClientForTests({
+      async generate(input) {
+        inputs.push(input);
+        return {
+          intro: "Imani is a Computer Science student at Kennesaw State University expected to graduate in December 2026. At Wellstar, he built ServiceNow workflows and REST API integrations.",
+          sections: [],
+          claims: [
+            {
+              text: "Imani is a Computer Science student at Kennesaw State University expected to graduate in December 2026.",
+              sourceIds: ["education:ksu"],
+            },
+            {
+              text: "At Wellstar, he built ServiceNow workflows and REST API integrations.",
+              sourceIds: ["experience:wellstar"],
+            },
+          ],
+        };
+      },
+    });
+
+    const response = await request(app)
+      .post("/api/chat")
+      .send({ message: "Tell me about Imani Gad.", mode: "general" })
+      .expect(200);
+
+    expect(response.body.intent).toBe("introduction");
+    expect(response.body.conversational).toBe(false);
+    expect(response.body.message).toContain("ServiceNow workflows");
+    expect(response.body.sources.length).toBeGreaterThanOrEqual(5);
+    expect(inputs[0].context).toContain("experience:wellstar");
+    expect(inputs[0].context).toContain("activity:leadership:andy8");
+  });
+
   it("returns a friendly provider error when the server-side Gemini key is missing", async () => {
     vi.stubEnv("GEMINI_API_KEY", "");
 

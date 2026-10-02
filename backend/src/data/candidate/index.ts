@@ -4,6 +4,7 @@ import { differentiators } from './differentiators.ts'
 import { education } from './education.ts'
 import { experience } from './experience.ts'
 import { interviewBank, interviewTracks } from './interviewBank.ts'
+import { leadership } from './leadership.ts'
 import { profile } from './profile.ts'
 import { projects } from './projects.ts'
 import { skills } from './skills.ts'
@@ -18,6 +19,7 @@ export {
   experience,
   interviewBank,
   interviewTracks,
+  leadership,
   profile,
   projects,
   recruiterBrief,
@@ -32,6 +34,7 @@ export const candidateKnowledgeBase = {
   projects,
   skills,
   activities,
+  leadership,
   story,
   recruiterBrief,
   differentiators,

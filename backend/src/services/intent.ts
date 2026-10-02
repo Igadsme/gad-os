@@ -1,4 +1,4 @@
-import { education, experience, profile } from '../data/candidate/index.ts'
+import { profile } from '../data/candidate/index.ts'
 import type { ConversationIntent, PipelinePath } from '../types.ts'
 
 export type { ConversationIntent }
@@ -89,6 +89,7 @@ export function pipelinePath(intent: ConversationIntent): PipelinePath {
 
 export function needsRetrieval(intent: ConversationIntent): boolean {
   return (
+    intent === 'introduction' ||
     intent === 'candidate' ||
     intent === 'experience' ||
     intent === 'projects' ||
@@ -103,6 +104,7 @@ export function needsRetrieval(intent: ConversationIntent): boolean {
 
 export function needsLlm(intent: ConversationIntent): boolean {
   return (
+    intent === 'introduction' ||
     intent === 'candidate' ||
     intent === 'experience' ||
     intent === 'projects' ||
@@ -137,16 +139,6 @@ export function conversationalReply(intent: ConversationIntent, historyLength: n
   }
 
   return "Hey! I'm Imani's AI assistant. I can tell you about his experience, projects, skills, or what roles he may fit. What would you like to know?"
-}
-
-export function introductionReply(): string {
-  const professional = experience.filter((role) => role.organization !== 'Lutheran Service School')
-  const recent = professional.slice(-2).map((role) => role.organization)
-  return [
-    `Imani is a Computer Science student at ${education.school}, graduating ${education.expectedGraduation}.`,
-    `He's interned across software, AI, cybersecurity, and enterprise automation — including ${recent.join(' and ')}.`,
-    `Ask about a role, a project, or why a team might hire him and I'll go deeper.`,
-  ].join(' ')
 }
 
 export function proofReply(hasPriorQuestion: boolean): string {
