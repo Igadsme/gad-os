@@ -31,7 +31,7 @@ Copy `.env.example` to `.env.local`.
 
 | Variable | Effect |
 | --- | --- |
-| `OPENAI_API_KEY` | April uses an LLM grounded on résumé context. Without it, April answers from deterministic retrieval. |
+| `RECRUITER_ASSISTANT_API_URL` | Required for the native Ask Imani feature. Server-only origin of the existing AI Recruiter Assistant API. |
 | `RESEND_API_KEY` | Contact form sends email. Without it, messages are logged server-side. |
 | `SPOTIFY_*` | Live now-playing, recently played, and top artists. Without them, a labeled coding playlist is shown. |
 
@@ -44,6 +44,12 @@ Copy `.env.example` to `.env.local`.
 5. Add `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, and `SPOTIFY_REFRESH_TOKEN` to Railway, then redeploy.
 
 The setup endpoints return `404` in production. Spotify refresh tokens currently expire after 180 days, so repeat the local authorization when the token expires.
+
+### Ask Imani assistant
+
+The `/assistant` page integrates the existing `Igadsme/ai-recruiter-assistant` frontend in the Gad OS design system. Its backend remains a separate service and is accessed through the same-origin `/api/recruiter/*` proxy. Set `RECRUITER_ASSISTANT_API_URL` to the backend service origin (no `/api` suffix) in `.env.local` for development and in the portfolio deployment environment for production. The URL is server-only; Gemini credentials and database configuration remain on the assistant backend and are never sent to the browser. See the assistant repository's README for its backend environment variables and database setup.
+
+The integration retains the assistant's chat, recruiter mode, suggested prompts, evidence and source disclosures, job-fit analysis, interview simulator, career timeline, recruiter session panel, resume preview/download, contact details, voice input/output where browser-supported, and private analytics at `/assistant/analytics`. That analytics route remains protected by the backend's `ANALYTICS_KEY`.
 
 ## Content
 

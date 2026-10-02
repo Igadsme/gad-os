@@ -6,6 +6,7 @@ import {
   Sparkles,
   Images,
   Music,
+  MessageCircle,
   User,
   FileText,
   Mail,
@@ -26,6 +27,7 @@ export const primaryNav: NavItem[] = [
   { href: "/gallery", label: "Gallery", icon: Images },
   { href: "/music", label: "Music", icon: Music },
   { href: "/about", label: "About", icon: User },
+  { href: "/assistant", label: "Ask Imani", icon: MessageCircle },
 ];
 
 export const secondaryNav: NavItem[] = [

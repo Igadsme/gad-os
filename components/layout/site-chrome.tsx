@@ -11,6 +11,7 @@ const links = [
   { href: "/projects", label: "Work" },
   { href: "/about", label: "About" },
   { href: "/experience", label: "Experience" },
+  { href: "/assistant", label: "Ask Imani" },
   { href: "/resume", label: "Résumé" },
   { href: "/contact", label: "Contact" },
 ];

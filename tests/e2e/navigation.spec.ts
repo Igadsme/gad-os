@@ -2,8 +2,10 @@ import { expect, test } from "@playwright/test";
 
 test("home renders Imani Gad and primary nav", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: "Imani Gad" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Projects" }).first()).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("building systems that ship.");
+  await expect(
+    page.getByRole("navigation", { name: "Primary navigation" }).getByRole("link", { name: "Work" }),
+  ).toBeVisible();
 });
 
 test("projects page lists DevDash", async ({ page }) => {
@@ -65,24 +67,34 @@ test("primary case studies share the requested structure and only verified demos
   }
 });
 
-test("command palette navigates to experience", async ({ page }) => {
+test("primary navigation opens experience", async ({ page }) => {
   await page.goto("/");
-  await page.keyboard.press("Meta+k");
-  const search = page.getByPlaceholder("Search projects, skills, or experience...");
-  await search.waitFor({ state: "visible" });
-  await search.fill("wellstar");
-  await page.getByText("Wellstar Health System").first().click();
-  await expect(page).toHaveURL(/experience/);
+  await page.getByRole("navigation", { name: "Primary navigation" }).getByRole("link", { name: "Experience" }).click();
+  await expect(page).toHaveURL(/\/experience$/);
 });
 
-test("removed Assistant and Lab sections are not public destinations", async ({ page }) => {
+test("Ask Imani is public and the research lab remains reachable", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("link", { name: "AI Assistant" })).toHaveCount(0);
+  await page.getByRole("navigation", { name: "Primary navigation" }).getByRole("link", { name: "Ask Imani" }).click();
+  await expect(page).toHaveURL(/\/assistant$/);
+  await expect(page.getByRole("heading", { name: "Ask Imani", exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: /Tell me about Imani Gad/ })).toBeVisible();
   await expect(page.getByRole("link", { name: "Lab" })).toHaveCount(0);
 
-  await page.goto("/assistant");
-  await expect(page).toHaveURL(/\/$/);
-
   await page.goto("/lab");
-  await expect(page).toHaveURL(/\/projects$/);
+  await expect(page.getByRole("heading", { name: "Engineering lab" })).toBeVisible();
+});
+
+test("assistant is usable on mobile and reports an unavailable backend", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/assistant");
+  await expect(page.getByRole("heading", { name: "Ask Imani", exact: true })).toBeVisible();
+  await expect.poll(() =>
+    page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
+  ).toBe(true);
+
+  const input = page.getByRole("textbox", { name: "Ask about Imani Gad" });
+  await input.fill("Tell me about Imani's backend experience");
+  await input.press("Enter");
+  await expect(page.getByText(/assistant is temporarily unavailable/i)).toBeVisible();
 });
