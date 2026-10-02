@@ -17,8 +17,8 @@ describe("searchSite", () => {
     expect(results.some((item) => item.title === "Python")).toBe(true);
   });
 
-  it("does not expose removed sections", () => {
-    expect(searchSite("assistant").some((item) => item.href === "/ai-assistant")).toBe(false);
+  it("finds Ask Imani and does not expose the removed Lab section", () => {
+    expect(searchSite("Ask Imani").some((item) => item.href === "/assistant")).toBe(true);
     expect(searchSite("lab").some((item) => item.href === "/lab")).toBe(false);
   });
 });
